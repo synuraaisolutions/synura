@@ -4,9 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Synura AI Solutions Website** - AI-first marketing platform featuring conversational automation via Retell.ai (Verus agent) and content management via Contentlayer + MDX.
+**Synura AI Solutions Website** - Professional website for an AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency through intelligent systems and custom-built AI agents. Features Retell.ai (Verus agent) for customer interaction and content management via Contentlayer + MDX.
 
-**Current Status:** Greenfield project in planning phase. The blueprint and specifications exist, but implementation is pending.
+**Current Status:** Complete implementation of production-ready website showcasing Synura's AI automation services.
+
+## About Synura AI Solutions
+
+Synura AI Solutions is an AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency through intelligent systems and custom-built AI agents. We specialize in automating workflows, integrating systems, and deploying AI employees that handle repetitive work, allowing human teams to focus on what truly drives growth.
+
+**Core Services:**
+- **AI Workforce Solutions** - Digital team members designed to handle business tasks like customer support, scheduling, lead follow-up, or reporting
+- **Automation & Integration** - Workflow automation, system & API integration, and custom automation development
+- **AI Consulting & Strategy** - Automation audits, AI strategy & roadmapping, and process optimization
+- **Managed AI Operations** - Ongoing management, optimization, and monitoring of deployed automations
+
+**Mission:** To empower businesses with intelligent automation that unlocks efficiency, innovation, and sustainable growth.
+
+**Vision:** To become the leading force in intelligent business automation, enabling organizations worldwide to operate smarter, faster, and with greater purpose.
+
+**Value Proposition:** We simplify complex technology into practical, results-driven solutions, so any business, regardless of size or technical background, can benefit from the power of intelligent automation.
 
 ## Technology Stack
 
@@ -96,10 +112,11 @@ npm run content:build
 - `GET /api/v1/services` - Service and pricing data
 
 ### Voice Integration (Retell.ai)
-- **Agent Name:** "Verus"
+- **Purpose:** Customer service and lead capture on Synura's website (not a service provided to clients)
+- **Agent Name:** "Verus" - Synura's AI assistant for website visitors
 - **Integration:** Global script tag in root layout
-- **Knowledge Base:** Fed from `/content/*.mdx` files
-- **Capabilities:** Lead capture, consultation booking, ROI estimates, FAQ responses
+- **Knowledge Base:** Fed from `/content/*.mdx` files about Synura's services
+- **Capabilities:** Lead capture, consultation booking, ROI estimates, FAQ responses about Synura's services
 - **Environment Variable:** `NEXT_PUBLIC_RETELL_AGENT_ID=verus`
 
 ### Component Architecture
