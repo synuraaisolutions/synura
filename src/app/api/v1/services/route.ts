@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: false,
       message: 'Failed to retrieve services',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
   }
 }
@@ -143,21 +143,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: false,
       message: 'Failed to generate service recommendations',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
   }
 }
 
 // Generate service recommendations based on criteria
-function getServiceRecommendations(criteria: {
-  companySize?: string
-  industry?: string
-  challenges?: string[]
-  goals?: string[]
-  budget?: string
-  timeline?: string
-  currentTools?: string[]
-}) {
+function getServiceRecommendations(criteria: RawRelevanceCriteria) {
   const allServicesData = allServices.map(service => ({
     id: service.slug,
     title: service.title,
@@ -169,10 +161,13 @@ function getServiceRecommendations(criteria: {
     url: service.url,
   }))
 
+  // Convert raw criteria to typed criteria
+  const typedCriteria = convertToTypedCriteria(criteria)
+
   // Calculate relevance scores for each service
   const scoredServices = allServicesData.map(service => ({
     ...service,
-    relevanceScore: calculateServiceRelevance(service, criteria),
+    relevanceScore: calculateServiceRelevance(service, typedCriteria),
     reasons: getRecommendationReasons(service, criteria),
   }))
 
@@ -197,13 +192,51 @@ function getServiceRecommendations(criteria: {
   }
 }
 
+type ServiceCategory = 'ai-workforce' | 'automation' | 'consulting' | 'managed-ops'
+type CompanySize = '1-10' | '11-50' | '51-200' | '201-1000' | '1000+'
+
+interface ServiceForRelevance {
+  category: ServiceCategory
+}
+
+interface RelevanceCriteria {
+  companySize?: CompanySize
+  industry?: Industry
+  challenges: Challenge[]
+  goals: string[]
+  budget?: string
+  timeline?: string
+}
+
+interface RawRelevanceCriteria {
+  companySize?: string
+  industry?: string
+  challenges?: string[]
+  goals?: string[]
+  budget?: string
+  timeline?: string
+  currentTools?: string[]
+}
+
+// Convert raw criteria from request to typed criteria
+function convertToTypedCriteria(raw: RawRelevanceCriteria): RelevanceCriteria {
+  return {
+    companySize: raw.companySize as CompanySize,
+    industry: raw.industry as Industry,
+    challenges: (raw.challenges as Challenge[]) || [],
+    goals: raw.goals || [],
+    budget: raw.budget,
+    timeline: raw.timeline,
+  }
+}
+
 // Calculate relevance score for a service based on criteria
-function calculateServiceRelevance(service: any, criteria: any): number {
+function calculateServiceRelevance(service: ServiceForRelevance, criteria: RelevanceCriteria): number {
   let score = 50 // Base score
 
   // Company size relevance
   if (criteria.companySize) {
-    const sizeScores = {
+    const sizeScores: Record<ServiceCategory, Record<CompanySize, number>> = {
       'ai-workforce': { '1-10': 70, '11-50': 85, '51-200': 90, '201-1000': 95, '1000+': 90 },
       'automation': { '1-10': 60, '11-50': 80, '51-200': 95, '201-1000': 100, '1000+': 100 },
       'consulting': { '1-10': 90, '11-50': 85, '51-200': 80, '201-1000': 75, '1000+': 70 },
@@ -220,13 +253,13 @@ function calculateServiceRelevance(service: any, criteria: any): number {
   }
 
   // Challenge-based scoring
-  if (criteria.challenges?.length > 0) {
+  if (criteria.challenges.length > 0) {
     const challengeScore = calculateChallengeAlignment(service, criteria.challenges)
     score += challengeScore
   }
 
   // Goal-based scoring
-  if (criteria.goals?.length > 0) {
+  if (criteria.goals.length > 0) {
     const goalScore = calculateGoalAlignment(service, criteria.goals)
     score += goalScore
   }
@@ -246,9 +279,11 @@ function calculateServiceRelevance(service: any, criteria: any): number {
   return Math.min(Math.max(Math.round(score), 0), 100) // Clamp between 0-100
 }
 
+type Industry = 'professional-services' | 'healthcare' | 'ecommerce' | 'manufacturing' | 'finance'
+
 // Helper functions for recommendation scoring
-function getIndustryServiceBonus(category: string, industry: string): number {
-  const industryBonuses = {
+function getIndustryServiceBonus(category: ServiceCategory, industry: Industry): number {
+  const industryBonuses: Record<Industry, Record<ServiceCategory, number>> = {
     'professional-services': {
       'ai-workforce': 15,
       'automation': 10,
@@ -284,8 +319,10 @@ function getIndustryServiceBonus(category: string, industry: string): number {
   return industryBonuses[industry]?.[category] || 0
 }
 
-function calculateChallengeAlignment(service: any, challenges: string[]): number {
-  const challengeServiceMap = {
+type Challenge = 'manual-tasks' | 'data-entry' | 'customer-service' | 'scaling-issues' | 'quality-control' | 'reporting' | 'integration' | 'strategy'
+
+function calculateChallengeAlignment(service: ServiceForRelevance, challenges: Challenge[]): number {
+  const challengeServiceMap: Record<Challenge, ServiceCategory[]> = {
     'manual-tasks': ['ai-workforce', 'automation'],
     'data-entry': ['automation', 'ai-workforce'],
     'customer-service': ['ai-workforce'],

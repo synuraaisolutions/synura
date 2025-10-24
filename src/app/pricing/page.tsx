@@ -43,7 +43,7 @@ export default function PricingPage() {
         <div className="synura-container">
           <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none">
-              <MDXContent code={pricingData.body.code} />
+              <MDXContent code={pricingData.body.raw} />
             </div>
           </div>
         </div>

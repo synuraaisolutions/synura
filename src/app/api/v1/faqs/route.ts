@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: false,
       message: 'Failed to retrieve FAQs',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
   }
 }
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
     // Filter by multiple categories
     if (categories.length > 0) {
       filteredFAQs = filteredFAQs.filter(faq =>
-        categories.some(cat =>
+        categories.some((cat: string) =>
           faq.category.toLowerCase() === cat.toLowerCase()
         )
       )
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     if (searchTerms.length > 0) {
       filteredFAQs = filteredFAQs.filter(faq => {
         const searchContent = `${faq.title} ${faq.description} ${faq.body.raw}`.toLowerCase()
-        return searchTerms.some(term =>
+        return searchTerms.some((term: string) =>
           searchContent.includes(term.toLowerCase())
         )
       })
@@ -172,7 +172,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: false,
       message: 'Failed to search FAQs',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
   }
 }

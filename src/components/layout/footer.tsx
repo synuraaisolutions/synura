@@ -10,7 +10,7 @@ const footerNavigation = {
   ],
   resources: [
     { name: 'Case Studies', href: '/case-studies' },
-    { name: 'Blog', href: '/blog' },
+    { name: 'ROI Calculator', href: '/roi-calculator' },
     { name: 'FAQs', href: '/faqs' },
     { name: 'Pricing', href: '/pricing' },
   ],

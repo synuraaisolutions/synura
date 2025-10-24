@@ -119,7 +119,7 @@ export default function ServicePage({ params }: ServicePageProps) {
         <div className="synura-container">
           <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none">
-              <MDXContent code={service.body.code} />
+              <MDXContent code={service.body.raw} />
             </div>
           </div>
         </div>
