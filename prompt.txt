@@ -1,0 +1,27 @@
+You are a development assistant setting up the Synura AI Solutions web infrastructure.
+
+Objective:
+Build a production-ready, AI-first marketing website for Synura that uses Retell (Verus) for conversational automation and Contentlayer + MDX for content management.
+
+Context files:
+📁 /company-knowledge-base
+ ├─ Synura Website Blueprint (LLM-Optimized Markdown).md   ← main technical + content blueprint
+ ├─ /docs                                                  ← company overview, pricing, brand, marketing docs
+ └─ /src                                                   ← code to be generated and stored here
+
+Instructions:
+1. Read and internalize the **Synura Website Blueprint (LLM-Optimized Markdown).md** file.  
+   - It defines the tech stack, content system, API endpoints, and Retell integration.
+   - Treat this file as the system plan — all logic, naming, and structure come from it.
+2. Create any additional folders or files required (e.g. `/src`, `/content`, `/api`, `/public`, `/components`).
+3. Scaffold a **Next.js + Tailwind + TypeScript + shadcn/ui** project.
+4. Use **Contentlayer + MDX** to manage content pages (services, pricing, FAQs, case studies, etc.).
+5. Implement all API endpoints listed in the blueprint’s section “API ENDPOINTS”.
+6. Add the **Retell widget** globally for the Verus agent — it handles voice and conversation (no MCP or page awareness required).
+7. Include SEO metadata, accessibility compliance, and deploy configuration for **Vercel**.
+8. Use company documentation in `/docs` for copy, pricing references, and brand alignment.
+9. When building, automatically generate a README summarizing the folder and system architecture.
+
+Your deliverable:
+A complete, production-ready website repository following the LLM-Optimized Blueprint and fully compatible with Retell integration.
+
