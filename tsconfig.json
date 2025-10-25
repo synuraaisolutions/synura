@@ -25,7 +25,8 @@
       "@/components/*": ["./src/components/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/content/*": ["./content/*"]
+      "@/content/*": ["./content/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
   "include": [
