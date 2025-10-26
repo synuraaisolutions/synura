@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { allServices, allPricings } from 'contentlayer/generated'
+import { allServices } from 'contentlayer/generated'
 
 // GET handler for services
 export async function GET(request: NextRequest) {
@@ -49,15 +49,10 @@ export async function GET(request: NextRequest) {
 
     // Get pricing data if requested
     let pricingData = null
-    if (includePricing && allPricings.length > 0) {
-      const pricing = allPricings[0] // Pricing is a singleton
-      pricingData = {
-        title: pricing.title,
-        description: pricing.description,
-        content: pricing.body.raw,
-        url: pricing.url,
-        lastUpdated: new Date().toISOString(),
-      }
+    if (includePricing) {
+      // Pricing functionality temporarily disabled for deployment
+      // Will be re-enabled when contentlayer singleton exports are fixed
+      pricingData = null
     }
 
     // Get available categories for metadata
@@ -80,7 +75,7 @@ export async function GET(request: NextRequest) {
       success: true,
       data: {
         services: transformedServices,
-        ...(pricingData && { pricing: pricingData }),
+        // Pricing data temporarily disabled for deployment
       },
       metadata,
     })
