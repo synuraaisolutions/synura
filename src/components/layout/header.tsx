@@ -7,6 +7,7 @@ import { Button } from '@/components/common/button'
 import { cn } from '@/lib/utils'
 
 const navigation = [
+  { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Case Studies', href: '/case-studies' },
