@@ -31,8 +31,7 @@ export default function PrivacyPolicyPage() {
             {/* Information Collection */}
             <Card className="border-primary-200">
               <CardHeader>
-                <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">📋</span>
+                <CardTitle className="text-2xl text-secondary-900">
                   1. Information We Collect
                 </CardTitle>
               </CardHeader>
@@ -43,19 +42,19 @@ export default function PrivacyPolicyPage() {
                     We collect information that you voluntarily provide to us when you:
                   </p>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-secondary-600">
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">✓</span>Fill out contact forms or request consultations</li>
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">✓</span>Subscribe to our newsletter or communications</li>
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">✓</span>Participate in surveys or provide feedback</li>
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">✓</span>Communicate with us via email, phone, or chat</li>
+                    <li className="flex items-center">Fill out contact forms or request consultations</li>
+                    <li className="flex items-center">Subscribe to our newsletter or communications</li>
+                    <li className="flex items-center">Participate in surveys or provide feedback</li>
+                    <li className="flex items-center">Communicate with us via email, phone, or chat</li>
                   </ul>
 
                   <div className="mt-6 pt-4 border-t border-primary-200">
                     <h4 className="font-semibold text-secondary-900 mb-3">This may include:</h4>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-secondary-600">
-                      <li className="flex items-center"><span className="text-primary-500 mr-2">→</span>Name and contact information (email, phone, company)</li>
-                      <li className="flex items-center"><span className="text-primary-500 mr-2">→</span>Business information (company size, industry, role)</li>
-                      <li className="flex items-center"><span className="text-primary-500 mr-2">→</span>Communication preferences</li>
-                      <li className="flex items-center"><span className="text-primary-500 mr-2">→</span>Any other information you choose to share</li>
+                      <li className="flex items-center">Name and contact information (email, phone, company)</li>
+                      <li className="flex items-center">Business information (company size, industry, role)</li>
+                      <li className="flex items-center">Communication preferences</li>
+                      <li className="flex items-center">Any other information you choose to share</li>
                     </ul>
                   </div>
                 </div>
@@ -66,10 +65,10 @@ export default function PrivacyPolicyPage() {
                     When you visit our website, we may automatically collect certain information about your device and usage patterns:
                   </p>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-secondary-600">
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">⚙️</span>IP address and browser type</li>
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">⚙️</span>Pages visited and time spent on site</li>
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">⚙️</span>Referral sources and search terms used</li>
-                    <li className="flex items-center"><span className="text-accent-500 mr-2">⚙️</span>Device and screen information</li>
+                    <li className="flex items-center">IP address and browser type</li>
+                    <li className="flex items-center">Pages visited and time spent on site</li>
+                    <li className="flex items-center">Referral sources and search terms used</li>
+                    <li className="flex items-center">Device and screen information</li>
                   </ul>
                 </div>
               </CardContent>
@@ -78,8 +77,7 @@ export default function PrivacyPolicyPage() {
             {/* How We Use Information */}
             <Card className="border-accent-200">
               <CardHeader>
-                <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">🎯</span>
+                <CardTitle className="text-2xl text-secondary-900">
                   2. How We Use Your Information
                 </CardTitle>
               </CardHeader>
@@ -87,19 +85,19 @@ export default function PrivacyPolicyPage() {
                 <p className="text-secondary-700 mb-6">We use the information we collect to:</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-accent-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-accent-800 mb-2">🛠️ Provide Services</h4>
+                    <h4 className="font-semibold text-accent-800 mb-2">Provide Services</h4>
                     <p className="text-sm text-accent-700">Respond to inquiries, schedule consultations, and deliver our AI automation services</p>
                   </div>
                   <div className="bg-primary-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-primary-800 mb-2">📢 Communication</h4>
+                    <h4 className="font-semibold text-primary-800 mb-2">Communication</h4>
                     <p className="text-sm text-primary-700">Send you updates, newsletters, and relevant business information (with your consent)</p>
                   </div>
                   <div className="bg-secondary-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-secondary-800 mb-2">📈 Improve Our Services</h4>
+                    <h4 className="font-semibold text-secondary-800 mb-2">Improve Our Services</h4>
                     <p className="text-sm text-secondary-700">Analyze website usage and user feedback to enhance our offerings</p>
                   </div>
                   <div className="bg-orange-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-orange-800 mb-2">⚖️ Legal Compliance</h4>
+                    <h4 className="font-semibold text-orange-800 mb-2">Legal Compliance</h4>
                     <p className="text-sm text-orange-700">Meet legal obligations and protect our rights and interests</p>
                   </div>
                 </div>
@@ -109,8 +107,7 @@ export default function PrivacyPolicyPage() {
             {/* Information Sharing */}
             <Card className="border-orange-200">
               <CardHeader>
-                <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">🔒</span>
+                <CardTitle className="text-2xl text-secondary-900">
                   3. Information Sharing
                 </CardTitle>
               </CardHeader>
@@ -124,16 +121,16 @@ export default function PrivacyPolicyPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-secondary-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-secondary-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🤝</span>Service Providers
+                      <span className="text-xl mr-2"></span>Service Providers
                     </h3>
                     <p className="text-secondary-700 mb-4">
                       We may share information with trusted third-party service providers who assist us in:
                     </p>
                     <ul className="space-y-2 text-secondary-600">
-                      <li className="flex items-center"><span className="text-accent-500 mr-2">•</span>Website hosting and maintenance</li>
-                      <li className="flex items-center"><span className="text-accent-500 mr-2">•</span>Email communication and marketing automation</li>
-                      <li className="flex items-center"><span className="text-accent-500 mr-2">•</span>Analytics and performance monitoring</li>
-                      <li className="flex items-center"><span className="text-accent-500 mr-2">•</span>Customer relationship management (CRM)</li>
+                      <li className="flex items-center">Website hosting and maintenance</li>
+                      <li className="flex items-center">Email communication and marketing automation</li>
+                      <li className="flex items-center">Analytics and performance monitoring</li>
+                      <li className="flex items-center">Customer relationship management (CRM)</li>
                     </ul>
                     <p className="text-sm text-secondary-600 mt-4 italic">
                       These providers are contractually obligated to keep your information confidential and secure.
@@ -148,9 +145,9 @@ export default function PrivacyPolicyPage() {
                       We may disclose your information when required by law or to:
                     </p>
                     <ul className="space-y-2 text-secondary-600">
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Comply with legal processes or government requests</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Protect our rights and property</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Ensure the safety and security of our users</li>
+                      <li className="flex items-center">Comply with legal processes or government requests</li>
+                      <li className="flex items-center">Protect our rights and property</li>
+                      <li className="flex items-center">Ensure the safety and security of our users</li>
                     </ul>
                   </div>
                 </div>
@@ -160,8 +157,7 @@ export default function PrivacyPolicyPage() {
             {/* Data Security */}
             <Card className="border-green-200">
               <CardHeader>
-                <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">🛡️</span>
+                <CardTitle className="text-2xl text-secondary-900">
                   4. Data Security
                 </CardTitle>
               </CardHeader>
@@ -172,19 +168,19 @@ export default function PrivacyPolicyPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-green-50 p-4 rounded-lg flex items-center">
-                    <span className="text-2xl mr-3">🔐</span>
+                    <span className="text-2xl mr-3"></span>
                     <span className="text-green-800">SSL encryption for data transmission</span>
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg flex items-center">
-                    <span className="text-2xl mr-3">🏢</span>
+                    <span className="text-2xl mr-3"></span>
                     <span className="text-green-800">Secure hosting with reputable providers</span>
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg flex items-center">
-                    <span className="text-2xl mr-3">🔄</span>
+                    <span className="text-2xl mr-3"></span>
                     <span className="text-green-800">Regular security updates and monitoring</span>
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg flex items-center">
-                    <span className="text-2xl mr-3">👥</span>
+                    <span className="text-2xl mr-3"></span>
                     <span className="text-green-800">Limited access on a need-to-know basis</span>
                   </div>
                 </div>
@@ -200,8 +196,7 @@ export default function PrivacyPolicyPage() {
             {/* Your Rights and Choices */}
             <Card className="border-blue-200">
               <CardHeader>
-                <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">⚡</span>
+                <CardTitle className="text-2xl text-secondary-900">
                   5. Your Rights and Choices
                 </CardTitle>
               </CardHeader>
@@ -214,9 +209,9 @@ export default function PrivacyPolicyPage() {
                       <span className="text-xl mr-2">🔍</span>Access & Updates
                     </h3>
                     <ul className="space-y-2 text-blue-800 text-sm">
-                      <li className="flex items-start"><span className="text-blue-500 mr-2 mt-1">•</span>Request access to your personal information</li>
-                      <li className="flex items-start"><span className="text-blue-500 mr-2 mt-1">•</span>Update or correct inaccurate information</li>
-                      <li className="flex items-start"><span className="text-blue-500 mr-2 mt-1">•</span>Request deletion (subject to legal obligations)</li>
+                      <li className="flex items-start">Request access to your personal information</li>
+                      <li className="flex items-start">Update or correct inaccurate information</li>
+                      <li className="flex items-start">Request deletion (subject to legal obligations)</li>
                     </ul>
                   </div>
 
@@ -225,15 +220,15 @@ export default function PrivacyPolicyPage() {
                       <span className="text-xl mr-2">📧</span>Communication
                     </h3>
                     <ul className="space-y-2 text-purple-800 text-sm">
-                      <li className="flex items-start"><span className="text-purple-500 mr-2 mt-1">•</span>Opt-out of marketing communications</li>
-                      <li className="flex items-start"><span className="text-purple-500 mr-2 mt-1">•</span>Update your preferences</li>
-                      <li className="flex items-start"><span className="text-purple-500 mr-2 mt-1">•</span>Unsubscribe from newsletters</li>
+                      <li className="flex items-start">Opt-out of marketing communications</li>
+                      <li className="flex items-start">Update your preferences</li>
+                      <li className="flex items-start">Unsubscribe from newsletters</li>
                     </ul>
                   </div>
 
                   <div className="bg-indigo-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-indigo-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🍪</span>Cookies & Tracking
+                      <span className="text-xl mr-2"></span>Cookies & Tracking
                     </h3>
                     <p className="text-indigo-800 text-sm">
                       You can control cookies through your browser settings. Note that disabling cookies may affect website functionality.
@@ -250,17 +245,17 @@ export default function PrivacyPolicyPage() {
               <Card className="border-purple-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">🍪</span>
+                    <span className="text-2xl mr-2"></span>
                     6. Cookies & Tracking
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-secondary-700 text-sm">Our website uses cookies and similar tracking technologies to:</p>
                   <ul className="space-y-1 text-secondary-600 text-sm">
-                    <li className="flex items-center"><span className="text-purple-500 mr-2">•</span>Remember your preferences and settings</li>
-                    <li className="flex items-center"><span className="text-purple-500 mr-2">•</span>Analyze website traffic and user behavior</li>
-                    <li className="flex items-center"><span className="text-purple-500 mr-2">•</span>Improve website performance</li>
-                    <li className="flex items-center"><span className="text-purple-500 mr-2">•</span>Provide relevant content</li>
+                    <li className="flex items-center">Remember your preferences and settings</li>
+                    <li className="flex items-center">Analyze website traffic and user behavior</li>
+                    <li className="flex items-center">Improve website performance</li>
+                    <li className="flex items-center">Provide relevant content</li>
                   </ul>
 
                   <div className="bg-purple-50 p-3 rounded">
@@ -278,7 +273,7 @@ export default function PrivacyPolicyPage() {
               <Card className="border-cyan-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">🔗</span>
+                    <span className="text-2xl mr-2"></span>
                     7. Third-Party Services
                   </CardTitle>
                 </CardHeader>
@@ -287,21 +282,21 @@ export default function PrivacyPolicyPage() {
                   <div className="grid grid-cols-1 gap-3">
                     <div className="bg-cyan-50 p-3 rounded">
                       <div className="flex items-center mb-1">
-                        <span className="text-sm mr-2">📊</span>
+                        <span className="text-sm mr-2"></span>
                         <strong className="text-cyan-900 text-sm">Analytics:</strong>
                       </div>
                       <p className="text-cyan-800 text-xs">Google Analytics, Plausible Analytics</p>
                     </div>
                     <div className="bg-cyan-50 p-3 rounded">
                       <div className="flex items-center mb-1">
-                        <span className="text-sm mr-2">📱</span>
+                        <span className="text-sm mr-2"></span>
                         <strong className="text-cyan-900 text-sm">Communication:</strong>
                       </div>
                       <p className="text-cyan-800 text-xs">Email service providers, chat widgets</p>
                     </div>
                     <div className="bg-cyan-50 p-3 rounded">
                       <div className="flex items-center mb-1">
-                        <span className="text-sm mr-2">🎤</span>
+                        <span className="text-sm mr-2"></span>
                         <strong className="text-cyan-900 text-sm">Voice Services:</strong>
                       </div>
                       <p className="text-cyan-800 text-xs">Retell.ai for AI voice interactions</p>
@@ -314,17 +309,17 @@ export default function PrivacyPolicyPage() {
               <Card className="border-teal-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">⏰</span>
+                    <span className="text-2xl mr-2"></span>
                     9. Data Retention
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-secondary-700 text-sm mb-3">We retain your personal information only as long as necessary to:</p>
                   <ul className="space-y-1 text-secondary-600 text-sm">
-                    <li className="flex items-center"><span className="text-teal-500 mr-2">•</span>Provide the services you requested</li>
-                    <li className="flex items-center"><span className="text-teal-500 mr-2">•</span>Comply with legal obligations</li>
-                    <li className="flex items-center"><span className="text-teal-500 mr-2">•</span>Resolve disputes and enforce agreements</li>
-                    <li className="flex items-center"><span className="text-teal-500 mr-2">•</span>Improve our services</li>
+                    <li className="flex items-center">Provide the services you requested</li>
+                    <li className="flex items-center">Comply with legal obligations</li>
+                    <li className="flex items-center">Resolve disputes and enforce agreements</li>
+                    <li className="flex items-center">Improve our services</li>
                   </ul>
                   <div className="bg-teal-50 p-3 rounded mt-3">
                     <p className="text-teal-800 text-xs">
@@ -338,7 +333,7 @@ export default function PrivacyPolicyPage() {
               <Card className="border-indigo-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">🌍</span>
+                    <span className="text-2xl mr-2"></span>
                     8. International Transfers
                   </CardTitle>
                 </CardHeader>
@@ -360,7 +355,7 @@ export default function PrivacyPolicyPage() {
               <Card className="border-pink-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">👶</span>
+                    <span className="text-2xl mr-2"></span>
                     10. Children's Privacy
                   </CardTitle>
                 </CardHeader>
@@ -377,7 +372,7 @@ export default function PrivacyPolicyPage() {
               <Card className="border-yellow-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">🔄</span>
+                    <span className="text-2xl mr-2"></span>
                     11. Changes to This Privacy Policy
                   </CardTitle>
                 </CardHeader>
@@ -386,9 +381,9 @@ export default function PrivacyPolicyPage() {
                     We may update this Privacy Policy from time to time to reflect changes in our practices or applicable laws. When we make changes, we will:
                   </p>
                   <ul className="space-y-2 text-secondary-600 text-sm">
-                    <li className="flex items-center"><span className="text-yellow-500 mr-2">•</span>Update the "Last updated" date at the top of this policy</li>
-                    <li className="flex items-center"><span className="text-yellow-500 mr-2">•</span>Notify you of significant changes via email or website notice</li>
-                    <li className="flex items-center"><span className="text-yellow-500 mr-2">•</span>Post the updated policy on our website</li>
+                    <li className="flex items-center">Update the "Last updated" date at the top of this policy</li>
+                    <li className="flex items-center">Notify you of significant changes via email or website notice</li>
+                    <li className="flex items-center">Post the updated policy on our website</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -398,8 +393,7 @@ export default function PrivacyPolicyPage() {
             {/* Contact Section */}
             <Card className="border-primary-300 bg-gradient-to-br from-primary-50 to-primary-100">
               <CardHeader>
-                <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">📞</span>
+                <CardTitle className="text-2xl text-secondary-900">
                   12. Contact Us
                 </CardTitle>
               </CardHeader>

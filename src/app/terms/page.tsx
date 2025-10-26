@@ -32,7 +32,7 @@ export default function TermsOfServicePage() {
             <Card className="border-blue-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">📋</span>
+                  
                   1. Acceptance of Terms
                 </CardTitle>
               </CardHeader>
@@ -52,7 +52,7 @@ export default function TermsOfServicePage() {
             <Card className="border-green-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">🚀</span>
+                  
                   2. Description of Services
                 </CardTitle>
               </CardHeader>
@@ -68,19 +68,19 @@ export default function TermsOfServicePage() {
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-green-900 mb-2 flex items-center">
-                      <span className="text-xl mr-2">🔄</span>Automation & Integration
+                      <span className="text-xl mr-2"></span>Automation & Integration
                     </h4>
                     <p className="text-sm text-green-800">Business process automation and system integration services</p>
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-green-900 mb-2 flex items-center">
-                      <span className="text-xl mr-2">🎯</span>AI Consulting & Strategy
+                      <span className="text-xl mr-2"></span>AI Consulting & Strategy
                     </h4>
                     <p className="text-sm text-green-800">Strategic consulting for AI implementation and digital transformation</p>
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-green-900 mb-2 flex items-center">
-                      <span className="text-xl mr-2">⚙️</span>Managed AI Operations
+                      <span className="text-xl mr-2"></span>Managed AI Operations
                     </h4>
                     <p className="text-sm text-green-800">Ongoing management and optimization of AI systems</p>
                   </div>
@@ -98,7 +98,7 @@ export default function TermsOfServicePage() {
             <Card className="border-purple-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">🤝</span>
+                  
                   3. Service Agreement and Engagement
                 </CardTitle>
               </CardHeader>
@@ -109,20 +109,20 @@ export default function TermsOfServicePage() {
                       <span className="text-xl mr-2">💬</span>Consultation Process
                     </h3>
                     <ul className="space-y-2 text-purple-800 text-sm">
-                      <li className="flex items-center"><span className="text-purple-500 mr-2">✓</span>Initial consultations are provided free of charge</li>
-                      <li className="flex items-center"><span className="text-purple-500 mr-2">✓</span>Detailed proposals and project scopes will be provided in writing</li>
-                      <li className="flex items-center"><span className="text-purple-500 mr-2">✓</span>Services begin only after written agreement and payment terms are established</li>
+                      <li className="flex items-center">Initial consultations are provided free of charge</li>
+                      <li className="flex items-center">Detailed proposals and project scopes will be provided in writing</li>
+                      <li className="flex items-center">Services begin only after written agreement and payment terms are established</li>
                     </ul>
                   </div>
 
                   <div className="bg-indigo-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-indigo-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">📝</span>Project Scope
+                      <span className="text-xl mr-2"></span>Project Scope
                     </h3>
                     <ul className="space-y-2 text-indigo-800 text-sm">
-                      <li className="flex items-center"><span className="text-indigo-500 mr-2">•</span>All services are subject to a detailed Statement of Work (SOW)</li>
-                      <li className="flex items-center"><span className="text-indigo-500 mr-2">•</span>Changes to project scope must be agreed upon in writing</li>
-                      <li className="flex items-center"><span className="text-indigo-500 mr-2">•</span>Additional work outside the original scope may incur additional charges</li>
+                      <li className="flex items-center">All services are subject to a detailed Statement of Work (SOW)</li>
+                      <li className="flex items-center">Changes to project scope must be agreed upon in writing</li>
+                      <li className="flex items-center">Additional work outside the original scope may incur additional charges</li>
                     </ul>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function TermsOfServicePage() {
             <Card className="border-orange-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">👥</span>
+                  
                   4. Client Responsibilities
                 </CardTitle>
               </CardHeader>
@@ -143,25 +143,25 @@ export default function TermsOfServicePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-orange-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-orange-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">📊</span>Information Provision
+                      <span className="text-xl mr-2"></span>Information Provision
                     </h3>
                     <ul className="space-y-2 text-orange-800 text-sm">
-                      <li className="flex items-center"><span className="text-orange-500 mr-2">•</span>Provide accurate and complete information about business processes</li>
-                      <li className="flex items-center"><span className="text-orange-500 mr-2">•</span>Grant necessary access to systems and data required for implementation</li>
-                      <li className="flex items-center"><span className="text-orange-500 mr-2">•</span>Designate key personnel for project collaboration</li>
-                      <li className="flex items-center"><span className="text-orange-500 mr-2">•</span>Respond to requests for information in a timely manner</li>
+                      <li className="flex items-center">Provide accurate and complete information about business processes</li>
+                      <li className="flex items-center">Grant necessary access to systems and data required for implementation</li>
+                      <li className="flex items-center">Designate key personnel for project collaboration</li>
+                      <li className="flex items-center">Respond to requests for information in a timely manner</li>
                     </ul>
                   </div>
 
                   <div className="bg-red-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-red-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🔐</span>System Access & Security
+                      <span className="text-xl mr-2"></span>System Access & Security
                     </h3>
                     <ul className="space-y-2 text-red-800 text-sm">
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Maintain appropriate security measures for systems and data</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Ensure authorized personnel have necessary permissions</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Comply with all applicable laws and regulations</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Backup critical data before any system modifications</li>
+                      <li className="flex items-center">Maintain appropriate security measures for systems and data</li>
+                      <li className="flex items-center">Ensure authorized personnel have necessary permissions</li>
+                      <li className="flex items-center">Comply with all applicable laws and regulations</li>
+                      <li className="flex items-center">Backup critical data before any system modifications</li>
                     </ul>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export default function TermsOfServicePage() {
             <Card className="border-emerald-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">💰</span>
+                  
                   5. Payment Terms
                 </CardTitle>
               </CardHeader>
@@ -180,25 +180,25 @@ export default function TermsOfServicePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-emerald-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-emerald-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">💵</span>Pricing and Fees
+                      <span className="text-xl mr-2"></span>Pricing and Fees
                     </h3>
                     <ul className="space-y-2 text-emerald-800 text-sm">
-                      <li className="flex items-center"><span className="text-emerald-500 mr-2">•</span>All fees are as specified in the relevant SOW or service agreement</li>
-                      <li className="flex items-center"><span className="text-emerald-500 mr-2">•</span>Prices are subject to change with 30 days written notice</li>
-                      <li className="flex items-center"><span className="text-emerald-500 mr-2">•</span>Payment terms are typically net 30 days unless otherwise specified</li>
-                      <li className="flex items-center"><span className="text-emerald-500 mr-2">•</span>Late payments may incur interest charges of 1.5% per month</li>
+                      <li className="flex items-center">All fees are as specified in the relevant SOW or service agreement</li>
+                      <li className="flex items-center">Prices are subject to change with 30 days written notice</li>
+                      <li className="flex items-center">Payment terms are typically net 30 days unless otherwise specified</li>
+                      <li className="flex items-center">Late payments may incur interest charges of 1.5% per month</li>
                     </ul>
                   </div>
 
                   <div className="bg-cyan-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-cyan-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🔄</span>Refunds & Cancellations
+                      <span className="text-xl mr-2"></span>Refunds & Cancellations
                     </h3>
                     <ul className="space-y-2 text-cyan-800 text-sm">
-                      <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>Refund policies are specific to each service type and outlined in the SOW</li>
-                      <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>Cancellations must be provided in writing with appropriate notice period</li>
-                      <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>Work completed prior to cancellation is non-refundable</li>
-                      <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>Recurring services can be cancelled with 30 days written notice</li>
+                      <li className="flex items-center">Refund policies are specific to each service type and outlined in the SOW</li>
+                      <li className="flex items-center">Cancellations must be provided in writing with appropriate notice period</li>
+                      <li className="flex items-center">Work completed prior to cancellation is non-refundable</li>
+                      <li className="flex items-center">Recurring services can be cancelled with 30 days written notice</li>
                     </ul>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export default function TermsOfServicePage() {
             <Card className="border-violet-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">💡</span>
+                  
                   6. Intellectual Property
                 </CardTitle>
               </CardHeader>
@@ -217,34 +217,34 @@ export default function TermsOfServicePage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-violet-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold text-violet-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🏢</span>Our IP
+                      <span className="text-xl mr-2"></span>Our IP
                     </h3>
                     <ul className="space-y-2 text-violet-800 text-xs">
-                      <li className="flex items-start"><span className="text-violet-500 mr-2 mt-1">•</span>All methodologies, frameworks, and proprietary tools remain our property</li>
-                      <li className="flex items-start"><span className="text-violet-500 mr-2 mt-1">•</span>Generic AI solutions and templates remain our intellectual property</li>
-                      <li className="flex items-start"><span className="text-violet-500 mr-2 mt-1">•</span>Our brand, trademarks, and copyrighted materials are protected</li>
+                      <li className="flex items-start">All methodologies, frameworks, and proprietary tools remain our property</li>
+                      <li className="flex items-start">Generic AI solutions and templates remain our intellectual property</li>
+                      <li className="flex items-start">Our brand, trademarks, and copyrighted materials are protected</li>
                     </ul>
                   </div>
 
                   <div className="bg-blue-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold text-blue-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">👤</span>Client IP
+                      <span className="text-xl mr-2"></span>Client IP
                     </h3>
                     <ul className="space-y-2 text-blue-800 text-xs">
-                      <li className="flex items-start"><span className="text-blue-500 mr-2 mt-1">•</span>Clients retain ownership of their business data and proprietary information</li>
-                      <li className="flex items-start"><span className="text-blue-500 mr-2 mt-1">•</span>Custom solutions developed specifically for clients become client property</li>
-                      <li className="flex items-start"><span className="text-blue-500 mr-2 mt-1">•</span>We may retain rights to use general methodologies learned during projects</li>
+                      <li className="flex items-start">Clients retain ownership of their business data and proprietary information</li>
+                      <li className="flex items-start">Custom solutions developed specifically for clients become client property</li>
+                      <li className="flex items-start">We may retain rights to use general methodologies learned during projects</li>
                     </ul>
                   </div>
 
                   <div className="bg-teal-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold text-teal-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">📦</span>Work Product
+                      <span className="text-xl mr-2"></span>Work Product
                     </h3>
                     <ul className="space-y-2 text-teal-800 text-xs">
-                      <li className="flex items-start"><span className="text-teal-500 mr-2 mt-1">•</span>Deliverables are provided "as-is" upon completion and payment</li>
-                      <li className="flex items-start"><span className="text-teal-500 mr-2 mt-1">•</span>Source code and documentation become client property as specified in the SOW</li>
-                      <li className="flex items-start"><span className="text-teal-500 mr-2 mt-1">•</span>We retain the right to use anonymized case studies and general learnings</li>
+                      <li className="flex items-start">Deliverables are provided "as-is" upon completion and payment</li>
+                      <li className="flex items-start">Source code and documentation become client property as specified in the SOW</li>
+                      <li className="flex items-start">We retain the right to use anonymized case studies and general learnings</li>
                     </ul>
                   </div>
                 </div>
@@ -255,7 +255,7 @@ export default function TermsOfServicePage() {
             <Card className="border-red-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">🔒</span>
+                  
                   7. Confidentiality and Data Protection
                 </CardTitle>
               </CardHeader>
@@ -263,28 +263,28 @@ export default function TermsOfServicePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-red-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-red-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🤐</span>Confidential Information
+                      <span className="text-xl mr-2"></span>Confidential Information
                     </h3>
                     <p className="text-red-800 text-sm mb-4">
                       We understand that clients may share sensitive business information. We commit to:
                     </p>
                     <ul className="space-y-2 text-red-800 text-sm">
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Maintain strict confidentiality of all client information</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Use client data only for the purposes of providing agreed services</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Implement appropriate security measures to protect client data</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Not disclose client information to third parties without consent</li>
+                      <li className="flex items-center">Maintain strict confidentiality of all client information</li>
+                      <li className="flex items-center">Use client data only for the purposes of providing agreed services</li>
+                      <li className="flex items-center">Implement appropriate security measures to protect client data</li>
+                      <li className="flex items-center">Not disclose client information to third parties without consent</li>
                     </ul>
                   </div>
 
                   <div className="bg-pink-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold text-pink-900 mb-3 flex items-center">
-                      <span className="text-xl mr-2">🗂️</span>Data Handling
+                      <span className="text-xl mr-2"></span>Data Handling
                     </h3>
                     <ul className="space-y-2 text-pink-800 text-sm">
-                      <li className="flex items-center"><span className="text-pink-500 mr-2">•</span>Data processing complies with applicable privacy laws and regulations</li>
-                      <li className="flex items-center"><span className="text-pink-500 mr-2">•</span>Client data is processed according to our Privacy Policy</li>
-                      <li className="flex items-center"><span className="text-pink-500 mr-2">•</span>Data retention periods are specified in service agreements</li>
-                      <li className="flex items-center"><span className="text-pink-500 mr-2">•</span>Secure data deletion procedures are followed upon project completion</li>
+                      <li className="flex items-center">Data processing complies with applicable privacy laws and regulations</li>
+                      <li className="flex items-center">Client data is processed according to our Privacy Policy</li>
+                      <li className="flex items-center">Data retention periods are specified in service agreements</li>
+                      <li className="flex items-center">Secure data deletion procedures are followed upon project completion</li>
                     </ul>
                   </div>
                 </div>
@@ -298,7 +298,7 @@ export default function TermsOfServicePage() {
               <Card className="border-yellow-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">⭐</span>
+                    <span className="text-2xl mr-2"></span>
                     8. Service Level & Warranties
                   </CardTitle>
                 </CardHeader>
@@ -306,17 +306,17 @@ export default function TermsOfServicePage() {
                   <div className="bg-yellow-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-yellow-900 mb-2 text-sm">Performance Standards</h4>
                     <ul className="space-y-1 text-yellow-800 text-xs">
-                      <li className="flex items-center"><span className="text-yellow-500 mr-2">•</span>We strive to deliver services meeting or exceeding agreed specifications</li>
-                      <li className="flex items-center"><span className="text-yellow-500 mr-2">•</span>Response times and performance metrics are specified in individual SOWs</li>
-                      <li className="flex items-center"><span className="text-yellow-500 mr-2">•</span>Regular progress updates and milestone reviews are provided</li>
+                      <li className="flex items-center">We strive to deliver services meeting or exceeding agreed specifications</li>
+                      <li className="flex items-center">Response times and performance metrics are specified in individual SOWs</li>
+                      <li className="flex items-center">Regular progress updates and milestone reviews are provided</li>
                     </ul>
                   </div>
                   <div className="bg-amber-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-amber-900 mb-2 text-sm">Warranties & Disclaimers</h4>
                     <ul className="space-y-1 text-amber-800 text-xs">
-                      <li className="flex items-center"><span className="text-amber-500 mr-2">•</span>Services are provided using industry-standard practices</li>
-                      <li className="flex items-center"><span className="text-amber-500 mr-2">•</span>No guarantee is made regarding specific business outcomes or ROI</li>
-                      <li className="flex items-center"><span className="text-amber-500 mr-2">•</span>AI systems may have limitations and are subject to ongoing improvement</li>
+                      <li className="flex items-center">Services are provided using industry-standard practices</li>
+                      <li className="flex items-center">No guarantee is made regarding specific business outcomes or ROI</li>
+                      <li className="flex items-center">AI systems may have limitations and are subject to ongoing improvement</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -326,7 +326,7 @@ export default function TermsOfServicePage() {
               <Card className="border-slate-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">⚖️</span>
+                    <span className="text-2xl mr-2"></span>
                     9. Limitation of Liability
                   </CardTitle>
                 </CardHeader>
@@ -335,9 +335,9 @@ export default function TermsOfServicePage() {
                   <div className="bg-slate-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-slate-900 mb-2 text-sm">Damages Limitation</h4>
                     <ul className="space-y-1 text-slate-800 text-xs">
-                      <li className="flex items-center"><span className="text-slate-500 mr-2">•</span>Our liability is limited to the total amount paid for the specific service</li>
-                      <li className="flex items-center"><span className="text-slate-500 mr-2">•</span>We are not liable for indirect, consequential, or punitive damages</li>
-                      <li className="flex items-center"><span className="text-slate-500 mr-2">•</span>Lost profits, revenue, or business opportunities are excluded from liability</li>
+                      <li className="flex items-center">Our liability is limited to the total amount paid for the specific service</li>
+                      <li className="flex items-center">We are not liable for indirect, consequential, or punitive damages</li>
+                      <li className="flex items-center">Lost profits, revenue, or business opportunities are excluded from liability</li>
                     </ul>
                   </div>
                   <div className="bg-gray-50 p-3 rounded">
@@ -353,7 +353,7 @@ export default function TermsOfServicePage() {
               <Card className="border-rose-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">🚪</span>
+                    <span className="text-2xl mr-2"></span>
                     10. Termination
                   </CardTitle>
                 </CardHeader>
@@ -361,17 +361,17 @@ export default function TermsOfServicePage() {
                   <div className="bg-rose-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-rose-900 mb-2 text-sm">Termination Rights</h4>
                     <ul className="space-y-1 text-rose-800 text-xs">
-                      <li className="flex items-center"><span className="text-rose-500 mr-2">•</span>Either party may terminate services with appropriate notice as specified in the SOW</li>
-                      <li className="flex items-center"><span className="text-rose-500 mr-2">•</span>Immediate termination is permitted for material breach or non-payment</li>
-                      <li className="flex items-center"><span className="text-rose-500 mr-2">•</span>Termination does not affect obligations incurred prior to termination</li>
+                      <li className="flex items-center">Either party may terminate services with appropriate notice as specified in the SOW</li>
+                      <li className="flex items-center">Immediate termination is permitted for material breach or non-payment</li>
+                      <li className="flex items-center">Termination does not affect obligations incurred prior to termination</li>
                     </ul>
                   </div>
                   <div className="bg-red-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-red-900 mb-2 text-sm">Effect of Termination</h4>
                     <ul className="space-y-1 text-red-800 text-xs">
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>All unpaid fees become immediately due and payable</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Confidentiality obligations survive termination</li>
-                      <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Client data will be returned or deleted as specified in the agreement</li>
+                      <li className="flex items-center">All unpaid fees become immediately due and payable</li>
+                      <li className="flex items-center">Confidentiality obligations survive termination</li>
+                      <li className="flex items-center">Client data will be returned or deleted as specified in the agreement</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -381,7 +381,7 @@ export default function TermsOfServicePage() {
               <Card className="border-sky-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl text-secondary-900 flex items-center">
-                    <span className="text-2xl mr-2">🤝</span>
+                    <span className="text-2xl mr-2"></span>
                     11. Dispute Resolution
                   </CardTitle>
                 </CardHeader>
@@ -395,9 +395,9 @@ export default function TermsOfServicePage() {
                   <div className="bg-blue-50 p-4 rounded-lg">
                     <h4 className="font-semibold text-blue-900 mb-2 text-sm">Formal Dispute Resolution</h4>
                     <ul className="space-y-1 text-blue-800 text-xs">
-                      <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>Disputes will be resolved through binding arbitration when possible</li>
-                      <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>Arbitration will be conducted in accordance with applicable commercial arbitration rules</li>
-                      <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>Legal proceedings, if necessary, will be conducted in our local jurisdiction</li>
+                      <li className="flex items-center">Disputes will be resolved through binding arbitration when possible</li>
+                      <li className="flex items-center">Arbitration will be conducted in accordance with applicable commercial arbitration rules</li>
+                      <li className="flex items-center">Legal proceedings, if necessary, will be conducted in our local jurisdiction</li>
                     </ul>
                   </div>
                 </CardContent>
@@ -411,7 +411,7 @@ export default function TermsOfServicePage() {
               <Card className="border-indigo-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg text-secondary-900 flex items-center">
-                    <span className="text-xl mr-2">🏛️</span>
+                    <span className="text-xl mr-2"></span>
                     12. Governing Law
                   </CardTitle>
                 </CardHeader>
@@ -427,16 +427,16 @@ export default function TermsOfServicePage() {
               <Card className="border-cyan-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg text-secondary-900 flex items-center">
-                    <span className="text-xl mr-2">📝</span>
+                    <span className="text-xl mr-2"></span>
                     13. Changes to Terms
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-cyan-700 text-xs mb-3">We reserve the right to modify these Terms at any time. When changes are made:</p>
                   <ul className="space-y-1 text-cyan-800 text-xs">
-                    <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>Updated terms will be posted on our website</li>
-                    <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>The "Last updated" date will reflect the revision</li>
-                    <li className="flex items-center"><span className="text-cyan-500 mr-2">•</span>Significant changes will be communicated via email when possible</li>
+                    <li className="flex items-center">Updated terms will be posted on our website</li>
+                    <li className="flex items-center">The "Last updated" date will reflect the revision</li>
+                    <li className="flex items-center">Significant changes will be communicated via email when possible</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -444,7 +444,7 @@ export default function TermsOfServicePage() {
               <Card className="border-teal-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg text-secondary-900 flex items-center">
-                    <span className="text-xl mr-2">📋</span>
+                    <span className="text-xl mr-2"></span>
                     14. General Provisions
                   </CardTitle>
                 </CardHeader>
@@ -466,7 +466,7 @@ export default function TermsOfServicePage() {
             <Card className="border-primary-300 bg-gradient-to-br from-primary-50 to-primary-100">
               <CardHeader>
                 <CardTitle className="text-2xl text-secondary-900 flex items-center">
-                  <span className="text-3xl mr-3">📞</span>
+                  
                   15. Contact Information
                 </CardTitle>
               </CardHeader>
