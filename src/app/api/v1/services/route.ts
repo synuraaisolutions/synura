@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { allServices } from 'contentlayer/generated'
+import { allServices, allPricings } from 'contentlayer/generated'
 
 // GET handler for services
 export async function GET(request: NextRequest) {
@@ -343,7 +343,7 @@ function calculateChallengeAlignment(service: ServiceForRelevance, challenges: C
 }
 
 function calculateGoalAlignment(service: any, goals: string[]): number {
-  const goalServiceMap = {
+  const goalServiceMap: Record<string, string[]> = {
     'cost-reduction': ['automation', 'ai-workforce'],
     'efficiency': ['automation', 'ai-workforce', 'managed-ops'],
     'scalability': ['automation', 'managed-ops'],
@@ -363,7 +363,7 @@ function calculateGoalAlignment(service: any, goals: string[]): number {
 }
 
 function calculateBudgetAlignment(category: string, budget: string): number {
-  const budgetMultipliers = {
+  const budgetMultipliers: Record<string, Record<string, number>> = {
     'under-5k': {
       'consulting': 1.2,
       'ai-workforce': 0.7,
@@ -394,7 +394,7 @@ function calculateBudgetAlignment(category: string, budget: string): number {
 }
 
 function calculateTimelineAlignment(category: string, timeline: string): number {
-  const timelineMultipliers = {
+  const timelineMultipliers: Record<string, Record<string, number>> = {
     'immediate': {
       'consulting': 1.3,
       'ai-workforce': 0.8,
@@ -486,7 +486,7 @@ function generateImplementationRoadmap(services: any[], criteria: any) {
 
 function estimateBudgetRange(services: any[], criteria: any) {
   // Simple budget estimation logic
-  const baseCosts = {
+  const baseCosts: Record<string, number> = {
     'consulting': 5000,
     'ai-workforce': 15000,
     'automation': 20000,
@@ -498,7 +498,7 @@ function estimateBudgetRange(services: any[], criteria: any) {
 
   services.forEach(service => {
     if (service.category === 'managed-ops') {
-      monthlyOngoing += baseCosts[service.category]
+      monthlyOngoing += baseCosts[service.category] || 0
     } else {
       totalSetup += baseCosts[service.category] || 0
     }
@@ -517,7 +517,7 @@ function estimateBudgetRange(services: any[], criteria: any) {
 }
 
 function estimateImplementationTime(services: any[], criteria: any) {
-  const baseDurations = {
+  const baseDurations: Record<string, number> = {
     'consulting': 4, // weeks
     'ai-workforce': 8,
     'automation': 12,
