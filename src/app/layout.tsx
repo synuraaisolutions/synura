@@ -52,8 +52,15 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
 
+        {/* Retell SDK Script */}
+        <Script
+          src="https://cdn.retellai.com/sdk.js"
+          strategy="beforeInteractive"
+        />
+
         {/* Retell Voice Agent (Verus) Integration */}
         <RetellWidget
+          publicKey={process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY || ''}
           agentId={process.env.NEXT_PUBLIC_RETELL_AGENT_ID || 'verus'}
           position="bottom-right"
           theme="synura"
