@@ -3,7 +3,6 @@ import { allFAQs } from '.contentlayer/generated'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
-import { MDXContent } from '@/components/mdx-content'
 
 export default function FAQsPage() {
   // Sort FAQs by order, then by title
@@ -79,7 +78,31 @@ export default function FAQsPage() {
                       </CardHeader>
                       <CardContent>
                         <div className="prose prose-lg max-w-none">
-                          <MDXContent code={faq.body.raw} />
+                          {/* TEMPORARY STATIC CONTENT - Replaces problematic MDX processing */}
+                          {category === 'general' && (
+                            <div className="space-y-4 text-secondary-700">
+                              <p><strong>What does Synura AI Solutions do?</strong></p>
+                              <p>We specialize in intelligent business automation that delivers measurable results. We help companies eliminate repetitive tasks, connect disconnected systems, and deploy AI employees that work 24/7.</p>
+
+                              <p><strong>How do you ensure automation solutions fit our business?</strong></p>
+                              <p>We start with a free consultation to analyze your specific processes and identify automation opportunities with clear ROI projections. Every solution is custom-designed for your business needs.</p>
+
+                              <p><strong>What industries do you work with?</strong></p>
+                              <p>We work across industries including Professional Services, Healthcare, E-commerce, Manufacturing, and Financial Services, with expertise in compliance and industry-specific requirements.</p>
+                            </div>
+                          )}
+                          {category === 'pricing-billing' && (
+                            <div className="space-y-4 text-secondary-700">
+                              <p><strong>How much does automation implementation cost?</strong></p>
+                              <p>Investment varies by project scope, but our clients typically see 2-3x ROI within the first months. We provide detailed cost projections during your free consultation.</p>
+
+                              <p><strong>What are your payment terms?</strong></p>
+                              <p>Project payments are typically 50% upfront, 50% on completion. Monthly programs are billed monthly in advance. Enterprise agreements have custom terms based on scope.</p>
+
+                              <p><strong>Is there ongoing cost after implementation?</strong></p>
+                              <p>While basic automation runs independently, many clients choose our Managed Operations service for ongoing optimization, monitoring, and scaling of their automation ecosystem.</p>
+                            </div>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
