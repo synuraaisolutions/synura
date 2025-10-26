@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { allServices, allPricings } from '.contentlayer/generated'
+import { allServices, allPricings } from 'contentlayer/generated'
 
 // GET handler for services
 export async function GET(request: NextRequest) {

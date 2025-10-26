@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
       order: faq.order,
       url: faq.url,
       content: faq.body.raw,
-      lastUpdated: faq._raw.sourceFileModified || new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
     }))
 
     // Get available categories for metadata
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
       order: faq.order,
       url: faq.url,
       ...(includeContent && { content: faq.body.raw }),
-      lastUpdated: faq._raw.sourceFileModified || new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
     }))
 
     return NextResponse.json({

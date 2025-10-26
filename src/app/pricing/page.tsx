@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { allPricings } from '.contentlayer/generated'
+import { allPricings } from 'contentlayer/generated'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
