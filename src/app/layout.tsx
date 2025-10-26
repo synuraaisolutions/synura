@@ -61,7 +61,7 @@ export default function RootLayout({
         {/* Retell Voice Agent (Verus) Integration */}
         <RetellWidget
           publicKey={process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY || ''}
-          agentId={process.env.NEXT_PUBLIC_RETELL_AGENT_ID || 'verus'}
+          agentId={process.env.NEXT_PUBLIC_RETELL_AGENT_ID || 'agent_cdc03c87fdce82350a6b6c418c'}
           position="bottom-right"
           theme="synura"
           autoLoad={true}

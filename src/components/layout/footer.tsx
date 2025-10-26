@@ -29,13 +29,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex items-center space-x-3 mb-4">
               <Image
                 src="/images/synura-logo-white.svg"
                 alt="Synura AI Solutions"
                 width={32}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-8"
               />
               <div className="flex flex-col">
                 <span className="text-lg font-bold">Synura</span>

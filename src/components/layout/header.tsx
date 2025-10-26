@@ -22,17 +22,22 @@ export function Header() {
       <nav className="synura-container flex items-center justify-between py-4">
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-3 group">
             <Image
               src="/images/synura-logo.svg"
-              alt="Synura AI Solutions"
-              width={200}
-              height={120}
-              className="h-10 w-auto"
+              alt="Synura AI Solutions - Home"
+              width={40}
+              height={40}
+              className="h-10 w-10 transition-transform group-hover:scale-105"
+              priority
             />
             <div className="flex flex-col">
-              <span className="text-xl font-bold text-primary-700">Synura</span>
-              <span className="text-xs text-secondary-600 -mt-1">AI Solutions</span>
+              <span className="text-xl font-bold text-primary-700 group-hover:text-primary-800 transition-colors">
+                Synura
+              </span>
+              <span className="text-xs text-secondary-600 -mt-1 group-hover:text-secondary-700 transition-colors">
+                AI Solutions
+              </span>
             </div>
           </Link>
         </div>
