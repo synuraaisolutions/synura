@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from './button'
+import { VoiceAgentButton } from './voice-agent-button'
 
 export function ContactPopup() {
   const [isVisible, setIsVisible] = useState(false)
@@ -80,6 +81,10 @@ export function ContactPopup() {
 
             {/* Quick Actions */}
             <div className="space-y-2">
+              <VoiceAgentButton variant="cta" size="sm" className="w-full">
+                🎙️ Talk to Verus AI
+              </VoiceAgentButton>
+
               <Button variant="cta" size="sm" asChild className="w-full">
                 <Link href="/contact">Schedule Free Consultation</Link>
               </Button>

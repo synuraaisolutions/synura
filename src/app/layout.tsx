@@ -53,11 +53,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
 
-        {/* Retell SDK Script */}
-        <Script
-          src="https://unpkg.com/@retell-ai/web-client@1.6.1/dist/index.min.js"
-          strategy="beforeInteractive"
-        />
+        {/* Retell SDK is now imported via npm package */}
 
         {/* Retell Voice Agent (Verus) Integration */}
         <RetellWidget

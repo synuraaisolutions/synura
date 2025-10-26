@@ -3,10 +3,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { Button } from './button'
 
-declare global {
-  interface Window {
-    RetellWebClient?: any
-  }
+// Import Retell SDK
+let RetellWebClient: any = null
+if (typeof window !== 'undefined') {
+  import('retell-client-js-sdk').then((module) => {
+    RetellWebClient = module.RetellWebClient
+  })
 }
 
 interface VoiceAgentButtonProps {
@@ -29,30 +31,25 @@ export function VoiceAgentButton({
   const callRef = useRef<any>(null)
 
   useEffect(() => {
-    // Check if SDK is loaded
+    // Check if SDK is loaded and initialize client
     const checkSDK = () => {
-      if (window.RetellWebClient && !retellClientRef.current) {
+      if (RetellWebClient && !retellClientRef.current) {
         try {
-          const publicKey = process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY
-          if (publicKey) {
-            retellClientRef.current = new window.RetellWebClient({
-              apiKey: publicKey
-            })
-            setIsSDKReady(true)
-            console.log('Voice Agent Button: Retell client initialized')
-          }
+          retellClientRef.current = new RetellWebClient()
+          setIsSDKReady(true)
+          console.log('Voice Agent Button: Retell client initialized')
         } catch (error) {
           console.error('Voice Agent Button: Failed to initialize Retell client:', error)
         }
       }
     }
 
-    if (window.RetellWebClient) {
+    if (RetellWebClient) {
       checkSDK()
     } else {
       // Wait for SDK to load
       const interval = setInterval(() => {
-        if (window.RetellWebClient) {
+        if (RetellWebClient) {
           clearInterval(interval)
           checkSDK()
         }
@@ -76,17 +73,38 @@ export function VoiceAgentButton({
 
     try {
       setIsLoading(true)
-      const agentId = process.env.NEXT_PUBLIC_RETELL_AGENT_ID || 'agent_cdc03c87fdce82350a6b6c418c'
 
-      console.log('Voice Agent Button: Starting call with agent:', agentId)
+      console.log('Voice Agent Button: Creating call access token...')
 
+      // Call our API to get access token
+      const response = await fetch('/api/v1/voice/create-call', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          agentId: process.env.NEXT_PUBLIC_RETELL_AGENT_ID
+        }),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to create call')
+      }
+
+      const { access_token, call_id } = await response.json()
+
+      console.log('Voice Agent Button: Starting call with access token...')
+
+      // Start call with access token
       const call = await retellClientRef.current.startCall({
-        agentId: agentId,
+        accessToken: access_token,
+        callId: call_id,
+        sampleRate: 24000,
       })
 
       if (call) {
         callRef.current = call
-        await call.connectMedia()
         setIsCallActive(true)
 
         // Handle call events
@@ -103,10 +121,27 @@ export function VoiceAgentButton({
           setIsLoading(false)
           callRef.current = null
         })
+
+        call.on('call_started', () => {
+          console.log('Voice Agent Button: Call started successfully')
+          setIsLoading(false)
+        })
+
+        call.on('call_ended', () => {
+          console.log('Voice Agent Button: Call ended')
+          setIsCallActive(false)
+          setIsLoading(false)
+          callRef.current = null
+        })
       }
     } catch (error) {
       console.error('Voice Agent Button: Failed to start call:', error)
       setIsLoading(false)
+
+      // Show error to user or redirect to contact page
+      if (showFallback) {
+        window.location.href = '/contact'
+      }
     }
   }
 
