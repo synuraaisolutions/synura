@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
@@ -49,36 +50,61 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
         <div className="synura-container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-secondary-900 mb-6">
-              Smarter systems.{' '}
-              <span className="synura-text-gradient">Stronger businesses.</span>
-            </h1>
-            <p className="text-xl text-secondary-600 mb-8 max-w-3xl mx-auto">
-              AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency
-              through intelligent systems and custom-built AI agents.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="xl" variant="cta" asChild>
-                <Link href="/contact">Book Free Consultation</Link>
-              </Button>
-              <VoiceAgentButton size="xl" variant="outline">
-                Speak to Verus
-              </VoiceAgentButton>
-              <Button size="xl" variant="outline" asChild>
-                <Link href="/services">Explore Services</Link>
-              </Button>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            <div className="text-center lg:text-left">
+              <h1 className="text-5xl md:text-6xl font-bold text-secondary-900 mb-6">
+                Smarter systems.{' '}
+                <span className="synura-text-gradient">Stronger businesses.</span>
+              </h1>
+              <p className="text-xl text-secondary-600 mb-8">
+                AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency
+                through intelligent systems and custom-built AI agents.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button size="xl" variant="cta" asChild>
+                  <Link href="/contact">Book Free Consultation</Link>
+                </Button>
+                <VoiceAgentButton size="xl" variant="outline">
+                  Speak to Verus
+                </VoiceAgentButton>
+                <Button size="xl" variant="outline" asChild>
+                  <Link href="/services">Explore Services</Link>
+                </Button>
+              </div>
+              <p className="text-sm text-secondary-500 mt-4">
+                ✓ Free consultation ✓ No obligation ✓ Clear ROI projections
+              </p>
             </div>
-            <p className="text-sm text-secondary-500 mt-4">
-              ✓ Free consultation ✓ No obligation ✓ Clear ROI projections
-            </p>
+            <div className="relative">
+              <div className="bg-white rounded-lg shadow-2xl p-8 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <Image
+                  src="/images/hero/laptop-website-view.jpg"
+                  alt="Professional viewing Synura AI Solutions website showing ROI metrics and automation benefits"
+                  width={600}
+                  height={400}
+                  className="rounded-lg object-cover w-full"
+                  priority
+                />
+                <div className="absolute -top-4 -right-4 bg-accent-500 text-white p-3 rounded-full shadow-lg">
+                  <span className="text-sm font-bold">2-3x ROI</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Value Proposition */}
-      <section className="py-16 bg-white">
-        <div className="synura-container">
+      <section className="py-16 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <Image
+            src="/images/automation/network-visualization.jpg"
+            alt="Network connections background"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="synura-container relative">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-secondary-900 mb-4">
               For every dollar you invest, our clients typically see
@@ -89,7 +115,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+              <div key={index} className="text-center bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm">
                 <div className="text-3xl font-bold text-primary-600 mb-2">{stat.value}</div>
                 <div className="text-sm font-semibold text-secondary-900 mb-1">{stat.label}</div>
                 <div className="text-xs text-secondary-600">{stat.description}</div>

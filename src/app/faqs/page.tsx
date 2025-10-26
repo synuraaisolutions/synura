@@ -162,7 +162,7 @@ export default function FAQsPage() {
             <VoiceAgentButton size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
               Talk to Verus
             </VoiceAgentButton>
-            <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
+            <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>
           </div>

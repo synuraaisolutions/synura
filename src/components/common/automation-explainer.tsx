@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Button } from './button'
 
 export function AutomationExplainer() {
@@ -49,17 +50,38 @@ export function AutomationExplainer() {
 
           {isOpen && (
             <div className="bg-white rounded-lg shadow-lg p-8 text-left animate-in slide-in-from-top duration-300">
-              <div className="space-y-8">
-                {explanations.map((item, index) => (
-                  <div key={index} className="border-l-4 border-primary-500 pl-6">
-                    <h3 className="text-lg font-semibold text-secondary-900 mb-3">
-                      {item.question}
-                    </h3>
-                    <p className="text-secondary-600 leading-relaxed">
-                      {item.answer}
-                    </p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-8">
+                  {explanations.map((item, index) => (
+                    <div key={index} className="border-l-4 border-primary-500 pl-6">
+                      <h3 className="text-lg font-semibold text-secondary-900 mb-3">
+                        {item.question}
+                      </h3>
+                      <p className="text-secondary-600 leading-relaxed">
+                        {item.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col justify-center">
+                  <h3 className="text-lg font-semibold text-secondary-900 mb-4">
+                    📊 Real Automation Example
+                  </h3>
+                  <div className="bg-secondary-50 rounded-lg p-4 mb-4">
+                    <Image
+                      src="/images/automation/workflow-diagram.jpg"
+                      alt="Example automation workflow showing data processing, filtering, and integration steps"
+                      width={500}
+                      height={300}
+                      className="rounded-lg object-cover w-full"
+                    />
                   </div>
-                ))}
+                  <p className="text-sm text-secondary-600">
+                    This workflow automatically processes data, applies filters, and integrates with multiple systems -
+                    saving 15+ hours per week of manual work.
+                  </p>
+                </div>
               </div>
 
               <div className="mt-8 p-6 bg-accent-50 rounded-lg">
