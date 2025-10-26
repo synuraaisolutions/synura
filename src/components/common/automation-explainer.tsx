@@ -66,15 +66,16 @@ export function AutomationExplainer() {
 
                 <div className="flex flex-col justify-center">
                   <h3 className="text-lg font-semibold text-secondary-900 mb-4">
-                    📊 Real Automation Example
+                    Real Automation Example
                   </h3>
-                  <div className="bg-secondary-50 rounded-lg p-4 mb-4">
+                  <div className="bg-secondary-50 rounded-lg p-3 md:p-4 mb-4">
                     <Image
-                      src="/images/automation/workflow-diagram.jpg"
-                      alt="Example automation workflow showing data processing, filtering, and integration steps"
+                      src="/images/professional/automation-workflow-diagram.jpg"
+                      alt="Complex automation workflow showing Google Sheets triggers, data processing, filtering, and multi-step integration"
                       width={500}
                       height={300}
-                      className="rounded-lg object-cover w-full"
+                      className="rounded-lg object-cover w-full h-auto"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                   <p className="text-sm text-secondary-600">
@@ -86,7 +87,7 @@ export function AutomationExplainer() {
 
               <div className="mt-8 p-6 bg-accent-50 rounded-lg">
                 <h3 className="text-lg font-semibold text-accent-800 mb-3">
-                  🎯 The Bottom Line
+                  The Bottom Line
                 </h3>
                 <p className="text-accent-700">
                   Automation isn't about replacing people—it's about freeing them up to do work that

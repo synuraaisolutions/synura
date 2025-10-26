@@ -60,14 +60,20 @@ export default function HomePage() {
                 AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency
                 through intelligent systems and custom-built AI agents.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="xl" variant="cta" asChild>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+                <Button size="lg" className="sm:size-xl" variant="cta" asChild>
                   <Link href="/contact">Book Free Consultation</Link>
                 </Button>
-                <VoiceAgentButton size="xl" variant="outline">
+                <VoiceAgentButton size="lg" className="sm:size-xl" variant="outline">
                   Speak to Verus
                 </VoiceAgentButton>
-                <Button size="xl" variant="outline" asChild>
+                <Button size="lg" className="sm:size-xl hidden sm:inline-flex" variant="outline" asChild>
+                  <Link href="/services">Explore Services</Link>
+                </Button>
+              </div>
+              {/* Mobile-only secondary button */}
+              <div className="sm:hidden mt-3">
+                <Button size="lg" variant="outline" asChild className="w-full">
                   <Link href="/services">Explore Services</Link>
                 </Button>
               </div>
@@ -76,17 +82,18 @@ export default function HomePage() {
               </p>
             </div>
             <div className="relative">
-              <div className="bg-white rounded-lg shadow-2xl p-8 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white rounded-lg shadow-2xl p-4 md:p-8 transform rotate-1 hover:rotate-0 transition-transform duration-300">
                 <Image
-                  src="/images/hero/laptop-website-view.jpg"
+                  src="/images/professional/hero-person-laptop-synura.jpg"
                   alt="Professional viewing Synura AI Solutions website showing ROI metrics and automation benefits"
-                  width={600}
-                  height={400}
-                  className="rounded-lg object-cover w-full"
+                  width={800}
+                  height={600}
+                  className="rounded-lg object-cover w-full h-auto"
                   priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-                <div className="absolute -top-4 -right-4 bg-accent-500 text-white p-3 rounded-full shadow-lg">
-                  <span className="text-sm font-bold">2-3x ROI</span>
+                <div className="absolute -top-2 -right-2 md:-top-4 md:-right-4 bg-accent-500 text-white p-2 md:p-3 rounded-full shadow-lg">
+                  <span className="text-xs md:text-sm font-bold">2-3x ROI</span>
                 </div>
               </div>
             </div>
@@ -98,10 +105,11 @@ export default function HomePage() {
       <section className="py-16 bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <Image
-            src="/images/automation/network-visualization.jpg"
-            alt="Network connections background"
+            src="/images/professional/network-connectivity-visualization.jpg"
+            alt="Network connections and digital connectivity visualization background"
             fill
             className="object-cover"
+            sizes="100vw"
           />
         </div>
         <div className="synura-container relative">
