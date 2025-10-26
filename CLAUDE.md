@@ -297,6 +297,18 @@ NEXT_PUBLIC_GA_MEASUREMENT_ID=G-***
 - Navigation and page rendering
 - Mobile responsiveness
 
+## Development Workflow Rules
+
+### Post-Commit Quality Assurance
+**MANDATORY:** After working on any page and committing changes, you must:
+1. **Test website functionality** - Verify all pages load correctly and navigation works
+2. **Check aesthetic quality** - Ensure visual design meets professional standards
+3. **Validate responsiveness** - Test mobile and desktop layouts
+4. **Fix any issues discovered** - Make immediate corrections if problems are found
+5. **Re-test after fixes** - Confirm all issues are resolved before considering work complete
+
+This rule ensures consistent quality and prevents deployment of broken or visually poor experiences.
+
 ## Brand Compliance
 
 ### Colors (Tailwind Classes)
