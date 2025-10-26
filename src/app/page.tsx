@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
+import { VoiceAgentButton } from '@/components/common/voice-agent-button'
 
 const services = [
   {
@@ -60,6 +61,9 @@ export default function HomePage() {
               <Button size="xl" variant="cta" asChild>
                 <Link href="/contact">Book Free Consultation</Link>
               </Button>
+              <VoiceAgentButton size="xl" variant="outline">
+                Ask Verus Your Questions
+              </VoiceAgentButton>
               <Button size="xl" variant="outline" asChild>
                 <Link href="/services">Explore Services</Link>
               </Button>
