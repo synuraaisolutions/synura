@@ -3,6 +3,7 @@ import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 import { VoiceAgentButton } from '@/components/common/voice-agent-button'
+import { AutomationExplainer } from '@/components/common/automation-explainer'
 
 const services = [
   {
@@ -97,6 +98,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Automation Explainer */}
+      <AutomationExplainer />
 
       {/* Services Section */}
       <section className="py-20 bg-secondary-50">
@@ -209,7 +213,7 @@ export default function HomePage() {
             <Button size="xl" variant="secondary" asChild>
               <Link href="/contact">Book Free Consultation</Link>
             </Button>
-            <Button size="xl" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
+            <Button size="xl" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>
           </div>

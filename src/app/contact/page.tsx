@@ -65,8 +65,10 @@ export default function ContactPage() {
                   </p>
                 </div>
 
-                <Button size="lg" variant="cta" className="w-full">
-                  Schedule Free Consultation
+                <Button size="lg" variant="cta" className="w-full" asChild>
+                  <a href="https://calendly.com/synura-ai/free-consultation" target="_blank" rel="noopener noreferrer">
+                    Schedule Free Consultation
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -75,7 +77,7 @@ export default function ContactPage() {
             <Card className="border-secondary-200 hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="flex items-center space-x-3 mb-4">
-                  <span className="text-4xl">💬</span>
+                  <span className="text-4xl">📞</span>
                   <div>
                     <CardTitle className="text-2xl">Direct Contact</CardTitle>
                     <CardDescription className="text-lg">
