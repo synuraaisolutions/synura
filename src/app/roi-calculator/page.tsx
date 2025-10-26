@@ -421,9 +421,3 @@ export default function ROICalculatorPage() {
     </PageLayout>
   )
 }
-
-export const metadata = {
-  title: 'ROI Calculator | Synura AI Solutions - Calculate Automation Savings',
-  description: 'Discover how much time and money AI automation could save your business. Use our ROI calculator to get instant estimates based on your specific situation.',
-  keywords: ['ROI calculator', 'AI automation savings', 'business automation ROI', 'cost savings calculator', 'automation benefits'],
-}
