@@ -68,6 +68,9 @@ export default function RootLayout({
           autoLoad={true}
         />
 
+        {/* Contact Popup */}
+        <ContactPopup />
+
         {/* Analytics and Monitoring Scripts */}
         {process.env.NODE_ENV === 'production' && (
           <>
