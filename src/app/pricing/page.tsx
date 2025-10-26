@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
+import { VoiceAgentButton } from '@/components/common/voice-agent-button'
 // Static pricing page without MDX dependency
 
 export default function PricingPage() {
@@ -202,10 +203,15 @@ export default function PricingPage() {
             </div>
           </div>
 
-          <div className="text-center mt-8">
-            <Button variant="outline" asChild>
-              <Link href="/faqs">View All FAQs</Link>
-            </Button>
+          <div className="text-center mt-8 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="outline" asChild>
+                <Link href="/faqs">View All FAQs</Link>
+              </Button>
+              <VoiceAgentButton variant="outline">
+                Ask Verus About Pricing
+              </VoiceAgentButton>
+            </div>
           </div>
         </div>
       </section>
@@ -223,6 +229,9 @@ export default function PricingPage() {
             <Button size="lg" variant="secondary" asChild>
               <Link href="/contact">Book Free Consultation</Link>
             </Button>
+            <VoiceAgentButton size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
+              Talk to Verus AI
+            </VoiceAgentButton>
             <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/services">Explore Services</Link>
             </Button>

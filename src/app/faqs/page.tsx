@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from '@/components/common/button'
 import { PageLayout } from '@/components/layout/page-layout'
 import { FAQAccordionSimple } from '@/components/common/faq-accordion'
+import { VoiceAgentButton } from '@/components/common/voice-agent-button'
 
 export default function FAQsPage() {
   // FAQ data organized by category for better UX
@@ -134,6 +135,9 @@ export default function FAQsPage() {
               <Button size="lg" variant="cta" asChild>
                 <Link href="/contact">Schedule Free Consultation</Link>
               </Button>
+              <VoiceAgentButton size="lg" variant="outline">
+                Ask Verus AI Directly
+              </VoiceAgentButton>
               <Button size="lg" variant="outline" asChild>
                 <Link href="/roi-calculator">Calculate Your ROI</Link>
               </Button>
@@ -155,6 +159,9 @@ export default function FAQsPage() {
             <Button size="lg" variant="secondary" asChild>
               <Link href="/services">Explore Services</Link>
             </Button>
+            <VoiceAgentButton size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
+              Talk to Verus Now
+            </VoiceAgentButton>
             <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>

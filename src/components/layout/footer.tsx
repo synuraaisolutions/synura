@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { VoiceAgentButton } from '@/components/common/voice-agent-button'
 
 const footerNavigation = {
   services: [
@@ -102,12 +103,15 @@ export function Footer() {
             </ul>
 
             {/* Contact Info */}
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 space-y-3">
               <p className="text-secondary-300 text-sm">
                 <a href="mailto:sales@synura.ai" className="hover:text-white transition-colors">
                   sales@synura.ai
                 </a>
               </p>
+              <VoiceAgentButton variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-secondary-900">
+                Talk to Verus AI
+              </VoiceAgentButton>
             </div>
           </div>
         </div>

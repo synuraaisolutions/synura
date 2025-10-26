@@ -206,6 +206,9 @@ export default function HomePage() {
             <Button size="xl" variant="secondary" asChild>
               <Link href="/contact">Book Free Consultation</Link>
             </Button>
+            <VoiceAgentButton size="xl" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
+              Talk to Verus AI Now
+            </VoiceAgentButton>
             <Button size="xl" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>
