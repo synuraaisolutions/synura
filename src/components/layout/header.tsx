@@ -26,8 +26,8 @@ export function Header() {
             <Image
               src="/images/synura-logo.svg"
               alt="Synura AI Solutions"
-              width={40}
-              height={40}
+              width={200}
+              height={120}
               className="h-10 w-auto"
             />
             <div className="flex flex-col">
