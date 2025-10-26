@@ -43,9 +43,8 @@ export async function GET(request: NextRequest) {
       url: service.url,
       ...(includeContent && {
         content: service.body.raw,
-        htmlContent: service.body.html,
       }),
-      lastUpdated: service._raw.sourceFileModified || new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
     }))
 
     // Get pricing data if requested
@@ -57,7 +56,7 @@ export async function GET(request: NextRequest) {
         description: pricing.description,
         content: pricing.body.raw,
         url: pricing.url,
-        lastUpdated: pricing._raw.sourceFileModified || new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
       }
     }
 
