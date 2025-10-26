@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 interface FAQItem {
   question: string
@@ -52,9 +51,9 @@ export function FAQAccordion({ title, faqs, defaultOpen = false }: FAQAccordionP
               </span>
               <div className="flex-shrink-0">
                 {openItems.has(index) ? (
-                  <ChevronDownIcon className="h-5 w-5 text-primary-600 transform transition-transform duration-200" />
+                  <ChevronDown className="h-5 w-5 text-primary-600 transform transition-transform duration-200" />
                 ) : (
-                  <ChevronRightIcon className="h-5 w-5 text-secondary-400 transform transition-transform duration-200" />
+                  <ChevronRight className="h-5 w-5 text-secondary-400 transform transition-transform duration-200" />
                 )}
               </div>
             </button>
