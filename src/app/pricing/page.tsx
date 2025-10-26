@@ -1,23 +1,11 @@
 import Link from 'next/link'
-import { allPricings } from 'contentlayer/generated'
+// Pricing content is loaded directly from MDX
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
-import { MDXContent } from '@/components/mdx-content'
+// Static pricing page without MDX dependency
 
 export default function PricingPage() {
-  const pricingData = allPricings[0] // Pricing is a singleton
-
-  if (!pricingData) {
-    return (
-      <PageLayout>
-        <div className="synura-container py-20 text-center">
-          <h1 className="text-4xl font-bold text-secondary-900 mb-4">Pricing information not available</h1>
-          <p className="text-secondary-600">Please contact us for pricing information.</p>
-        </div>
-      </PageLayout>
-    )
-  }
 
   return (
     <PageLayout>
@@ -26,10 +14,10 @@ export default function PricingPage() {
         <div className="synura-container">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
-              {pricingData.title}
+              Pricing
             </h1>
             <p className="text-xl text-secondary-600 mb-8">
-              {pricingData.description}
+              Transparent pricing for AI automation solutions that deliver measurable ROI
             </p>
             <p className="text-lg text-secondary-700">
               <strong>For every dollar you invest, our clients typically see 2-3x ROI</strong> within the first months of implementation.
@@ -41,9 +29,75 @@ export default function PricingPage() {
       {/* Detailed Content */}
       <section className="py-20 bg-white">
         <div className="synura-container">
-          <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg max-w-none">
-              <MDXContent code={pricingData.body.raw} />
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Starter Package */}
+              <Card className="relative">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-2xl">Starter</CardTitle>
+                  <CardDescription>Perfect for small businesses</CardDescription>
+                  <div className="text-4xl font-bold text-primary-600 mt-4">$2,500</div>
+                  <p className="text-sm text-secondary-600">Starting from</p>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    <li className="flex items-center">✓ Free consultation</li>
+                    <li className="flex items-center">✓ 1-2 simple automations</li>
+                    <li className="flex items-center">✓ Basic integration setup</li>
+                    <li className="flex items-center">✓ 30-day support included</li>
+                  </ul>
+                  <Button className="w-full mt-6" asChild>
+                    <Link href="/contact">Get Started</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Business Package */}
+              <Card className="relative border-primary-500 border-2">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm">Most Popular</span>
+                </div>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-2xl">Business</CardTitle>
+                  <CardDescription>For growing companies</CardDescription>
+                  <div className="text-4xl font-bold text-primary-600 mt-4">$8,500</div>
+                  <p className="text-sm text-secondary-600">Starting from</p>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    <li className="flex items-center">✓ Everything in Starter</li>
+                    <li className="flex items-center">✓ 3-5 automations</li>
+                    <li className="flex items-center">✓ Advanced integrations</li>
+                    <li className="flex items-center">✓ Custom workflows</li>
+                    <li className="flex items-center">✓ 90-day support</li>
+                  </ul>
+                  <Button className="w-full mt-6" asChild>
+                    <Link href="/contact">Get Started</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Enterprise Package */}
+              <Card>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-2xl">Enterprise</CardTitle>
+                  <CardDescription>For large organizations</CardDescription>
+                  <div className="text-4xl font-bold text-primary-600 mt-4">Custom</div>
+                  <p className="text-sm text-secondary-600">Tailored pricing</p>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    <li className="flex items-center">✓ Everything in Business</li>
+                    <li className="flex items-center">✓ Unlimited automations</li>
+                    <li className="flex items-center">✓ Enterprise integrations</li>
+                    <li className="flex items-center">✓ Dedicated support</li>
+                    <li className="flex items-center">✓ SLA guarantees</li>
+                  </ul>
+                  <Button className="w-full mt-6" asChild>
+                    <Link href="/contact">Contact Sales</Link>
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
