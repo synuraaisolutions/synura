@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { allServices } from '.contentlayer/generated'
 import { Button } from '@/components/common/button'
 import { PageLayout } from '@/components/layout/page-layout'
-import { MDXContent } from '@/components/mdx-content'
+// import { MDXContent } from '@/components/mdx-content' // Temporarily disabled
 
 interface ServicePageProps {
   params: {
@@ -114,12 +114,25 @@ export default function ServicePage({ params }: ServicePageProps) {
         </div>
       </section>
 
-      {/* Service Details */}
+      {/* Service Details - TEMPORARILY DISABLED MDX TO FIX DEPLOYMENT */}
       <section className="py-16 bg-secondary-50">
         <div className="synura-container">
           <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none">
-              <MDXContent code={service.body.raw} />
+              {/* Temporary static content while MDX issue is resolved */}
+              <div className="text-lg text-secondary-700 space-y-6">
+                <p>
+                  Our {service.title} helps businesses streamline operations and improve efficiency
+                  through intelligent automation solutions.
+                </p>
+                <p>
+                  We provide comprehensive support and implementation services to ensure your
+                  automation initiatives deliver measurable results and ROI.
+                </p>
+                <p>
+                  Contact us today to learn how {service.title} can transform your business operations.
+                </p>
+              </div>
             </div>
           </div>
         </div>
