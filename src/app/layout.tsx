@@ -55,7 +55,7 @@ export default function RootLayout({
 
         {/* Retell SDK Script */}
         <Script
-          src="https://cdn.retellai.com/sdk.js"
+          src="https://unpkg.com/@retell-ai/web-client@1.6.1/dist/index.min.js"
           strategy="beforeInteractive"
         />
 

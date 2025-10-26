@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 declare global {
   interface Window {
-    RetellAI?: any
+    RetellWebClient?: any
   }
 }
 
@@ -34,9 +34,9 @@ export function RetellWidget({
     // Initialize Retell client when SDK is loaded
     const initRetellClient = () => {
       try {
-        if (window.RetellAI && !retellClientRef.current) {
-          retellClientRef.current = new window.RetellAI({
-            publicKey: publicKey
+        if (window.RetellWebClient && !retellClientRef.current) {
+          retellClientRef.current = new window.RetellWebClient({
+            apiKey: publicKey
           })
           console.log('Retell AI client initialized')
         }
@@ -46,12 +46,12 @@ export function RetellWidget({
     }
 
     // Check if SDK is already loaded
-    if (window.RetellAI) {
+    if (window.RetellWebClient) {
       initRetellClient()
     } else {
       // Wait for SDK to load (it's loaded in layout.tsx)
       const checkForRetell = setInterval(() => {
-        if (window.RetellAI) {
+        if (window.RetellWebClient) {
           clearInterval(checkForRetell)
           initRetellClient()
         }

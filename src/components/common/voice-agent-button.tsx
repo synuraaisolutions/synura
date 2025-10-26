@@ -5,7 +5,7 @@ import { Button } from './button'
 
 declare global {
   interface Window {
-    RetellAI?: any
+    RetellWebClient?: any
   }
 }
 
@@ -31,12 +31,12 @@ export function VoiceAgentButton({
   useEffect(() => {
     // Check if SDK is loaded
     const checkSDK = () => {
-      if (window.RetellAI && !retellClientRef.current) {
+      if (window.RetellWebClient && !retellClientRef.current) {
         try {
           const publicKey = process.env.NEXT_PUBLIC_RETELL_PUBLIC_KEY
           if (publicKey) {
-            retellClientRef.current = new window.RetellAI({
-              publicKey: publicKey
+            retellClientRef.current = new window.RetellWebClient({
+              apiKey: publicKey
             })
             setIsSDKReady(true)
             console.log('Voice Agent Button: Retell client initialized')
@@ -47,12 +47,12 @@ export function VoiceAgentButton({
       }
     }
 
-    if (window.RetellAI) {
+    if (window.RetellWebClient) {
       checkSDK()
     } else {
       // Wait for SDK to load
       const interval = setInterval(() => {
-        if (window.RetellAI) {
+        if (window.RetellWebClient) {
           clearInterval(interval)
           checkSDK()
         }
@@ -66,6 +66,12 @@ export function VoiceAgentButton({
   }, [])
 
   const startCall = async () => {
+    // If SDK isn't ready, redirect to contact page
+    if (!isSDKReady && showFallback) {
+      window.location.href = '/contact'
+      return
+    }
+
     if (!retellClientRef.current || isLoading || !isSDKReady) return
 
     try {
@@ -113,8 +119,22 @@ export function VoiceAgentButton({
     }
   }
 
-  if (!isSDKReady) {
-    return null // Don't render if SDK isn't ready
+  // Show fallback button if SDK isn't ready after 5 seconds
+  const [showFallback, setShowFallback] = useState(false)
+
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (!isSDKReady) {
+        setShowFallback(true)
+        console.log('Voice Agent Button: Showing fallback due to SDK not loading')
+      }
+    }, 5000)
+
+    return () => clearTimeout(fallbackTimer)
+  }, [isSDKReady])
+
+  if (!isSDKReady && !showFallback) {
+    return null // Don't render initially while waiting for SDK
   }
 
   return (
@@ -143,11 +163,19 @@ export function VoiceAgentButton({
       ) : (
         <>
           <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C10.89 2 10 2.89 10 4V12C10 13.11 10.89 14 12 14S14 13.11 14 12V4C14 2.89 13.11 2 12 2Z"/>
-            <path d="M19 11V12C19 15.87 15.87 19 12 19S5 15.87 5 12V11H7V12C7 14.76 9.24 17 12 17S17 14.76 17 12V11H19Z"/>
-            <path d="M11 21H13V24H11V21Z"/>
+            {showFallback && !isSDKReady ? (
+              // Contact icon for fallback
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            ) : (
+              // Microphone icon for voice
+              <>
+                <path d="M12 2C10.89 2 10 2.89 10 4V12C10 13.11 10.89 14 12 14S14 13.11 14 12V4C14 2.89 13.11 2 12 2Z"/>
+                <path d="M19 11V12C19 15.87 15.87 19 12 19S5 15.87 5 12V11H7V12C7 14.76 9.24 17 12 17S17 14.76 17 12V11H19Z"/>
+                <path d="M11 21H13V24H11V21Z"/>
+              </>
+            )}
           </svg>
-          {children}
+          {showFallback && !isSDKReady ? 'Contact Our Team' : children}
         </>
       )}
     </Button>
