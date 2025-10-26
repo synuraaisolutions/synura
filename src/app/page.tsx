@@ -62,7 +62,7 @@ export default function HomePage() {
                 <Link href="/contact">Book Free Consultation</Link>
               </Button>
               <VoiceAgentButton size="xl" variant="outline">
-                Ask Verus Your Questions
+                🎙️ Speak to Verus
               </VoiceAgentButton>
               <Button size="xl" variant="outline" asChild>
                 <Link href="/services">Explore Services</Link>
@@ -105,10 +105,13 @@ export default function HomePage() {
             <h2 className="text-4xl font-bold text-secondary-900 mb-4">
               Transform Your Business with AI Automation
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+            <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-6">
               From AI employees that work 24/7 to seamless system integrations,
               we provide comprehensive solutions that eliminate manual work and drive growth.
             </p>
+            <VoiceAgentButton size="lg" variant="outline">
+              🎙️ Ask Verus About Our Services
+            </VoiceAgentButton>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -207,7 +210,7 @@ export default function HomePage() {
               <Link href="/contact">Book Free Consultation</Link>
             </Button>
             <VoiceAgentButton size="xl" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
-              Talk to Verus AI Now
+              🎙️ Talk to Verus
             </VoiceAgentButton>
             <Button size="xl" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/pricing">View Pricing</Link>
