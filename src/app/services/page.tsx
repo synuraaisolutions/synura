@@ -6,7 +6,6 @@ import { PageLayout } from '@/components/layout/page-layout'
 
 export default function ServicesPage() {
   const featuredServices = allServices.filter(service => service.featured)
-  const allServicesData = allServices.sort((a, b) => a.title.localeCompare(b.title))
 
   return (
     <PageLayout>
@@ -112,34 +111,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* All Services Grid */}
-      <section className="py-20 bg-secondary-50">
-        <div className="synura-container">
-          <h2 className="text-3xl font-bold text-secondary-900 text-center mb-12">
-            Complete Service Portfolio
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {allServicesData.map((service) => (
-              <Card key={service.slug} className="hover:shadow-md transition-shadow duration-300">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg">{service.title}</CardTitle>
-                  <CardDescription className="text-sm">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <Button variant="ghost" asChild className="w-full justify-start p-0 h-auto text-primary-600">
-                    <Link href={service.url}>
-                      Explore {service.title} →
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Process Overview */}
       <section className="py-20 bg-white">
