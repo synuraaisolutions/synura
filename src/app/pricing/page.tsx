@@ -22,7 +22,7 @@ export default function PricingPage() {
             className="w-full h-full object-cover"
             poster="/images/professional/automation-workflow-diagram.jpg"
           >
-            <source src="/videos/automation.mp4" type="video/mp4" />
+            <source src="/videos/Business_growth.mp4" type="video/mp4" />
             {/* Fallback for browsers that don't support video */}
             Your browser does not support the video tag.
           </video>
