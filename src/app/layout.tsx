@@ -87,12 +87,40 @@ export default function RootLayout({
               __html: `
                 window.onload = function() {
                   if (typeof Calendly !== 'undefined') {
+                    // Initialize the floating badge widget
                     Calendly.initBadgeWidget({
                       url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1',
                       text: 'Schedule Free Consultation',
                       color: '#00ceff',
                       textColor: '#ffffff',
                       branding: true
+                    });
+
+                    // Make all consultation buttons open Calendly popup
+                    const consultationButtons = document.querySelectorAll('a[href="/contact"]');
+                    const consultationTexts = [
+                      'free consultation',
+                      'book free consultation',
+                      'schedule free consultation',
+                      'schedule your free consultation',
+                      'book consultation',
+                      'schedule consultation'
+                    ];
+
+                    consultationButtons.forEach(button => {
+                      const buttonText = button.textContent?.toLowerCase() || '';
+                      const isConsultationButton = consultationTexts.some(text =>
+                        buttonText.includes(text)
+                      );
+
+                      if (isConsultationButton) {
+                        button.addEventListener('click', function(e) {
+                          e.preventDefault();
+                          Calendly.initPopupWidget({
+                            url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                          });
+                        });
+                      }
                     });
                   }
                 }`
