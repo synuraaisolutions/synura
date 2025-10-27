@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { RetellWidget } from '@/components/retell-widget'
 import { ContactPopup } from '@/components/common/contact-popup'
 import { CalendlyIntegration } from '@/components/calendly-integration'
+import { GoogleAnalytics } from '@/components/analytics/google-analytics'
 import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -66,6 +67,9 @@ export default function RootLayout({
         {/* Analytics and Monitoring Scripts */}
         {process.env.NODE_ENV === 'production' && (
           <>
+            {/* Google Analytics GA4 */}
+            <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+
             {/* Plausible Analytics */}
             <Script
               defer
