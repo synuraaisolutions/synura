@@ -59,13 +59,13 @@ export default function PricingPage() {
                       alt="Starter package header"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-white/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
                   </div>
-                  <div className="relative z-10">
-                    <CardTitle className="text-2xl text-white drop-shadow-lg">Starter</CardTitle>
-                    <CardDescription className="text-gray-100">Perfect for small businesses</CardDescription>
-                    <div className="text-4xl font-bold text-white drop-shadow-lg mt-4">$2,500</div>
-                    <p className="text-sm text-gray-200">Starting from</p>
+                  <div className="relative z-10 py-2">
+                    <CardTitle className="text-2xl text-white font-bold">Starter</CardTitle>
+                    <CardDescription className="text-gray-100 font-medium">Perfect for small businesses</CardDescription>
+                    <div className="text-4xl font-bold text-white mt-4 mb-1">$2,500</div>
+                    <p className="text-sm text-gray-100 font-medium">Starting from</p>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -93,13 +93,13 @@ export default function PricingPage() {
                       alt="Business package header"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-white/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
                   </div>
-                  <div className="relative z-10">
-                    <CardTitle className="text-2xl text-white drop-shadow-lg">Business</CardTitle>
-                    <CardDescription className="text-gray-100">For growing companies</CardDescription>
-                    <div className="text-4xl font-bold text-white drop-shadow-lg mt-4">$8,500</div>
-                    <p className="text-sm text-gray-200">Starting from</p>
+                  <div className="relative z-10 py-2">
+                    <CardTitle className="text-2xl text-white font-bold">Business</CardTitle>
+                    <CardDescription className="text-gray-100 font-medium">For growing companies</CardDescription>
+                    <div className="text-4xl font-bold text-white mt-4 mb-1">$8,500</div>
+                    <p className="text-sm text-gray-100 font-medium">Starting from</p>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -125,13 +125,13 @@ export default function PricingPage() {
                       alt="Enterprise package header"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-white/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
                   </div>
-                  <div className="relative z-10">
-                    <CardTitle className="text-2xl text-white drop-shadow-lg">Enterprise</CardTitle>
-                    <CardDescription className="text-gray-100">For large organizations</CardDescription>
-                    <div className="text-4xl font-bold text-white drop-shadow-lg mt-4">Custom</div>
-                    <p className="text-sm text-gray-200">Tailored pricing</p>
+                  <div className="relative z-10 py-2">
+                    <CardTitle className="text-2xl text-white font-bold">Enterprise</CardTitle>
+                    <CardDescription className="text-gray-100 font-medium">For large organizations</CardDescription>
+                    <div className="text-4xl font-bold text-white mt-4 mb-1">Custom</div>
+                    <p className="text-sm text-gray-100 font-medium">Tailored pricing</p>
                   </div>
                 </CardHeader>
                 <CardContent>
