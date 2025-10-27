@@ -7,18 +7,33 @@ import { PageLayout } from '@/components/layout/page-layout'
 export default function AboutPage() {
   return (
     <PageLayout>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
-        <div className="synura-container">
+      {/* Hero Section with Video Background */}
+      <section className="relative py-20 overflow-hidden">
+        {/* Video Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/videos/Automation_timeline.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+
+        {/* Content */}
+        <div className="synura-container relative z-20">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               About Synura AI Solutions
             </h1>
-            <p className="text-xl text-secondary-600 mb-8">
+            <p className="text-xl text-gray-100 mb-8">
               We're not just another AI company. We're your partners in building intelligent systems
               that make businesses more efficient, productive, and profitable.
             </p>
-            <p className="text-lg text-secondary-700">
+            <p className="text-lg text-gray-200">
               <strong>Smarter systems. Stronger businesses.</strong>
             </p>
           </div>
