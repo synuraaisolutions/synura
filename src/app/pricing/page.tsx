@@ -51,22 +51,21 @@ export default function PricingPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Starter Package */}
-              <Card className="relative">
-                <CardHeader className="text-center relative overflow-hidden">
-                  <div className="absolute inset-0 z-0">
-                    <img
-                      src="/images/professional/Starter-Card-Header.png"
-                      alt="Starter package header"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
-                  </div>
-                  <div className="relative z-10 py-2">
-                    <CardTitle className="text-2xl text-white font-bold">Starter</CardTitle>
-                    <CardDescription className="text-gray-100 font-medium">Perfect for small businesses</CardDescription>
-                    <div className="text-4xl font-bold text-white mt-4 mb-1">$2,500</div>
-                    <p className="text-sm text-gray-100 font-medium">Starting from</p>
-                  </div>
+              <Card className="relative overflow-hidden">
+                {/* Clean Image Section */}
+                <div className="h-48 w-full">
+                  <img
+                    src="/images/professional/Starter-Card-Header.png"
+                    alt="Starter package header"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Clean Text Section */}
+                <CardHeader className="text-center bg-white">
+                  <CardTitle className="text-2xl text-secondary-900 font-bold">Starter</CardTitle>
+                  <CardDescription className="text-secondary-600">Perfect for small businesses</CardDescription>
+                  <div className="text-4xl font-bold text-primary-600 mt-4 mb-1">$2,500</div>
+                  <p className="text-sm text-secondary-600">Starting from</p>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
@@ -86,21 +85,20 @@ export default function PricingPage() {
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
                   <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm">Most Popular</span>
                 </div>
-                <CardHeader className="text-center relative overflow-hidden">
-                  <div className="absolute inset-0 z-0">
-                    <img
-                      src="/images/professional/Business-Card-Header.png"
-                      alt="Business package header"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
-                  </div>
-                  <div className="relative z-10 py-2">
-                    <CardTitle className="text-2xl text-white font-bold">Business</CardTitle>
-                    <CardDescription className="text-gray-100 font-medium">For growing companies</CardDescription>
-                    <div className="text-4xl font-bold text-white mt-4 mb-1">$8,500</div>
-                    <p className="text-sm text-gray-100 font-medium">Starting from</p>
-                  </div>
+                {/* Clean Image Section */}
+                <div className="h-48 w-full">
+                  <img
+                    src="/images/professional/Business-Card-Header.png"
+                    alt="Business package header"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Clean Text Section */}
+                <CardHeader className="text-center bg-white">
+                  <CardTitle className="text-2xl text-secondary-900 font-bold">Business</CardTitle>
+                  <CardDescription className="text-secondary-600">For growing companies</CardDescription>
+                  <div className="text-4xl font-bold text-primary-600 mt-4 mb-1">$8,500</div>
+                  <p className="text-sm text-secondary-600">Starting from</p>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
@@ -118,21 +116,20 @@ export default function PricingPage() {
 
               {/* Enterprise Package */}
               <Card className="relative">
-                <CardHeader className="text-center relative overflow-hidden">
-                  <div className="absolute inset-0 z-0">
-                    <img
-                      src="/images/professional/Enterprise-Card-Header.png"
-                      alt="Enterprise package header"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
-                  </div>
-                  <div className="relative z-10 py-2">
-                    <CardTitle className="text-2xl text-white font-bold">Enterprise</CardTitle>
-                    <CardDescription className="text-gray-100 font-medium">For large organizations</CardDescription>
-                    <div className="text-4xl font-bold text-white mt-4 mb-1">Custom</div>
-                    <p className="text-sm text-gray-100 font-medium">Tailored pricing</p>
-                  </div>
+                {/* Clean Image Section */}
+                <div className="h-48 w-full">
+                  <img
+                    src="/images/professional/Enterprise-Card-Header.png"
+                    alt="Enterprise package header"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Clean Text Section */}
+                <CardHeader className="text-center bg-white">
+                  <CardTitle className="text-2xl text-secondary-900 font-bold">Enterprise</CardTitle>
+                  <CardDescription className="text-secondary-600">For large organizations</CardDescription>
+                  <div className="text-4xl font-bold text-primary-600 mt-4 mb-1">Custom</div>
+                  <p className="text-sm text-secondary-600">Tailored pricing</p>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
