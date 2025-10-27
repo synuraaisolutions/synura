@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { allCaseStudies } from '@/data/case-studies'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 // Removed MDX dependency to eliminate parsing issues
@@ -332,9 +333,9 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
             Let's discuss how we can transform your operations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Schedule Free Consultation</Link>
-            </Button>
+            <ConsultationButton size="lg" variant="secondary">
+              Schedule Free Consultation
+            </ConsultationButton>
             <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/services">Explore Our Services</Link>
             </Button>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { PageLayout } from '@/components/layout/page-layout'
 import { FAQAccordionSimple } from '@/components/common/faq-accordion'
 import { VoiceAgentButton } from '@/components/common/voice-agent-button'
@@ -132,9 +133,9 @@ export default function FAQsPage() {
               Our team is here to help you understand how AI automation can transform your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="cta" asChild>
-                <Link href="/contact">Schedule Free Consultation</Link>
-              </Button>
+              <ConsultationButton size="lg" variant="cta">
+                Schedule Free Consultation
+              </ConsultationButton>
               <VoiceAgentButton size="lg" variant="outline">
                 Ask our agent directly
               </VoiceAgentButton>

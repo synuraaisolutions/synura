@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 
@@ -314,9 +315,9 @@ export default function ROICalculatorPage() {
                           Schedule a free consultation to discuss your specific needs.
                         </p>
                         <div className="space-y-3">
-                          <Button asChild variant="cta" className="w-full">
-                            <Link href="/contact">Schedule Free Consultation</Link>
-                          </Button>
+                          <ConsultationButton variant="cta" className="w-full">
+                            Schedule Free Consultation
+                          </ConsultationButton>
                           <Button asChild variant="outline" className="w-full">
                             <Link href="/case-studies">See Real Results</Link>
                           </Button>
@@ -409,9 +410,9 @@ export default function ROICalculatorPage() {
             No obligations, just actionable insights.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Book Free Consultation</Link>
-            </Button>
+            <ConsultationButton size="lg" variant="secondary">
+              Book Free Consultation
+            </ConsultationButton>
             <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/services">Explore Services</Link>
             </Button>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 
@@ -250,9 +251,9 @@ export default function AboutPage() {
               <p className="text-secondary-600 mb-4">
                 Join hundreds of companies that have already automated their way to greater efficiency and profitability.
               </p>
-              <Button size="lg" variant="cta" asChild>
-                <Link href="/contact">Schedule Your Free Consultation</Link>
-              </Button>
+              <ConsultationButton size="lg" variant="cta">
+                Schedule Your Free Consultation
+              </ConsultationButton>
             </div>
           </div>
         </div>

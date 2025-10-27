@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { allCaseStudies } from '@/data/case-studies'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 
@@ -267,9 +268,9 @@ export default function CaseStudiesPage() {
             <p className="text-secondary-600 mb-6">
               Join these successful companies and start your automation journey today
             </p>
-            <Button variant="cta" size="lg" asChild>
-              <Link href="/contact">Get Your Free Assessment</Link>
-            </Button>
+            <ConsultationButton variant="cta" size="lg">
+              Get Your Free Assessment
+            </ConsultationButton>
           </div>
         </div>
       </section>
@@ -322,9 +323,9 @@ export default function CaseStudiesPage() {
             Your success story could be next.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Schedule Free Consultation</Link>
-            </Button>
+            <ConsultationButton size="lg" variant="secondary">
+              Schedule Free Consultation
+            </ConsultationButton>
             <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/roi-calculator">Calculate Your ROI</Link>
             </Button>
