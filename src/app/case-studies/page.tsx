@@ -189,6 +189,91 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
+      {/* Client Testimonials */}
+      <section className="py-20 bg-white">
+        <div className="synura-container">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-4">
+              What Our Clients Say
+            </h2>
+            <p className="text-xl text-secondary-600">
+              Real feedback from business leaders who transformed their operations
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Testimonial 1 - Brightstone Consulting */}
+            <div className="bg-secondary-50 p-8 rounded-lg">
+              <div className="mb-6">
+                <svg className="w-8 h-8 text-primary-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z" />
+                </svg>
+                <p className="text-secondary-700 text-lg leading-relaxed mb-6">
+                  "Synura transformed how we operate. Our consultants now focus on high-value strategy work instead of admin tasks, and our clients are noticing the difference."
+                </p>
+              </div>
+              <div className="border-t border-secondary-200 pt-4">
+                <p className="font-semibold text-secondary-900">Sarah Chen</p>
+                <p className="text-secondary-600">Managing Partner</p>
+                <p className="text-sm text-secondary-500">Brightstone Consulting</p>
+                <div className="mt-2">
+                  <span className="text-sm font-medium text-primary-600">280% ROI • 45 employees</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 - Nordic Home Goods */}
+            <div className="bg-secondary-50 p-8 rounded-lg">
+              <div className="mb-6">
+                <svg className="w-8 h-8 text-primary-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z" />
+                </svg>
+                <p className="text-secondary-700 text-lg leading-relaxed mb-6">
+                  "The automation solutions from Synura allowed us to scale rapidly without losing the personal touch our customers love. Our growth has been incredible."
+                </p>
+              </div>
+              <div className="border-t border-secondary-200 pt-4">
+                <p className="font-semibold text-secondary-900">Marcus Lindberg</p>
+                <p className="text-secondary-600">Co-Founder & CEO</p>
+                <p className="text-sm text-secondary-500">Nordic Home Goods</p>
+                <div className="mt-2">
+                  <span className="text-sm font-medium text-primary-600">340% ROI • 28 employees</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 - Precision Components */}
+            <div className="bg-secondary-50 p-8 rounded-lg">
+              <div className="mb-6">
+                <svg className="w-8 h-8 text-primary-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z" />
+                </svg>
+                <p className="text-secondary-700 text-lg leading-relaxed mb-6">
+                  "The automation system paid for itself in 8 months. We're now the most efficient manufacturer in our sector while maintaining the highest quality standards."
+                </p>
+              </div>
+              <div className="border-t border-secondary-200 pt-4">
+                <p className="font-semibold text-secondary-900">David Park</p>
+                <p className="text-secondary-600">Operations Director</p>
+                <p className="text-sm text-secondary-500">Precision Components</p>
+                <div className="mt-2">
+                  <span className="text-sm font-medium text-primary-600">385% ROI • 85 employees</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-secondary-600 mb-6">
+              Join these successful companies and start your automation journey today
+            </p>
+            <Button variant="cta" size="lg" asChild>
+              <Link href="/contact">Get Your Free Assessment</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Results Overview */}
       <section className="py-20 bg-primary-50">
         <div className="synura-container">
@@ -240,7 +325,7 @@ export default function CaseStudiesPage() {
             <Button size="lg" variant="secondary" asChild>
               <Link href="/contact">Schedule Free Consultation</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
+            <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/roi-calculator">Calculate Your ROI</Link>
             </Button>
           </div>

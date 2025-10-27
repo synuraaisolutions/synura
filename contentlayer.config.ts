@@ -120,11 +120,6 @@ export const CaseStudy = defineDocumentType(() => ({
       description: 'Case study description for SEO',
       required: true,
     },
-    client: {
-      type: 'string',
-      description: 'Client name (can be anonymized)',
-      required: true,
-    },
     industry: {
       type: 'string',
       description: 'Client industry',
@@ -150,6 +145,36 @@ export const CaseStudy = defineDocumentType(() => ({
       type: 'list',
       of: { type: 'string' },
       description: 'Services used in this case study',
+      required: true,
+    },
+    clientTestimonial: {
+      type: 'string',
+      description: 'Client testimonial quote',
+      required: true,
+    },
+    clientName: {
+      type: 'string',
+      description: 'Name of the client providing testimonial',
+      required: true,
+    },
+    clientTitle: {
+      type: 'string',
+      description: 'Title of the client providing testimonial',
+      required: true,
+    },
+    companySize: {
+      type: 'string',
+      description: 'Size of the client company',
+      required: true,
+    },
+    implementationTime: {
+      type: 'string',
+      description: 'Time taken for implementation',
+      required: true,
+    },
+    roi: {
+      type: 'string',
+      description: 'Return on investment achieved',
       required: true,
     },
     featured: {
