@@ -53,7 +53,7 @@ export default function PricingPage() {
               {/* Starter Package */}
               <Card className="relative overflow-hidden">
                 {/* Clean Image Section */}
-                <div className="h-48 w-full">
+                <div className="h-30 w-full">
                   <img
                     src="/images/professional/Starter-Card-Header.png"
                     alt="Starter package header"
@@ -86,7 +86,7 @@ export default function PricingPage() {
                   <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm">Most Popular</span>
                 </div>
                 {/* Clean Image Section */}
-                <div className="h-48 w-full">
+                <div className="h-30 w-full">
                   <img
                     src="/images/professional/Business-Card-Header.png"
                     alt="Business package header"
@@ -117,7 +117,7 @@ export default function PricingPage() {
               {/* Enterprise Package */}
               <Card className="relative">
                 {/* Clean Image Section */}
-                <div className="h-48 w-full">
+                <div className="h-30 w-full">
                   <img
                     src="/images/professional/Enterprise-Card-Header.png"
                     alt="Enterprise package header"
