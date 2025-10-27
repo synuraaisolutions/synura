@@ -11,16 +11,34 @@ export default function PricingPage() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
-        <div className="synura-container">
+      <section className="relative py-20 overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            poster="/images/professional/automation-workflow-diagram.jpg"
+          >
+            <source src="/videos/automation.mp4" type="video/mp4" />
+            {/* Fallback for browsers that don't support video */}
+            Your browser does not support the video tag.
+          </video>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-secondary-900/90"></div>
+        </div>
+
+        <div className="synura-container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Pricing
             </h1>
-            <p className="text-xl text-secondary-600 mb-8">
+            <p className="text-xl text-gray-200 mb-8">
               Transparent pricing for AI automation solutions that deliver measurable ROI
             </p>
-            <p className="text-lg text-secondary-700">
+            <p className="text-lg text-gray-100">
               <strong>For every dollar you invest, our clients typically see 2-3x ROI</strong> within the first months of implementation.
             </p>
           </div>
@@ -119,7 +137,9 @@ export default function PricingPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💰</span>
+                <svg className="w-8 h-8 text-accent-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
               </div>
               <h3 className="text-lg font-semibold text-secondary-900 mb-2">Proven ROI</h3>
               <p className="text-secondary-600 text-sm">
@@ -128,7 +148,9 @@ export default function PricingPage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💬</span>
+                <svg className="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                </svg>
               </div>
               <h3 className="text-lg font-semibold text-secondary-900 mb-2">Simple Language</h3>
               <p className="text-secondary-600 text-sm">
@@ -137,7 +159,9 @@ export default function PricingPage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎯</span>
+                <svg className="w-8 h-8 text-secondary-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H18V2h-2v1H8V2H6v1H4.5C3.67 3 3 3.67 3 4.5v15C3 20.33 3.67 21 4.5 21h15c.83 0 1.5-.67 1.5-1.5v-15C21 3.67 20.33 3 19.5 3zm0 16h-15v-12h15v12z"/>
+                </svg>
               </div>
               <h3 className="text-lg font-semibold text-secondary-900 mb-2">Tailored Solutions</h3>
               <p className="text-secondary-600 text-sm">
@@ -146,7 +170,9 @@ export default function PricingPage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤝</span>
+                <svg className="w-8 h-8 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 7H16c-.8 0-1.54.37-2.01.99L12 10l-1.99-2.01A2.5 2.5 0 0 0 8 7H5.46c-.8 0-1.54.37-2.01.99L1 12h2.5v10h4v-6h2v6h4z"/>
+                </svg>
               </div>
               <h3 className="text-lg font-semibold text-secondary-900 mb-2">End-to-End Support</h3>
               <p className="text-secondary-600 text-sm">
