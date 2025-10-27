@@ -59,6 +59,47 @@ export default function RootLayout({
         {/* Contact Popup */}
         <ContactPopup />
 
+        {/* Calendly Widget */}
+        <>
+          {/* Calendly CSS - loaded dynamically */}
+          <Script
+            id="calendly-css"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                const link = document.createElement('link');
+                link.href = 'https://assets.calendly.com/assets/external/widget.css';
+                link.rel = 'stylesheet';
+                document.head.appendChild(link);
+              `
+            }}
+          />
+
+          {/* Calendly Scripts */}
+          <Script
+            src="https://assets.calendly.com/assets/external/widget.js"
+            strategy="afterInteractive"
+          />
+          <Script
+            id="calendly-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.onload = function() {
+                  if (typeof Calendly !== 'undefined') {
+                    Calendly.initBadgeWidget({
+                      url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1',
+                      text: 'Schedule Free Consultation',
+                      color: '#00ceff',
+                      textColor: '#ffffff',
+                      branding: true
+                    });
+                  }
+                }`
+            }}
+          />
+        </>
+
         {/* Analytics and Monitoring Scripts */}
         {process.env.NODE_ENV === 'production' && (
           <>
