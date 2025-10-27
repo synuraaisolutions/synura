@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import { RetellWidget } from '@/components/retell-widget'
 import { ContactPopup } from '@/components/common/contact-popup'
+import { CalendlyIntegration } from '@/components/calendly-integration'
 import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -59,74 +60,8 @@ export default function RootLayout({
         {/* Contact Popup */}
         <ContactPopup />
 
-        {/* Calendly Widget */}
-        <>
-          {/* Calendly CSS - loaded dynamically */}
-          <Script
-            id="calendly-css"
-            strategy="beforeInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                const link = document.createElement('link');
-                link.href = 'https://assets.calendly.com/assets/external/widget.css';
-                link.rel = 'stylesheet';
-                document.head.appendChild(link);
-              `
-            }}
-          />
-
-          {/* Calendly Scripts */}
-          <Script
-            src="https://assets.calendly.com/assets/external/widget.js"
-            strategy="afterInteractive"
-          />
-          <Script
-            id="calendly-init"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.onload = function() {
-                  if (typeof Calendly !== 'undefined') {
-                    // Initialize the floating badge widget
-                    Calendly.initBadgeWidget({
-                      url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1',
-                      text: 'Schedule Free Consultation',
-                      color: '#00ceff',
-                      textColor: '#ffffff',
-                      branding: true
-                    });
-
-                    // Make all consultation buttons open Calendly popup
-                    const consultationButtons = document.querySelectorAll('a[href="/contact"]');
-                    const consultationTexts = [
-                      'free consultation',
-                      'book free consultation',
-                      'schedule free consultation',
-                      'schedule your free consultation',
-                      'book consultation',
-                      'schedule consultation'
-                    ];
-
-                    consultationButtons.forEach(button => {
-                      const buttonText = button.textContent?.toLowerCase() || '';
-                      const isConsultationButton = consultationTexts.some(text =>
-                        buttonText.includes(text)
-                      );
-
-                      if (isConsultationButton) {
-                        button.addEventListener('click', function(e) {
-                          e.preventDefault();
-                          Calendly.initPopupWidget({
-                            url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                          });
-                        });
-                      }
-                    });
-                  }
-                }`
-            }}
-          />
-        </>
+        {/* Calendly Integration */}
+        <CalendlyIntegration />
 
         {/* Analytics and Monitoring Scripts */}
         {process.env.NODE_ENV === 'production' && (
