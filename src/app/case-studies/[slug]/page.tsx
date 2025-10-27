@@ -103,22 +103,31 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
               {caseStudy.description}
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg text-secondary-900">Client</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-secondary-600">{caseStudy.client}</p>
-                </CardContent>
-              </Card>
-
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg text-secondary-900">Industry</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-secondary-600">{caseStudy.industry}</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg text-secondary-900">Company Size</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-secondary-600">{caseStudy.companySize}</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg text-secondary-900">ROI Achieved</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-secondary-600 font-semibold">{caseStudy.roi}</p>
                 </CardContent>
               </Card>
             </div>
@@ -205,6 +214,36 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </Card>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Client Testimonial */}
+      <section className="py-16 bg-primary-50">
+        <div className="synura-container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-8">What Our Client Says</h2>
+            <Card className="bg-white border-primary-200">
+              <CardContent className="p-8">
+                <svg className="w-12 h-12 text-primary-600 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z" />
+                </svg>
+                <blockquote className="text-xl text-secondary-700 leading-relaxed mb-6">
+                  "{caseStudy.clientTestimonial}"
+                </blockquote>
+                <div className="border-t border-secondary-200 pt-6">
+                  <p className="font-semibold text-secondary-900 text-lg">{caseStudy.clientName}</p>
+                  <p className="text-secondary-600">{caseStudy.clientTitle}</p>
+                  <div className="mt-2 flex items-center justify-center space-x-4 text-sm text-primary-600 font-medium">
+                    <span>{caseStudy.companySize}</span>
+                    <span>•</span>
+                    <span>{caseStudy.roi} achieved</span>
+                    <span>•</span>
+                    <span>{caseStudy.implementationTime} implementation</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
