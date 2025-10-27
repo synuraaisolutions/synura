@@ -11,6 +11,7 @@ const services = [
     title: 'AI Workforce Solutions',
     description: 'Digital team members that work 24/7 handling customer support, scheduling, lead follow-up, and reporting.',
     icon: '🤖',
+    image: '/images/professional/industrial-robotics-automation.jpg',
     href: '/services/ai-workforce',
     benefits: ['40-60% time savings', '24/7 availability', 'Consistent quality'],
   },
@@ -18,6 +19,7 @@ const services = [
     title: 'Automation & Integration',
     description: 'Connect your systems and eliminate manual work with intelligent workflow automation.',
     icon: '🔄',
+    image: '/images/professional/social-media-automation-workflow.jpg',
     href: '/services/automation-integration',
     benefits: ['Seamless integrations', 'Error reduction', 'Process efficiency'],
   },
@@ -25,6 +27,7 @@ const services = [
     title: 'AI Consulting & Strategy',
     description: 'Strategic roadmaps and optimization to maximize your automation ROI and business impact.',
     icon: '🎯',
+    image: '/images/professional/strategic-team-meeting-automation.jpg',
     href: '/services/ai-consulting',
     benefits: ['Strategic planning', 'ROI optimization', 'Expert guidance'],
   },
@@ -32,6 +35,7 @@ const services = [
     title: 'Managed AI Operations',
     description: 'Ongoing monitoring, optimization, and scaling of your automation ecosystem.',
     icon: '⚙️',
+    image: '/images/professional/data-center-professional.jpg',
     href: '/services/managed-operations',
     benefits: ['24/7 monitoring', 'Continuous optimization', 'Scalable growth'],
   },
@@ -154,17 +158,28 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
-                  <div className="flex items-center space-x-3 mb-4">
-                    <span className="text-3xl">{service.icon}</span>
-                    <CardTitle className="text-xl">{service.title}</CardTitle>
+              <Card key={index} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                <CardHeader className="p-0">
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={service.image}
+                      alt={`${service.title} - Professional automation and AI services visualization`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <CardTitle className="text-xl text-white mb-2">{service.title}</CardTitle>
+                    </div>
                   </div>
-                  <CardDescription className="text-base">
-                    {service.description}
-                  </CardDescription>
+                  <div className="p-6 pb-0">
+                    <CardDescription className="text-base">
+                      {service.description}
+                    </CardDescription>
+                  </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   <ul className="space-y-2 mb-6">
                     {service.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-center text-sm text-secondary-600">
@@ -204,28 +219,58 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📋</span>
+              <div className="relative w-32 h-32 mx-auto mb-4 rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="/images/professional/business-consultation-meeting.jpg"
+                  alt="Professional business consultation meeting discussing automation strategies"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-primary-500/20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white text-lg font-bold bg-primary-600/80 px-3 py-1 rounded-full">1</span>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-secondary-900 mb-2">1. Free Consultation</h3>
+              <h3 className="text-xl font-semibold text-secondary-900 mb-2">Free Consultation</h3>
               <p className="text-secondary-600">
                 We analyze your processes and identify automation opportunities with clear ROI projections.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🛠️</span>
+              <div className="relative w-32 h-32 mx-auto mb-4 rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="/images/professional/development-coding-screen.jpg"
+                  alt="Professional software development and coding for custom automation solutions"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-primary-500/20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white text-lg font-bold bg-primary-600/80 px-3 py-1 rounded-full">2</span>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-secondary-900 mb-2">2. Custom Development</h3>
+              <h3 className="text-xl font-semibold text-secondary-900 mb-2">Custom Development</h3>
               <p className="text-secondary-600">
                 We build and deploy tailored automation solutions that integrate with your existing systems.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📈</span>
+              <div className="relative w-32 h-32 mx-auto mb-4 rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="/images/professional/data-center-professional.jpg"
+                  alt="Professional data center operations representing ongoing monitoring and optimization"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-primary-500/20"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white text-lg font-bold bg-primary-600/80 px-3 py-1 rounded-full">3</span>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-secondary-900 mb-2">3. Ongoing Optimization</h3>
+              <h3 className="text-xl font-semibold text-secondary-900 mb-2">Ongoing Optimization</h3>
               <p className="text-secondary-600">
                 Continuous monitoring and improvement to ensure maximum ROI and sustainable growth.
               </p>

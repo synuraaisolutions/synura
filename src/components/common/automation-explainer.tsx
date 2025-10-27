@@ -38,9 +38,8 @@ export function AutomationExplainer() {
           </p>
 
           <Button
-            variant="outline"
             onClick={() => setIsOpen(!isOpen)}
-            className="mb-8"
+            className="mb-8 bg-orange-500 hover:bg-orange-600 text-white border-none shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse"
           >
             {isOpen ? 'Hide Explanation' : 'Why Do Companies Need Automation?'}
             <span className={`ml-2 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
