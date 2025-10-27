@@ -1,0 +1,111 @@
+<svg width="400" height="240" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="businessGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F9FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#E0F2FE;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0EA5E9;stop-opacity:0.2" />
+    </linearGradient>
+    <linearGradient id="businessIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="240" fill="url(#businessGradient)" rx="8"/>
+
+  <!-- Most Popular Badge -->
+  <g transform="translate(20, 20)">
+    <rect width="80" height="20" rx="10" fill="url(#goldAccent)"/>
+    <text x="40" y="14" text-anchor="middle" fill="white" font-size="10" font-weight="bold">POPULAR</text>
+  </g>
+
+  <!-- Advanced automation network -->
+  <g opacity="0.8">
+    <!-- Central hub -->
+    <circle cx="200" cy="120" r="25" fill="url(#businessIconGradient)" opacity="0.6"/>
+    <circle cx="200" cy="120" r="15" fill="white" opacity="0.9"/>
+    <circle cx="200" cy="120" r="8" fill="url(#businessIconGradient)"/>
+
+    <!-- Connected nodes (representing multiple automations) -->
+    <circle cx="120" cy="80" r="12" fill="url(#businessIconGradient)" opacity="0.5"/>
+    <circle cx="280" cy="80" r="12" fill="url(#businessIconGradient)" opacity="0.5"/>
+    <circle cx="120" cy="160" r="12" fill="url(#businessIconGradient)" opacity="0.5"/>
+    <circle cx="280" cy="160" r="12" fill="url(#businessIconGradient)" opacity="0.5"/>
+
+    <!-- Connection lines -->
+    <path d="M132 86 L185 114" stroke="url(#businessIconGradient)" stroke-width="2" opacity="0.4"/>
+    <path d="M268 86 L215 114" stroke="url(#businessIconGradient)" stroke-width="2" opacity="0.4"/>
+    <path d="M132 154 L185 126" stroke="url(#businessIconGradient)" stroke-width="2" opacity="0.4"/>
+    <path d="M268 154 L215 126" stroke="url(#businessIconGradient)" stroke-width="2" opacity="0.4"/>
+
+    <!-- Workflow arrows -->
+    <path d="M60 120 L100 120" stroke="url(#businessIconGradient)" stroke-width="3" opacity="0.6"/>
+    <path d="M95 115 L100 120 L95 125" stroke="url(#businessIconGradient)" stroke-width="3" fill="none" opacity="0.6"/>
+
+    <path d="M300 120 L340 120" stroke="url(#businessIconGradient)" stroke-width="3" opacity="0.6"/>
+    <path d="M335 115 L340 120 L335 125" stroke="url(#businessIconGradient)" stroke-width="3" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- Growing business building -->
+  <g opacity="0.7" transform="translate(320, 170)">
+    <!-- Multi-story building -->
+    <rect x="0" y="0" width="60" height="50" fill="url(#businessIconGradient)" opacity="0.4"/>
+    <!-- Windows -->
+    <rect x="8" y="8" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="20" y="8" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="32" y="8" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="44" y="8" width="8" height="8" fill="white" opacity="0.8"/>
+
+    <rect x="8" y="20" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="20" y="20" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="32" y="20" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="44" y="20" width="8" height="8" fill="white" opacity="0.8"/>
+
+    <rect x="8" y="32" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="20" y="32" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="32" y="32" width="8" height="8" fill="white" opacity="0.8"/>
+    <rect x="44" y="32" width="8" height="8" fill="white" opacity="0.8"/>
+  </g>
+
+  <!-- Growth arrow -->
+  <g transform="translate(50, 50)">
+    <path d="M0 40 L40 0" stroke="url(#goldAccent)" stroke-width="4" opacity="0.8"/>
+    <path d="M30 0 L40 0 L40 10" stroke="url(#goldAccent)" stroke-width="4" fill="none" opacity="0.8"/>
+  </g>
+
+  <!-- Advanced features icons -->
+  <g opacity="0.6">
+    <!-- Custom workflows -->
+    <g transform="translate(60, 180)">
+      <rect x="0" y="0" width="30" height="20" rx="3" fill="url(#businessIconGradient)" opacity="0.4"/>
+      <rect x="5" y="5" width="20" height="2" fill="white" opacity="0.8"/>
+      <rect x="5" y="9" width="15" height="2" fill="white" opacity="0.8"/>
+      <rect x="5" y="13" width="18" height="2" fill="white" opacity="0.8"/>
+    </g>
+
+    <!-- Analytics dashboard -->
+    <g transform="translate(100, 180)">
+      <rect x="0" y="0" width="25" height="20" rx="2" fill="url(#businessIconGradient)" opacity="0.4"/>
+      <rect x="3" y="15" width="3" height="2" fill="url(#goldAccent)"/>
+      <rect x="8" y="12" width="3" height="5" fill="url(#goldAccent)"/>
+      <rect x="13" y="8" width="3" height="9" fill="url(#goldAccent)"/>
+      <rect x="18" y="6" width="3" height="11" fill="url(#goldAccent)"/>
+    </g>
+  </g>
+
+  <!-- Success metrics -->
+  <g transform="translate(350, 30)">
+    <circle cx="0" cy="0" r="20" fill="#10B981" opacity="0.9"/>
+    <text x="0" y="5" text-anchor="middle" fill="white" font-size="12" font-weight="bold">3x</text>
+  </g>
+
+  <!-- Decorative elements -->
+  <circle cx="50" cy="200" r="30" fill="url(#businessIconGradient)" opacity="0.1"/>
+  <circle cx="350" cy="200" r="35" fill="url(#goldAccent)" opacity="0.1"/>
+</svg>
