@@ -22,7 +22,7 @@ export function VoiceAgentButton({
   variant = 'cta',
   size = 'lg',
   className,
-  children = 'Talk to Verus - Our AI Assistant'
+  children = 'Speak to an agent'
 }: VoiceAgentButtonProps) {
   const [isCallActive, setIsCallActive] = useState(false)
   const [isLoading, setIsLoading] = useState(false)

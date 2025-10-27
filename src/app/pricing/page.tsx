@@ -209,7 +209,7 @@ export default function PricingPage() {
                 <Link href="/faqs">View All FAQs</Link>
               </Button>
               <VoiceAgentButton variant="outline">
-                Ask Verus About Pricing
+                Ask our agent about pricing
               </VoiceAgentButton>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function PricingPage() {
               <Link href="/contact">Book Free Consultation</Link>
             </Button>
             <VoiceAgentButton size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
-              Talk to Verus
+              Speak to an agent
             </VoiceAgentButton>
             <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/services">Explore Services</Link>

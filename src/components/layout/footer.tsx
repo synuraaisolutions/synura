@@ -110,7 +110,7 @@ export function Footer() {
                 </a>
               </p>
               <VoiceAgentButton variant="outline" size="sm" className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-secondary-900">
-                Talk to Verus
+                Speak to an agent
               </VoiceAgentButton>
             </div>
           </div>

@@ -82,7 +82,7 @@ export function ContactPopup() {
             {/* Quick Actions */}
             <div className="space-y-2">
               <VoiceAgentButton variant="cta" size="sm" className="w-full">
-                Talk to Verus
+                Speak to an agent
               </VoiceAgentButton>
 
               <Button variant="cta" size="sm" asChild className="w-full">

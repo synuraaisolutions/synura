@@ -69,7 +69,7 @@ export default function HomePage() {
                   <Link href="/contact">Book Free Consultation</Link>
                 </Button>
                 <VoiceAgentButton size="lg" className="sm:size-xl" variant="outline">
-                  Speak to Verus
+                  Speak to an agent
                 </VoiceAgentButton>
                 <Button size="lg" className="sm:size-xl hidden sm:inline-flex" variant="outline" asChild>
                   <Link href="/services">Explore Services</Link>
@@ -152,7 +152,7 @@ export default function HomePage() {
               we provide comprehensive solutions that eliminate manual work and drive growth.
             </p>
             <VoiceAgentButton size="lg" variant="outline">
-              Ask Verus About Our Services
+              Ask our agent about services
             </VoiceAgentButton>
           </div>
 

@@ -106,7 +106,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-2">AI Assistant</h3>
                     <p className="text-secondary-600 mb-3">
-                      Chat with Verus, our AI assistant, using the voice widget on this page.
+                      Chat with our AI assistant, using the voice widget on this page.
                       Available 24/7 to answer questions and help schedule consultations.
                     </p>
                     <Button variant="outline" size="sm">
