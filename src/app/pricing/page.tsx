@@ -282,10 +282,10 @@ export default function PricingPage() {
             <Button size="lg" variant="secondary" asChild>
               <Link href="/contact">Book Free Consultation</Link>
             </Button>
-            <VoiceAgentButton size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
+            <VoiceAgentButton size="lg" variant="outline" className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               Speak to an agent
             </VoiceAgentButton>
-            <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
+            <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/services">Explore Services</Link>
             </Button>
           </div>
