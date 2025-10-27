@@ -200,8 +200,18 @@ export default function ServicesPage() {
             Start with a free consultation to discover which services would benefit your business most.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Book Free Consultation</Link>
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).Calendly) {
+                  (window as any).Calendly.initPopupWidget({
+                    url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                  });
+                }
+              }}
+            >
+              Book Free Consultation
             </Button>
             <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>

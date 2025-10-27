@@ -61,8 +61,17 @@ export function Header() {
           <Button variant="ghost" asChild>
             <Link href="/contact">Contact</Link>
           </Button>
-          <Button variant="cta" asChild>
-            <Link href="/contact">Free Consultation</Link>
+          <Button
+            variant="cta"
+            onClick={() => {
+              if (typeof window !== 'undefined' && (window as any).Calendly) {
+                (window as any).Calendly.initPopupWidget({
+                  url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                });
+              }
+            }}
+          >
+            Free Consultation
           </Button>
         </div>
 
@@ -115,10 +124,18 @@ export function Header() {
                   Contact
                 </Link>
               </Button>
-              <Button variant="cta" asChild>
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
-                  Free Consultation
-                </Link>
+              <Button
+                variant="cta"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (typeof window !== 'undefined' && (window as any).Calendly) {
+                    (window as any).Calendly.initPopupWidget({
+                      url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                    });
+                  }
+                }}
+              >
+                Free Consultation
               </Button>
             </div>
           </div>

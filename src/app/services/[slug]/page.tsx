@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { allServices } from '@/data/services'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { PageLayout } from '@/components/layout/page-layout'
 // import { MDXContent } from '@/components/mdx-content' // Temporarily disabled
 
@@ -68,9 +69,9 @@ export default function ServicePage({ params }: ServicePageProps) {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" variant="cta" asChild>
-                <Link href="/contact">Get Started</Link>
-              </Button>
+              <ConsultationButton size="lg" variant="cta">
+                Get Started
+              </ConsultationButton>
               <Button size="lg" variant="outline" asChild>
                 <Link href="/pricing">View Pricing</Link>
               </Button>
@@ -181,9 +182,9 @@ export default function ServicePage({ params }: ServicePageProps) {
             Schedule a free consultation to discuss how this service can transform your business operations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Book Free Consultation</Link>
-            </Button>
+            <ConsultationButton size="lg" variant="secondary">
+              Book Free Consultation
+            </ConsultationButton>
             <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
               <Link href="/case-studies">View Case Studies</Link>
             </Button>
