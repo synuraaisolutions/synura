@@ -3,7 +3,7 @@ import { allCaseStudies } from '.contentlayer/generated'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
-import { MDXContent } from '@/components/mdx-content'
+// Removed MDX dependency to eliminate parsing issues
 import { notFound } from 'next/navigation'
 
 interface CaseStudyPageProps {
@@ -248,12 +248,35 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      {/* Detailed Content */}
+      {/* Implementation Summary */}
       <section className="py-16 bg-white">
         <div className="synura-container">
-          <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg max-w-none">
-              <MDXContent code={caseStudy.body.raw} />
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-8">
+              Implementation Success
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="text-3xl font-bold text-primary-600 mb-2">{caseStudy.implementationTime}</div>
+                  <h3 className="font-semibold text-secondary-900 mb-2">Implementation Time</h3>
+                  <p className="text-secondary-600 text-sm">From planning to full deployment</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="text-3xl font-bold text-accent-600 mb-2">{caseStudy.roi}</div>
+                  <h3 className="font-semibold text-secondary-900 mb-2">Return on Investment</h3>
+                  <p className="text-secondary-600 text-sm">Measurable business impact achieved</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <div className="text-3xl font-bold text-secondary-600 mb-2">{caseStudy.companySize}</div>
+                  <h3 className="font-semibold text-secondary-900 mb-2">Company Scale</h3>
+                  <p className="text-secondary-600 text-sm">Organization size and complexity</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
