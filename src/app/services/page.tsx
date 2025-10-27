@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { allServices } from '@/data/services'
 import { Button } from '@/components/common/button'
@@ -39,8 +41,18 @@ export default function ServicesPage() {
               From AI employees that work 24/7 to seamless system integrations,
               we provide complete solutions that eliminate manual work and drive measurable business growth.
             </p>
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Schedule Free Consultation</Link>
+            <Button
+              size="lg"
+              variant="secondary"
+              onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).Calendly) {
+                  (window as any).Calendly.initPopupWidget({
+                    url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                  });
+                }
+              }}
+            >
+              Schedule Free Consultation
             </Button>
           </div>
         </div>

@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/common/button'
@@ -83,8 +85,19 @@ export default function HomePage() {
                 through intelligent systems and custom-built AI agents.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="sm:size-xl" variant="cta" asChild>
-                  <Link href="/contact">Book Free Consultation</Link>
+                <Button
+                  size="lg"
+                  className="sm:size-xl"
+                  variant="cta"
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && (window as any).Calendly) {
+                      (window as any).Calendly.initPopupWidget({
+                        url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                      });
+                    }
+                  }}
+                >
+                  Book Free Consultation
                 </Button>
                 <VoiceAgentButton size="lg" className="sm:size-xl" variant="outline">
                   Speak to an agent
@@ -307,8 +320,18 @@ export default function HomePage() {
             Let's find out how much time and money your business could save with intelligent automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="xl" variant="secondary" asChild>
-              <Link href="/contact">Book Free Consultation</Link>
+            <Button
+              size="xl"
+              variant="secondary"
+              onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).Calendly) {
+                  (window as any).Calendly.initPopupWidget({
+                    url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
+                  });
+                }
+              }}
+            >
+              Book Free Consultation
             </Button>
             <Button size="xl" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>
