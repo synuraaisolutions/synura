@@ -48,8 +48,17 @@ export default function ServicesPage() {
       </section>
 
       {/* Featured Services */}
-      <section className="py-20 bg-white">
-        <div className="synura-container">
+      <section className="py-20 bg-white relative">
+        {/* AI Workflow Background */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-5">
+          <img
+            src="/images/professional/ai-automation-workflow.png"
+            alt="AI Automation Network"
+            className="max-w-2xl w-full h-auto"
+          />
+        </div>
+
+        <div className="synura-container relative z-10">
           <h2 className="text-3xl font-bold text-secondary-900 text-center mb-12">
             Our Core Services
           </h2>
@@ -159,6 +168,17 @@ export default function ServicesPage() {
                   Watch: Automation in Action
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Process Visualization */}
+          <div className="max-w-5xl mx-auto mb-16">
+            <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 shadow-lg">
+              <img
+                src="/images/professional/process-visualization.png"
+                alt="Synura Implementation Process: Discovery, Strategy, Implementation, Optimization"
+                className="w-full h-auto mx-auto"
+              />
             </div>
           </div>
 
