@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { allServices } from '@/data/services'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
-// GET handler for services
-export async function GET(request: NextRequest) {
+// CORS handler
+export async function OPTIONS() {
+  return handleCORS()
+}
+
+// GET handler for services (with optional authentication)
+const getServicesHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
@@ -71,7 +80,7 @@ export async function GET(request: NextRequest) {
       },
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: {
         services: transformedServices,
@@ -80,19 +89,34 @@ export async function GET(request: NextRequest) {
       metadata,
     })
 
+    // Log analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
+
   } catch (error) {
     console.error('Services API error:', error)
 
-    return NextResponse.json({
+    const errorResponse = NextResponse.json({
       success: false,
       message: 'Failed to retrieve services',
       error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
+
+    // Log error analytics
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
 
-// POST handler for service recommendations
-export async function POST(request: NextRequest) {
+// Export wrapped handler
+export const GET = withOptionalAuth(getServicesHandler)
+
+// POST handler for service recommendations (with optional authentication)
+const postServiceRecommendationsHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     const body = await request.json()
     const {
@@ -116,7 +140,24 @@ export async function POST(request: NextRequest) {
       currentTools,
     })
 
-    return NextResponse.json({
+    // Log service recommendation analytics
+    const recommendationId = Analytics.generateRecommendationId()
+    await Analytics.logRecommendation({
+      recommendationId,
+      companySize,
+      industry,
+      challenges,
+      goals,
+      budget,
+      timeline,
+      currentTools,
+      recommendations,
+      roadmap: recommendations.roadmap,
+      estimatedBudget: recommendations.estimatedBudget,
+      estimatedTimeline: recommendations.estimatedTimeline
+    }, request, authContext)
+
+    const response = NextResponse.json({
       success: true,
       data: recommendations,
       metadata: {
@@ -128,19 +169,33 @@ export async function POST(request: NextRequest) {
           budget,
           timeline,
         },
+        recommendationId,
       },
     })
+
+    // Log API analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('Service recommendation error:', error)
 
-    return NextResponse.json({
+    const errorResponse = NextResponse.json({
       success: false,
       message: 'Failed to generate service recommendations',
       error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
+
+    // Log error analytics
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export wrapped handler for POST
+export const POST = withOptionalAuth(postServiceRecommendationsHandler)
 
 // Generate service recommendations based on criteria
 function getServiceRecommendations(criteria: RawRelevanceCriteria) {

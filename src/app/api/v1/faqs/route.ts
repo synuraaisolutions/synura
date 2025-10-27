@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { allFAQs } from '@/data/faqs'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
-// GET handler for FAQs
-export async function GET(request: NextRequest) {
+// Handle CORS preflight requests
+export async function OPTIONS(request: NextRequest) {
+  return handleCORS()
+}
+
+// GET handler for FAQs with authentication and analytics
+const getFAQsHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
   try {
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
@@ -71,25 +79,42 @@ export async function GET(request: NextRequest) {
       },
     }
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       data: transformedFAQs,
       metadata,
-    })
+    }
+
+    const response = NextResponse.json(responseData)
+
+    // Log API request analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('FAQ API error:', error)
 
-    return NextResponse.json({
+    const errorResponse = NextResponse.json({
       success: false,
       message: 'Failed to retrieve FAQs',
       error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
+
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
 
+// Export GET handler with optional authentication
+export const GET = withOptionalAuth(getFAQsHandler)
+
 // POST handler for FAQ search with advanced filtering
-export async function POST(request: NextRequest) {
+const postFAQsHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     const body = await request.json()
     const {
@@ -155,7 +180,7 @@ export async function POST(request: NextRequest) {
       lastUpdated: new Date().toISOString(),
     }))
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       data: transformedFAQs,
       metadata: {
@@ -164,18 +189,33 @@ export async function POST(request: NextRequest) {
         categories,
         includeContent,
       },
-    })
+    }
+
+    const response = NextResponse.json(responseData)
+
+    // Log API request analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('FAQ search error:', error)
 
-    return NextResponse.json({
+    const errorResponse = NextResponse.json({
       success: false,
       message: 'Failed to search FAQs',
       error: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : undefined,
     }, { status: 500 })
+
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export POST handler with optional authentication
+export const POST = withOptionalAuth(postFAQsHandler)
 
 // Calculate relevance score for search results
 function calculateRelevanceScore(faq: any, searchTerms: string[]): number {

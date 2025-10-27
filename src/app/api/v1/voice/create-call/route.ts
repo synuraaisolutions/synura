@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
-export async function POST(request: NextRequest) {
+// Handle CORS preflight requests
+export async function OPTIONS(request: NextRequest) {
+  return handleCORS()
+}
+
+// Main POST handler with authentication and analytics
+const postCreateCallHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
   try {
     const { agentId } = await request.json()
 
@@ -45,16 +54,32 @@ export async function POST(request: NextRequest) {
 
     const data = await response.json()
 
-    return NextResponse.json({
+    const responseData = {
       access_token: data.access_token,
       call_id: data.call_id,
-    })
+    }
+
+    const apiResponse = NextResponse.json(responseData)
+
+    // Log API request analytics
+    await Analytics.logAPI(request, apiResponse, startTime, authContext)
+
+    return addCORSHeaders(apiResponse)
 
   } catch (error) {
     console.error('Create call error:', error)
-    return NextResponse.json(
+
+    const errorResponse = NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     )
+
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export with optional authentication
+export const POST = withOptionalAuth(postCreateCallHandler)

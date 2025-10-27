@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
 // Validation schema for lead capture
 const leadSchema = z.object({
@@ -17,36 +19,61 @@ const leadSchema = z.object({
 
 type LeadData = z.infer<typeof leadSchema>
 
-export async function POST(request: NextRequest) {
+// Handle CORS preflight requests
+export async function OPTIONS(request: NextRequest) {
+  return handleCORS()
+}
+
+// Main POST handler with authentication and analytics
+const postLeadsHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     // Parse and validate request body
     const body = await request.json()
     const validatedData = leadSchema.parse(body)
 
-    // Get additional metadata
+    // Generate lead ID using analytics system
+    const leadId = Analytics.generateLeadId()
+
+    // Log lead capture to database and analytics
+    await Analytics.logLead({
+      leadId,
+      name: validatedData.name,
+      email: validatedData.email,
+      company: validatedData.company,
+      phone: validatedData.phone,
+      intent: validatedData.intent,
+      message: validatedData.message,
+      source: validatedData.source,
+      utmSource: validatedData.utm_source,
+      utmCampaign: validatedData.utm_campaign,
+      utmMedium: validatedData.utm_medium,
+      utmContent: undefined,
+      utmTerm: undefined,
+      ipAddress: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
+      userAgent: request.headers.get('user-agent') || 'unknown',
+      referer: request.headers.get('referer') || undefined,
+      apiKeyId: authContext.apiKeyId,
+      status: 'new'
+    }, request, authContext)
+
+    // Get additional metadata for CRM
     const metadata = {
       ip: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
       userAgent: request.headers.get('user-agent') || 'unknown',
       referer: request.headers.get('referer'),
       timestamp: new Date().toISOString(),
+      leadId,
     }
 
-    // TODO: Save to database (for now, we'll log it)
-    console.log('New lead captured:', {
-      ...validatedData,
-      metadata,
-    })
-
-    // TODO: Send to CRM via webhook (n8n/Make/Zapier)
+    // Send to CRM via webhook (n8n/Make/Zapier)
     await sendToCRM(validatedData, metadata)
 
-    // TODO: Send notification email to team
-    await sendNotification(validatedData)
+    // Send notification email to team
+    await sendNotification(validatedData, leadId)
 
-    // Generate lead ID (in production, this would come from database)
-    const leadId = `lead_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-    return NextResponse.json({
+    const responseData = {
       success: true,
       message: 'Lead captured successfully',
       leadId,
@@ -55,13 +82,21 @@ export async function POST(request: NextRequest) {
         email: validatedData.email,
         intent: validatedData.intent,
       },
-    }, { status: 201 })
+    }
+
+    const response = NextResponse.json(responseData, { status: 201 })
+
+    // Log API request analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('Lead capture error:', error)
 
+    let errorResponse
     if (error instanceof z.ZodError) {
-      return NextResponse.json({
+      errorResponse = NextResponse.json({
         success: false,
         message: 'Validation error',
         errors: error.errors.map(err => ({
@@ -69,14 +104,22 @@ export async function POST(request: NextRequest) {
           message: err.message,
         })),
       }, { status: 400 })
+    } else {
+      errorResponse = NextResponse.json({
+        success: false,
+        message: 'Internal server error',
+      }, { status: 500 })
     }
 
-    return NextResponse.json({
-      success: false,
-      message: 'Internal server error',
-    }, { status: 500 })
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export with optional authentication
+export const POST = withOptionalAuth(postLeadsHandler)
 
 // Simulate CRM integration
 async function sendToCRM(leadData: LeadData, metadata: any) {
@@ -113,19 +156,20 @@ async function sendToCRM(leadData: LeadData, metadata: any) {
 }
 
 // Simulate notification system
-async function sendNotification(leadData: LeadData) {
+async function sendNotification(leadData: LeadData, leadId: string) {
   // In production, this would send notification to your team
   // via email, Slack, or other notification system
 
   const notification = {
     subject: `New ${leadData.intent} request from ${leadData.name}`,
     message: `
-      New lead captured:
+      New lead captured (ID: ${leadId}):
       - Name: ${leadData.name}
       - Email: ${leadData.email}
       - Company: ${leadData.company || 'Not provided'}
       - Intent: ${leadData.intent}
       - Message: ${leadData.message || 'No message'}
+      - Source: ${leadData.source}
     `,
     priority: leadData.intent === 'consultation' ? 'high' : 'normal',
   }

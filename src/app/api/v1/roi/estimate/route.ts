@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
 // Validation schema for ROI calculation
 const roiSchema = z.object({
@@ -40,7 +42,15 @@ const roiSchema = z.object({
 
 type ROIData = z.infer<typeof roiSchema>
 
-export async function POST(request: NextRequest) {
+// Handle CORS preflight requests
+export async function OPTIONS(request: NextRequest) {
+  return handleCORS()
+}
+
+// Main POST handler with authentication and analytics
+const postROIHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     // Parse and validate request body
     const body = await request.json()
@@ -50,34 +60,56 @@ export async function POST(request: NextRequest) {
     const estimates = calculateROIEstimates(validatedData)
 
     // Generate calculation ID for follow-up
-    const calculationId = `roi_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    const calculationId = Analytics.generateCalculationId()
 
-    // Log calculation for analytics
-    console.log('ROI calculation performed:', {
+    // Log ROI calculation for analytics
+    await Analytics.logROI({
       calculationId,
-      input: validatedData,
+      companySize: validatedData.companySize,
+      industry: validatedData.industry,
+      employeeCount: validatedData.employeeCount,
+      averageHourlyRate: validatedData.averageHourlyRate,
+      manualTaskHours: validatedData.manualTaskHours,
+      errorRate: validatedData.errorRate,
+      automationAreas: validatedData.automationAreas,
+      primaryGoal: validatedData.primaryGoal,
+      timeframe: validatedData.timeframe,
       estimates,
-      timestamp: new Date().toISOString(),
-    })
+      recommendations: generateRecommendations(validatedData, estimates),
+      confidenceLevel: estimates.confidence,
+      email: validatedData.email,
+      name: validatedData.name,
+      apiKeyId: authContext.apiKeyId,
+      ipAddress: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
+      userAgent: request.headers.get('user-agent') || 'unknown'
+    }, request, authContext)
 
     // If email provided, save for follow-up
     if (validatedData.email) {
       await saveForFollowUp(validatedData, estimates, calculationId)
     }
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       calculationId,
       estimates,
       recommendations: generateRecommendations(validatedData, estimates),
       nextSteps: getNextSteps(estimates),
-    })
+    }
+
+    const response = NextResponse.json(responseData)
+
+    // Log API request analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('ROI calculation error:', error)
 
+    let errorResponse
     if (error instanceof z.ZodError) {
-      return NextResponse.json({
+      errorResponse = NextResponse.json({
         success: false,
         message: 'Validation error',
         errors: error.errors.map(err => ({
@@ -85,14 +117,22 @@ export async function POST(request: NextRequest) {
           message: err.message,
         })),
       }, { status: 400 })
+    } else {
+      errorResponse = NextResponse.json({
+        success: false,
+        message: 'Failed to calculate ROI estimate',
+      }, { status: 500 })
     }
 
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to calculate ROI estimate',
-    }, { status: 500 })
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export with optional authentication
+export const POST = withOptionalAuth(postROIHandler)
 
 // Main ROI calculation function
 function calculateROIEstimates(data: ROIData) {

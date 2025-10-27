@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
 // Validation schema for feedback
 const feedbackSchema = z.object({
@@ -18,11 +20,22 @@ const feedbackSchema = z.object({
 
 type FeedbackData = z.infer<typeof feedbackSchema>
 
-export async function POST(request: NextRequest) {
+// Handle CORS preflight requests
+export async function OPTIONS(request: NextRequest) {
+  return handleCORS()
+}
+
+// Main POST handler with authentication and analytics
+const postFeedbackHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     // Parse and validate request body
     const body = await request.json()
     const validatedData = feedbackSchema.parse(body)
+
+    // Generate feedback ID using consistent pattern
+    const feedbackId = `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
     // Get additional metadata
     const metadata = {
@@ -31,12 +44,11 @@ export async function POST(request: NextRequest) {
       referer: request.headers.get('referer'),
       timestamp: new Date().toISOString(),
       page: validatedData.page || request.headers.get('referer') || 'unknown',
+      feedbackId,
+      apiKeyId: authContext.apiKeyId,
     }
 
-    // Generate feedback ID
-    const feedbackId = `feedback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-    // TODO: Save to database
+    // Log feedback for analytics (could be expanded to dedicated feedback table in future)
     console.log('New feedback received:', {
       feedbackId,
       ...validatedData,
@@ -51,7 +63,7 @@ export async function POST(request: NextRequest) {
       await sendAcknowledgmentEmail(validatedData, feedbackId)
     }
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       message: 'Feedback received successfully',
       feedbackId,
@@ -62,13 +74,21 @@ export async function POST(request: NextRequest) {
         status: 'received',
         expectedResponse: getExpectedResponseTime(validatedData.priority),
       },
-    }, { status: 201 })
+    }
+
+    const response = NextResponse.json(responseData, { status: 201 })
+
+    // Log API request analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('Feedback processing error:', error)
 
+    let errorResponse
     if (error instanceof z.ZodError) {
-      return NextResponse.json({
+      errorResponse = NextResponse.json({
         success: false,
         message: 'Validation error',
         errors: error.errors.map(err => ({
@@ -76,14 +96,22 @@ export async function POST(request: NextRequest) {
           message: err.message,
         })),
       }, { status: 400 })
+    } else {
+      errorResponse = NextResponse.json({
+        success: false,
+        message: 'Failed to process feedback. Please try again.',
+      }, { status: 500 })
     }
 
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to process feedback. Please try again.',
-    }, { status: 500 })
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export with optional authentication
+export const POST = withOptionalAuth(postFeedbackHandler)
 
 // Process feedback based on type and priority
 async function processFeedback(feedbackData: FeedbackData, feedbackId: string, metadata: any) {

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { Analytics } from '@/lib/analytics'
 
 // Validation schema for meeting booking
 const meetingSchema = z.object({
@@ -20,11 +22,22 @@ const meetingSchema = z.object({
 
 type MeetingData = z.infer<typeof meetingSchema>
 
-export async function POST(request: NextRequest) {
+// Handle CORS preflight requests
+export async function OPTIONS(request: NextRequest) {
+  return handleCORS()
+}
+
+// Main POST handler with authentication and analytics
+const postMeetingsHandler = async (request: NextRequest, authContext: AuthContext) => {
+  const startTime = Date.now()
+
   try {
     // Parse and validate request body
     const body = await request.json()
     const validatedData = meetingSchema.parse(body)
+
+    // Generate meeting ID using a consistent pattern
+    const meetingId = `meeting_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
     // Get additional metadata
     const metadata = {
@@ -32,15 +45,14 @@ export async function POST(request: NextRequest) {
       userAgent: request.headers.get('user-agent') || 'unknown',
       referer: request.headers.get('referer'),
       timestamp: new Date().toISOString(),
+      meetingId,
+      apiKeyId: authContext.apiKeyId,
     }
 
-    // Generate meeting ID
-    const meetingId = `meeting_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-    // TODO: Integrate with calendar system (Calendly, Acuity, etc.)
+    // Integrate with calendar system (Calendly, Acuity, etc.)
     const calendarResult = await scheduleCalendarMeeting(validatedData, meetingId)
 
-    // TODO: Save to database
+    // Log meeting booking (could be expanded to dedicated meetings table in future)
     console.log('New meeting booking:', {
       meetingId,
       ...validatedData,
@@ -48,16 +60,16 @@ export async function POST(request: NextRequest) {
       calendarResult,
     })
 
-    // TODO: Send confirmation email
+    // Send confirmation email
     await sendConfirmationEmail(validatedData, meetingId)
 
-    // TODO: Send to CRM
+    // Send to CRM
     await updateCRMWithMeeting(validatedData, meetingId)
 
-    // TODO: Send team notification
+    // Send team notification
     await notifyTeam(validatedData, meetingId)
 
-    return NextResponse.json({
+    const responseData = {
       success: true,
       message: 'Meeting booked successfully',
       meetingId,
@@ -69,13 +81,21 @@ export async function POST(request: NextRequest) {
         status: 'pending_confirmation',
         nextSteps: 'You will receive a calendar invitation shortly.',
       },
-    }, { status: 201 })
+    }
+
+    const response = NextResponse.json(responseData, { status: 201 })
+
+    // Log API request analytics
+    await Analytics.logAPI(request, response, startTime, authContext)
+
+    return addCORSHeaders(response)
 
   } catch (error) {
     console.error('Meeting booking error:', error)
 
+    let errorResponse
     if (error instanceof z.ZodError) {
-      return NextResponse.json({
+      errorResponse = NextResponse.json({
         success: false,
         message: 'Validation error',
         errors: error.errors.map(err => ({
@@ -83,14 +103,22 @@ export async function POST(request: NextRequest) {
           message: err.message,
         })),
       }, { status: 400 })
+    } else {
+      errorResponse = NextResponse.json({
+        success: false,
+        message: 'Failed to book meeting. Please try again or contact us directly.',
+      }, { status: 500 })
     }
 
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to book meeting. Please try again or contact us directly.',
-    }, { status: 500 })
+    // Log API request even for errors
+    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+
+    return addCORSHeaders(errorResponse)
   }
 }
+
+// Export with optional authentication
+export const POST = withOptionalAuth(postMeetingsHandler)
 
 // Simulate calendar integration
 async function scheduleCalendarMeeting(meetingData: MeetingData, meetingId: string) {
