@@ -65,7 +65,7 @@ export const allCaseStudies: CaseStudy[] = [
     description: "Mid-sized manufacturing company automates quality control, production scheduling, and supply chain management to achieve significant cost savings and quality improvements.",
     industry: "Manufacturing",
     publishedAt: "2024-10-20",
-    featured: false,
+    featured: true,
     challenge: "Manual quality control process causing 12% defect rate, inefficient production scheduling leading to 30% machine downtime, and reactive supply chain management causing frequent stockouts.",
     solution: "Implemented AI-powered quality inspection system, predictive maintenance scheduling, automated production optimization, and intelligent supply chain forecasting.",
     results: [

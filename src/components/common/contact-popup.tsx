@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from './button'
+import { ConsultationButton } from './consultation-button'
 import { VoiceAgentButton } from './voice-agent-button'
 
 export function ContactPopup() {
@@ -85,9 +86,9 @@ export function ContactPopup() {
                 Speak to an agent
               </VoiceAgentButton>
 
-              <Button variant="cta" size="sm" asChild className="w-full">
-                <Link href="/contact">Schedule Free Consultation</Link>
-              </Button>
+              <ConsultationButton variant="cta" size="sm" className="w-full">
+                Schedule Free Consultation
+              </ConsultationButton>
 
               <Button variant="outline" size="sm" asChild className="w-full">
                 <Link href="/faqs">View FAQs</Link>

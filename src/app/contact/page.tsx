@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/common/button'
+import { ConsultationButton } from '@/components/common/consultation-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 
@@ -65,11 +68,9 @@ export default function ContactPage() {
                   </p>
                 </div>
 
-                <Button size="lg" variant="cta" className="w-full" asChild>
-                  <a href="https://calendly.com/synura-ai/free-consultation" target="_blank" rel="noopener noreferrer">
-                    Schedule Free Consultation
-                  </a>
-                </Button>
+                <ConsultationButton size="lg" variant="cta" className="w-full">
+                  Schedule Free Consultation
+                </ConsultationButton>
               </CardContent>
             </Card>
 
@@ -217,9 +218,9 @@ export default function ContactPage() {
             Join hundreds of businesses that have transformed their operations with intelligent automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="#consultation">Book Free Consultation</Link>
-            </Button>
+            <ConsultationButton size="lg" variant="secondary">
+              Book Free Consultation
+            </ConsultationButton>
             <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>
