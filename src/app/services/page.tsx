@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { allServices } from '.contentlayer/generated'
+import { allServices } from '@/data/services'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'

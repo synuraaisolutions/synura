@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { allFAQs } from '.contentlayer/generated'
+import { allFAQs } from '@/data/faqs'
 
 // GET handler for FAQs
 export async function GET(request: NextRequest) {
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       filteredFAQs = filteredFAQs.filter(faq =>
         faq.title.toLowerCase().includes(searchLower) ||
         faq.description.toLowerCase().includes(searchLower) ||
-        faq.body.raw.toLowerCase().includes(searchLower)
+        (faq.body?.raw && faq.body.raw.toLowerCase().includes(searchLower))
       )
     }
 
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       category: faq.category,
       order: faq.order,
       url: faq.url,
-      content: faq.body.raw,
+      content: faq.body?.raw || '',
       lastUpdated: new Date().toISOString(),
     }))
 
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
     // Advanced search with multiple terms
     if (searchTerms.length > 0) {
       filteredFAQs = filteredFAQs.filter(faq => {
-        const searchContent = `${faq.title} ${faq.description} ${faq.body.raw}`.toLowerCase()
+        const searchContent = `${faq.title} ${faq.description} ${faq.body?.raw || ''}`.toLowerCase()
         return searchTerms.some((term: string) =>
           searchContent.includes(term.toLowerCase())
         )
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
       category: faq.category,
       order: faq.order,
       url: faq.url,
-      ...(includeContent && { content: faq.body.raw }),
+      ...(includeContent && { content: faq.body?.raw || '' }),
       lastUpdated: new Date().toISOString(),
     }))
 
@@ -182,7 +182,7 @@ function calculateRelevanceScore(faq: any, searchTerms: string[]): number {
   let score = 0
   const title = faq.title.toLowerCase()
   const description = faq.description.toLowerCase()
-  const content = faq.body.raw.toLowerCase()
+  const content = faq.body?.raw?.toLowerCase() || ''
 
   searchTerms.forEach(term => {
     const termLower = term.toLowerCase()

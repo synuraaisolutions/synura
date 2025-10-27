@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { allServices } from '.contentlayer/generated'
+import { allServices } from '@/data/services'
 import { Button } from '@/components/common/button'
 import { PageLayout } from '@/components/layout/page-layout'
 // import { MDXContent } from '@/components/mdx-content' // Temporarily disabled

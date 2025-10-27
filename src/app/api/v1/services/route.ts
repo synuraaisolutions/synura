@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { allServices } from 'contentlayer/generated'
+import { allServices } from '@/data/services'
 
 // GET handler for services
 export async function GET(request: NextRequest) {
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       outcomes: service.outcomes || [],
       url: service.url,
       ...(includeContent && {
-        content: service.body.raw,
+        content: service.body?.raw || '',
       }),
       lastUpdated: new Date().toISOString(),
     }))
@@ -190,7 +190,8 @@ type ServiceCategory = 'ai-workforce' | 'automation' | 'consulting' | 'managed-o
 type CompanySize = '1-10' | '11-50' | '51-200' | '201-1000' | '1000+'
 
 interface ServiceForRelevance {
-  category: ServiceCategory
+  category: string
+  title?: string
 }
 
 interface RelevanceCriteria {
@@ -236,13 +237,13 @@ function calculateServiceRelevance(service: ServiceForRelevance, criteria: Relev
       'consulting': { '1-10': 90, '11-50': 85, '51-200': 80, '201-1000': 75, '1000+': 70 },
       'managed-ops': { '1-10': 40, '11-50': 60, '51-200': 80, '201-1000': 95, '1000+': 100 },
     }
-    const categoryScore = sizeScores[service.category]?.[criteria.companySize] || 50
+    const categoryScore = sizeScores[service.category as ServiceCategory]?.[criteria.companySize] || 50
     score = (score + categoryScore) / 2
   }
 
   // Industry relevance
   if (criteria.industry) {
-    const industryBonus = getIndustryServiceBonus(service.category, criteria.industry)
+    const industryBonus = getIndustryServiceBonus(service.category as ServiceCategory, criteria.industry)
     score += industryBonus
   }
 
@@ -329,7 +330,7 @@ function calculateChallengeAlignment(service: ServiceForRelevance, challenges: C
 
   let alignmentScore = 0
   challenges.forEach(challenge => {
-    if (challengeServiceMap[challenge]?.includes(service.category)) {
+    if (challengeServiceMap[challenge]?.includes(service.category as ServiceCategory)) {
       alignmentScore += 10
     }
   })
@@ -337,7 +338,7 @@ function calculateChallengeAlignment(service: ServiceForRelevance, challenges: C
   return Math.min(alignmentScore, 30) // Cap at 30 points
 }
 
-function calculateGoalAlignment(service: any, goals: string[]): number {
+function calculateGoalAlignment(service: ServiceForRelevance, goals: string[]): number {
   const goalServiceMap: Record<string, string[]> = {
     'cost-reduction': ['automation', 'ai-workforce'],
     'efficiency': ['automation', 'ai-workforce', 'managed-ops'],
@@ -419,7 +420,7 @@ function calculateTimelineAlignment(category: string, timeline: string): number 
   return timelineMultipliers[timeline]?.[category] || 1.0
 }
 
-function getRecommendationReasons(service: any, criteria: any): string[] {
+function getRecommendationReasons(service: ServiceForRelevance, criteria: RawRelevanceCriteria): string[] {
   const reasons = []
 
   // Add specific reasons based on service and criteria
@@ -431,7 +432,7 @@ function getRecommendationReasons(service: any, criteria: any): string[] {
     reasons.push('Directly addresses efficiency improvement goals')
   }
 
-  if (service.category === 'consulting' && ['1-10', '11-50'].includes(criteria.companySize)) {
+  if (service.category === 'consulting' && criteria.companySize && ['1-10', '11-50'].includes(criteria.companySize)) {
     reasons.push('Ideal starting point for smaller organizations')
   }
 
@@ -442,7 +443,7 @@ function getRecommendationReasons(service: any, criteria: any): string[] {
   return reasons
 }
 
-function generateImplementationRoadmap(services: any[], criteria: any) {
+function generateImplementationRoadmap(services: ServiceForRelevance[], criteria: RawRelevanceCriteria) {
   // Generate a basic implementation roadmap
   const phases = []
 
@@ -461,7 +462,7 @@ function generateImplementationRoadmap(services: any[], criteria: any) {
       phase: phases.length + 1,
       title: 'Core Implementation',
       duration: '4-8 weeks',
-      services: services.filter(s => ['ai-workforce', 'automation'].includes(s.category)).map(s => s.title),
+      services: services.filter(s => ['ai-workforce', 'automation'].includes(s.category)).map(s => s.title || 'Service'),
       deliverables: ['Automated workflows', 'AI agents', 'System integrations'],
     })
   }
@@ -479,7 +480,7 @@ function generateImplementationRoadmap(services: any[], criteria: any) {
   return phases
 }
 
-function estimateBudgetRange(services: any[], criteria: any) {
+function estimateBudgetRange(services: ServiceForRelevance[], criteria: RawRelevanceCriteria) {
   // Simple budget estimation logic
   const baseCosts: Record<string, number> = {
     'consulting': 5000,
@@ -511,7 +512,7 @@ function estimateBudgetRange(services: any[], criteria: any) {
   }
 }
 
-function estimateImplementationTime(services: any[], criteria: any) {
+function estimateImplementationTime(services: ServiceForRelevance[], criteria: RawRelevanceCriteria) {
   const baseDurations: Record<string, number> = {
     'consulting': 4, // weeks
     'ai-workforce': 8,
