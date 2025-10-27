@@ -285,10 +285,10 @@ export default function AboutPage() {
             we're here to help you achieve your goals with intelligent AI solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/services">Explore Our Services</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild className="text-white border-white hover:bg-white hover:text-primary-600">
+            <ConsultationButton size="lg" variant="secondary">
+              Schedule Free Consultation
+            </ConsultationButton>
+            <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/case-studies">View Case Studies</Link>
             </Button>
           </div>
