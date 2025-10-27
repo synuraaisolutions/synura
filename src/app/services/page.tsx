@@ -10,18 +10,37 @@ export default function ServicesPage() {
 
   return (
     <PageLayout>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
-        <div className="synura-container">
+      {/* Hero Section with Video Background */}
+      <section className="relative py-20 overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            poster="/images/professional/automation-workflow-diagram.jpg"
+          >
+            <source src="/videos/automation.mp4" type="video/mp4" />
+            {/* Fallback for browsers that don't support video */}
+            Your browser does not support the video tag.
+          </video>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/60"></div>
+        </div>
+
+        {/* Content */}
+        <div className="synura-container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Comprehensive AI Automation Services
             </h1>
-            <p className="text-xl text-secondary-600 mb-8">
+            <p className="text-xl text-gray-200 mb-8">
               From AI employees that work 24/7 to seamless system integrations,
               we provide complete solutions that eliminate manual work and drive measurable business growth.
             </p>
-            <Button size="lg" variant="cta" asChild>
+            <Button size="lg" variant="secondary" asChild>
               <Link href="/contact">Schedule Free Consultation</Link>
             </Button>
           </div>
@@ -120,10 +139,27 @@ export default function ServicesPage() {
             <h2 className="text-3xl font-bold text-secondary-900 mb-4">
               Our Implementation Process
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+            <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8">
               We follow a proven methodology to ensure successful automation deployment
               with minimal disruption to your business operations.
             </p>
+
+            {/* Process Demo Video */}
+            <div className="max-w-4xl mx-auto mb-12">
+              <div className="relative rounded-lg overflow-hidden shadow-2xl bg-secondary-900">
+                <video
+                  controls
+                  className="w-full h-auto"
+                  poster="/images/professional/automation-workflow-diagram.jpg"
+                >
+                  <source src="/videos/automation.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="absolute bottom-4 left-4 text-white text-sm bg-black/50 px-3 py-1 rounded">
+                  Watch: Automation in Action
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
