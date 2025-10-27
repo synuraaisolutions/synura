@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { allServices } from '@/data/services'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
@@ -76,38 +77,36 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {featuredServices.map((service) => (
-              <Card key={service.slug} className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
-                  <div className="flex items-center space-x-3 mb-4">
-                    {service.icon && <span className="text-3xl">{service.icon}</span>}
-                    <CardTitle className="text-xl">{service.title}</CardTitle>
+              <Card key={service.slug} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                <CardHeader className="p-0">
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={service.image}
+                      alt={`${service.title} - Professional automation and AI services visualization`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <CardTitle className="text-xl text-white mb-2">{service.title}</CardTitle>
+                    </div>
                   </div>
-                  <CardDescription className="text-base">
-                    {service.description}
-                  </CardDescription>
+                  <div className="p-6 pb-0">
+                    <CardDescription className="text-base">
+                      {service.description}
+                    </CardDescription>
+                  </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   {service.benefits && (
                     <div className="mb-6">
                       <h4 className="font-semibold text-secondary-900 mb-3">Key Benefits:</h4>
                       <ul className="space-y-2">
-                        {service.benefits.map((benefit, idx) => (
+                        {service.benefits.slice(0, 3).map((benefit, idx) => (
                           <li key={idx} className="flex items-center text-sm text-secondary-600">
                             <span className="text-accent-500 mr-2">✓</span>
                             {benefit}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {service.outcomes && (
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-secondary-900 mb-3">Expected Outcomes:</h4>
-                      <ul className="space-y-2">
-                        {service.outcomes.map((outcome, idx) => (
-                          <li key={idx} className="flex items-center text-sm text-secondary-600">
-                            <span className="text-primary-500 mr-2">→</span>
-                            {outcome}
                           </li>
                         ))}
                       </ul>

@@ -7,6 +7,7 @@ export interface Service {
   category: string
   featured: boolean
   icon: string
+  image: string
   benefits: string[]
   outcomes: string[]
   url: string

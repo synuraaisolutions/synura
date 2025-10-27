@@ -8,6 +8,7 @@ export const allServices: Service[] = [
     category: "ai-workforce",
     featured: true,
     icon: "robot",
+    image: "/images/services/AI-Workforce-Solutions.png",
     benefits: [
       "24/7 availability with no breaks or downtime",
       "Process unlimited conversations simultaneously",
@@ -67,6 +68,7 @@ Perfect for businesses looking to scale operations without proportional increase
     category: "automation",
     featured: true,
     icon: "sync",
+    image: "/images/services/Automation-&-Integration.png",
     benefits: [
       "Eliminate manual data entry and repetitive tasks",
       "Connect disparate systems seamlessly",
@@ -142,6 +144,7 @@ Ideal for businesses with multiple software tools that need to work together sea
     category: "consulting",
     featured: true,
     icon: "compass",
+    image: "/images/services/AI-Consulting-&-Strategy.png",
     benefits: [
       "Expert analysis of automation opportunities",
       "Custom roadmap with ROI projections",
@@ -236,6 +239,7 @@ Perfect for businesses that want to make informed decisions and avoid common pit
     category: "managed-ops",
     featured: true,
     icon: "lightning",
+    image: "/images/services/Managed-AI-Operations.png",
     benefits: [
       "24/7 system monitoring and maintenance",
       "Proactive issue detection and resolution",
