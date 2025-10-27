@@ -52,15 +52,33 @@ export default function HomePage() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
-        <div className="synura-container">
+      <section className="relative py-20 overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            poster="/images/professional/hero-person-laptop-synura.jpg"
+          >
+            <source src="/videos/automation.mp4" type="video/mp4" />
+            {/* Fallback for browsers that don't support video */}
+            Your browser does not support the video tag.
+          </video>
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-secondary-900/90"></div>
+        </div>
+
+        <div className="synura-container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl md:text-6xl font-bold text-secondary-900 mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
                 Smarter systems.{' '}
-                <span className="synura-text-gradient">Stronger businesses.</span>
+                <span className="text-accent-300">Stronger businesses.</span>
               </h1>
-              <p className="text-xl text-secondary-600 mb-8">
+              <p className="text-xl text-gray-200 mb-8">
                 AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency
                 through intelligent systems and custom-built AI agents.
               </p>
@@ -81,7 +99,7 @@ export default function HomePage() {
                   <Link href="/services">Explore Services</Link>
                 </Button>
               </div>
-              <p className="text-sm text-secondary-500 mt-4">
+              <p className="text-sm text-gray-300 mt-4">
                 ✓ Free consultation ✓ No obligation ✓ Clear ROI projections
               </p>
             </div>

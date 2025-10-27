@@ -153,29 +153,13 @@ export default function ServicesPage() {
               with minimal disruption to your business operations.
             </p>
 
-            {/* Process Demo Video */}
-            <div className="max-w-4xl mx-auto mb-12">
-              <div className="relative rounded-lg overflow-hidden shadow-2xl bg-secondary-900">
-                <video
-                  controls
-                  className="w-full h-auto"
-                  poster="/images/professional/automation-workflow-diagram.jpg"
-                >
-                  <source src="/videos/automation.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <div className="absolute bottom-4 left-4 text-white text-sm bg-black/50 px-3 py-1 rounded">
-                  Watch: Automation in Action
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Process Visualization */}
           <div className="max-w-5xl mx-auto mb-16">
             <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 shadow-lg">
               <img
-                src="/images/professional/process-visualization.png"
+                src="/images/professional/Untitled-1.png"
                 alt="Synura Implementation Process: Discovery, Strategy, Implementation, Optimization"
                 className="w-full h-auto mx-auto"
               />
