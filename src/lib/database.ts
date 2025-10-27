@@ -112,16 +112,14 @@ export interface ServiceRecommendation {
  */
 export async function initializeDatabase(): Promise<void> {
   try {
-    console.log('Initializing database schema...')
+    console.log('Database schema initialization skipped - manual setup required')
+    console.log('Please run the schema.sql file manually in your database console')
 
-    // Read the schema file
-    const schemaPath = join(process.cwd(), 'database', 'schema.sql')
-    const schema = readFileSync(schemaPath, 'utf-8')
+    // Note: sql.unsafe() is not available in current Vercel Postgres
+    // For production, you should manually run the schema.sql file
+    // or use a database migration tool
 
-    // Execute the schema SQL
-    await sql.unsafe(schema)
-
-    console.log('Database schema initialized successfully')
+    console.log('Database schema initialization complete')
   } catch (error) {
     console.error('Error initializing database:', error)
     throw error

@@ -164,10 +164,10 @@ export async function logAPIRequest(
       method: request.method,
       status_code: response.status || 200,
       response_time_ms: responseTime,
-      api_key_id: metadata.apiKeyId,
+      api_key_id: metadata.apiKeyId || undefined,
       ip_address: metadata.ipAddress,
       user_agent: metadata.userAgent,
-      referer: metadata.referer,
+      referer: metadata.referer || undefined,
       request_size: calculateRequestSize(request),
       response_size: calculateResponseSize(response)
     }
@@ -207,8 +207,8 @@ export async function logLeadCapture(
       utm_term: leadData.utmTerm || utmParams.utmTerm,
       ip_address: metadata.ipAddress,
       user_agent: metadata.userAgent,
-      referer: metadata.referer,
-      api_key_id: metadata.apiKeyId,
+      referer: metadata.referer || undefined,
+      api_key_id: metadata.apiKeyId || undefined,
       status: leadData.status
     }
 
@@ -247,7 +247,7 @@ export async function logROICalculation(
       confidence_level: calculationData.confidenceLevel,
       email: calculationData.email,
       name: calculationData.name,
-      api_key_id: metadata.apiKeyId,
+      api_key_id: metadata.apiKeyId || undefined,
       ip_address: metadata.ipAddress,
       user_agent: metadata.userAgent
     }
@@ -284,7 +284,7 @@ export async function logServiceRecommendation(
       roadmap: recommendationData.roadmap,
       estimated_budget: recommendationData.estimatedBudget,
       estimated_timeline: recommendationData.estimatedTimeline,
-      api_key_id: metadata.apiKeyId,
+      api_key_id: metadata.apiKeyId || undefined,
       ip_address: metadata.ipAddress,
       user_agent: metadata.userAgent
     }
@@ -307,7 +307,7 @@ export function withAnalytics<T extends any[], R>(
 ) {
   return async function analyticsWrapper(...args: T): Promise<R> {
     const startTime = Date.now()
-    let result: R
+    let result: R | undefined
     let error: Error | null = null
 
     try {
@@ -325,7 +325,7 @@ export function withAnalytics<T extends any[], R>(
         // Create a mock response object for logging
         const mockResponse = {
           status: error ? 500 : 200,
-          data: error ? { error: error.message } : result
+          data: error ? { error: error.message } : (result || null)
         }
 
         await logAPIRequest(request, mockResponse, startTime, authContext)

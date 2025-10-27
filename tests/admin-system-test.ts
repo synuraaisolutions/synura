@@ -11,8 +11,8 @@
  * Run with: npx ts-node tests/admin-system-test.ts
  */
 
-import { createAPIKey, validateAPIKey, listAPIKeys, deactivateAPIKey } from '../src/lib/auth.ts'
-import { Analytics, AnalyticsDashboard } from '../src/lib/analytics.ts'
+import { createAPIKey, validateAPIKey, listAPIKeys, deactivateAPIKey } from '../src/lib/auth'
+import { Analytics, AnalyticsDashboard } from '../src/lib/analytics'
 
 // Mock request object for testing
 const createMockRequest = (url: string, method: string = 'GET', headers: Record<string, string> = {}) => {

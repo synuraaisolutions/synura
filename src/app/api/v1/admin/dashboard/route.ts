@@ -38,35 +38,44 @@ const getDashboardHandler = async (request: NextRequest, authContext: AuthContex
         return Math.round(((current - previous) / previous) * 100)
       }
 
+      // Process database array results into metrics
+      const monthlyApiData = Array.isArray(monthlyUsage?.api) && monthlyUsage.api.length > 0 ? monthlyUsage.api[0] : {}
+      const weeklyApiData = Array.isArray(weeklyUsage?.api) && weeklyUsage.api.length > 0 ? weeklyUsage.api[0] : {}
+      const monthlyLeadsData = Array.isArray(monthlyUsage?.leads) && monthlyUsage.leads.length > 0 ? monthlyUsage.leads[0] : {}
+      const weeklyLeadsData = Array.isArray(weeklyUsage?.leads) && weeklyUsage.leads.length > 0 ? weeklyUsage.leads[0] : {}
+      const monthlyRoiData = Array.isArray(monthlyUsage?.roi) && monthlyUsage.roi.length > 0 ? monthlyUsage.roi[0] : {}
+      const weeklyRoiData = Array.isArray(weeklyUsage?.roi) && weeklyUsage.roi.length > 0 ? weeklyUsage.roi[0] : {}
+      const monthlyRecommendationsData = Array.isArray(monthlyUsage?.recommendations) && monthlyUsage.recommendations.length > 0 ? monthlyUsage.recommendations[0] : {}
+
       // Prepare dashboard metrics
       const metrics = {
         // API Usage Metrics
-        totalAPIRequests: monthlyUsage?.api?.totalRequests || 0,
-        weeklyAPIRequests: weeklyUsage?.api?.totalRequests || 0,
+        totalAPIRequests: monthlyApiData.total_requests || 0,
+        weeklyAPIRequests: weeklyApiData.total_requests || 0,
         apiRequestsGrowth: calculateGrowth(
-          weeklyUsage?.api?.totalRequests || 0,
-          (monthlyUsage?.api?.totalRequests || 0) - (weeklyUsage?.api?.totalRequests || 0)
+          weeklyApiData.total_requests || 0,
+          (monthlyApiData.total_requests || 0) - (weeklyApiData.total_requests || 0)
         ),
-        averageResponseTime: weeklyUsage?.api?.averageResponseTime || 0,
-        errorRate: weeklyUsage?.api?.errorRate || 0,
+        averageResponseTime: weeklyApiData.avg_response_time || 0,
+        errorRate: weeklyApiData.error_rate || 0,
 
         // Lead Metrics
-        totalLeads: monthlyUsage?.leads?.total || 0,
-        weeklyLeads: weeklyUsage?.leads?.total || 0,
+        totalLeads: monthlyLeadsData.total_leads || 0,
+        weeklyLeads: weeklyLeadsData.total_leads || 0,
         leadsGrowth: calculateGrowth(
-          weeklyUsage?.leads?.total || 0,
-          (monthlyUsage?.leads?.total || 0) - (weeklyUsage?.leads?.total || 0)
+          weeklyLeadsData.total_leads || 0,
+          (monthlyLeadsData.total_leads || 0) - (weeklyLeadsData.total_leads || 0)
         ),
-        conversionRate: weeklyUsage?.leads?.conversionRate || 0,
+        conversionRate: weeklyLeadsData.conversion_rate || 0,
 
         // ROI Calculator Metrics
-        totalROICalculations: monthlyUsage?.roi?.calculationsPerformed || 0,
-        weeklyROICalculations: weeklyUsage?.roi?.calculationsPerformed || 0,
+        totalROICalculations: monthlyRoiData.calculations_performed || 0,
+        weeklyROICalculations: weeklyRoiData.calculations_performed || 0,
         roiCalculationsGrowth: calculateGrowth(
-          weeklyUsage?.roi?.calculationsPerformed || 0,
-          (monthlyUsage?.roi?.calculationsPerformed || 0) - (weeklyUsage?.roi?.calculationsPerformed || 0)
+          weeklyRoiData.calculations_performed || 0,
+          (monthlyRoiData.calculations_performed || 0) - (weeklyRoiData.calculations_performed || 0)
         ),
-        averageROI: weeklyUsage?.roi?.averageROI || 0,
+        averageROI: weeklyRoiData.average_roi || 0,
 
         // API Key Metrics
         totalAPIKeys: keyStats.total,
@@ -75,7 +84,7 @@ const getDashboardHandler = async (request: NextRequest, authContext: AuthContex
         totalAPIKeyUsage: keyStats.totalUsage,
 
         // Service Recommendations
-        totalServiceRecommendations: monthlyUsage?.recommendations?.total || 0,
+        totalServiceRecommendations: monthlyRecommendationsData.total_recommendations || 0,
       }
 
       // System health indicators
