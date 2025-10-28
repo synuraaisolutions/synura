@@ -10,6 +10,7 @@ import '@/styles/globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://synura.ai'),
   title: {
     default: 'Synura AI Solutions - Smarter systems. Stronger businesses.',
     template: '%s | Synura AI Solutions',
@@ -25,12 +26,21 @@ export const metadata: Metadata = {
     title: 'Synura AI Solutions - Smarter systems. Stronger businesses.',
     description: 'AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency through intelligent systems and custom-built AI agents.',
     siteName: 'Synura AI Solutions',
+    images: [
+      {
+        url: '/images/professional/hero-person-laptop-synura.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Synura AI Solutions - Professional viewing Synura website showing AI automation services',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Synura AI Solutions - Smarter systems. Stronger businesses.',
     description: 'AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency through intelligent systems and custom-built AI agents.',
     creator: '@synuraai',
+    images: ['/images/professional/hero-person-laptop-synura.jpg'],
   },
   robots: {
     index: true,
