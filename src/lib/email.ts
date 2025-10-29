@@ -490,4 +490,4 @@ export async function testEmailConnection(): Promise<boolean> {
   }
 }
 
-export { EmailTemplate, EmailConfig }
+export type { EmailTemplate, EmailConfig }
