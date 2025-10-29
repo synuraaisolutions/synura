@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
 import { Analytics } from '@/lib/analytics'
+import { sendROIResults, sendLeadNotification } from '@/lib/email'
 
 // Validation schema for ROI calculation
 const roiSchema = z.object({
@@ -399,9 +400,66 @@ async function saveForFollowUp(data: ROIData, estimates: any, calculationId: str
     timestamp: new Date().toISOString(),
   }
 
-  // TODO: Save to CRM and trigger follow-up sequence
   console.log('ROI calculation saved for follow-up:', followUpData)
 
-  // TODO: Send ROI report email
+  // Send ROI results email to the visitor
+  if (data.email) {
+    try {
+      const roiEmailData = {
+        calculationId,
+        companySize: data.companySize,
+        industry: data.industry,
+        employeeCount: data.employeeCount,
+        averageHourlyRate: data.averageHourlyRate,
+        manualTaskHours: data.manualTaskHours,
+        errorRate: data.errorRate,
+        automationAreas: data.automationAreas,
+        primaryGoal: data.primaryGoal,
+        timeframe: data.timeframe,
+        estimates,
+        recommendations: undefined,
+        confidenceLevel: estimates.confidence,
+        email: data.email,
+        name: data.name,
+        apiKeyId: undefined,
+        ipAddress: 'roi-calculator',
+        userAgent: 'roi-calculator'
+      }
+
+      await sendROIResults(roiEmailData, estimates)
+      console.log('ROI results email sent successfully')
+
+      // Send notification to team about ROI calculation lead
+      const leadData = {
+        leadId: calculationId,
+        name: data.name || 'ROI Calculator User',
+        email: data.email,
+        company: `${data.companySize} company in ${data.industry}`,
+        phone: undefined,
+        intent: 'consultation' as const,
+        message: `Completed ROI calculation showing $${estimates.costSavings?.annual || 0} annual savings potential`,
+        source: 'website' as const,
+        utmSource: undefined,
+        utmCampaign: 'roi-calculator',
+        utmMedium: 'website',
+        utmContent: undefined,
+        utmTerm: undefined,
+        ipAddress: 'roi-calculator',
+        userAgent: 'roi-calculator',
+        referer: undefined,
+        apiKeyId: undefined,
+        status: 'new'
+      }
+
+      await sendLeadNotification(leadData, 'roi_calculator')
+      console.log('Team notification sent successfully')
+
+    } catch (error) {
+      console.error('Failed to send ROI follow-up emails:', error)
+      // Don't throw - email failure shouldn't break the API response
+    }
+  }
+
+  // TODO: Save to CRM and trigger follow-up sequence
   // TODO: Schedule follow-up reminder
 }

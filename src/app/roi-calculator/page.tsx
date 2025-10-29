@@ -11,19 +11,18 @@ export default function ROICalculatorPage() {
   const [formData, setFormData] = useState({
     companySize: '',
     industry: '',
-    monthlyRevenue: '',
-    employeeCost: '',
-    hoursSpentManual: '',
-    primaryChallenge: '',
+    employeeCount: '',
+    averageHourlyRate: '',
+    manualTaskHours: '',
+    automationAreas: [] as string[],
+    primaryGoal: '',
+    email: '',
+    name: '',
   })
 
-  const [results, setResults] = useState<{
-    annualSavings: number
-    roiPercentage: number
-    paybackMonths: number
-    hoursReclaimed: number
-    estimatedCost: number
-  } | null>(null)
+  const [results, setResults] = useState<any>(null)
+  const [isCalculating, setIsCalculating] = useState(false)
+  const [calculationError, setCalculationError] = useState<string | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -32,56 +31,70 @@ export default function ROICalculatorPage() {
     })
   }
 
-  const calculateROI = () => {
-    const revenue = parseFloat(formData.monthlyRevenue) || 0
-    const employeeCostHourly = parseFloat(formData.employeeCost) || 50
-    const hoursManual = parseFloat(formData.hoursSpentManual) || 0
-
-    // Size multipliers
-    const sizeMultipliers = {
-      '1-10': 1.0,
-      '11-50': 1.2,
-      '51-200': 1.5,
-      '201-1000': 1.8,
-      '1000+': 2.2,
+  const handleCheckboxChange = (value: string, checked: boolean) => {
+    if (checked) {
+      setFormData({
+        ...formData,
+        automationAreas: [...formData.automationAreas, value]
+      })
+    } else {
+      setFormData({
+        ...formData,
+        automationAreas: formData.automationAreas.filter(area => area !== value)
+      })
     }
+  }
 
-    // Industry factors
-    const industryFactors = {
-      'professional-services': 1.3,
-      'healthcare': 1.1,
-      'ecommerce': 1.4,
-      'manufacturing': 1.2,
-      'finance': 1.3,
-      'other': 1.0,
+  const calculateROI = async () => {
+    setIsCalculating(true)
+    setCalculationError(null)
+
+    try {
+      // Prepare API payload
+      const payload = {
+        companySize: formData.companySize,
+        industry: formData.industry,
+        employeeCount: parseInt(formData.employeeCount) || 1,
+        averageHourlyRate: parseFloat(formData.averageHourlyRate) || 50,
+        manualTaskHours: parseFloat(formData.manualTaskHours) || 1,
+        automationAreas: formData.automationAreas.length > 0 ? formData.automationAreas : ['data-entry'],
+        primaryGoal: formData.primaryGoal || 'efficiency',
+        email: formData.email || undefined,
+        name: formData.name || undefined,
+      }
+
+      // Call API
+      const response = await fetch('/api/v1/roi/estimate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to calculate ROI')
+      }
+
+      const data = await response.json()
+
+      if (data.success) {
+        setResults(data.estimates)
+
+        // Show success message if email was provided
+        if (formData.email) {
+          setCalculationError('✅ Results calculated! Check your email for a detailed report.')
+        }
+      } else {
+        throw new Error(data.message || 'Calculation failed')
+      }
+
+    } catch (error) {
+      console.error('ROI calculation error:', error)
+      setCalculationError('Failed to calculate ROI. Please try again.')
+    } finally {
+      setIsCalculating(false)
     }
-
-    const sizeMultiplier = sizeMultipliers[formData.companySize as keyof typeof sizeMultipliers] || 1.0
-    const industryFactor = industryFactors[formData.industry as keyof typeof industryFactors] || 1.0
-
-    // Calculate potential savings
-    const hoursReclaimed = hoursManual * 0.6 * sizeMultiplier // 60% automation rate
-    const monthlySavings = hoursReclaimed * employeeCostHourly * 4.33 * industryFactor // 4.33 weeks per month
-    const annualSavings = monthlySavings * 12
-
-    // Estimate implementation cost
-    let estimatedCost = 5000 // Base cost
-    if (formData.companySize === '1-10') estimatedCost = 3000
-    else if (formData.companySize === '11-50') estimatedCost = 5000
-    else if (formData.companySize === '51-200') estimatedCost = 8000
-    else if (formData.companySize === '201-1000') estimatedCost = 15000
-    else if (formData.companySize === '1000+') estimatedCost = 25000
-
-    const roiPercentage = annualSavings > 0 ? ((annualSavings - estimatedCost) / estimatedCost) * 100 : 0
-    const paybackMonths = annualSavings > 0 ? (estimatedCost / (annualSavings / 12)) : 0
-
-    setResults({
-      annualSavings: Math.round(annualSavings),
-      roiPercentage: Math.round(roiPercentage),
-      paybackMonths: Math.round(paybackMonths * 10) / 10,
-      hoursReclaimed: Math.round(hoursReclaimed),
-      estimatedCost,
-    })
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -170,30 +183,30 @@ export default function ROICalculatorPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="monthlyRevenue" className="block text-sm font-medium text-secondary-900 mb-2">
-                        Monthly Revenue (USD)
+                      <label htmlFor="employeeCount" className="block text-sm font-medium text-secondary-900 mb-2">
+                        Number of Employees
                       </label>
                       <input
                         type="number"
-                        id="monthlyRevenue"
-                        name="monthlyRevenue"
-                        value={formData.monthlyRevenue}
+                        id="employeeCount"
+                        name="employeeCount"
+                        value={formData.employeeCount}
                         onChange={handleInputChange}
-                        placeholder="e.g., 50000"
+                        placeholder="e.g., 25"
                         className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                         required
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="employeeCost" className="block text-sm font-medium text-secondary-900 mb-2">
+                      <label htmlFor="averageHourlyRate" className="block text-sm font-medium text-secondary-900 mb-2">
                         Average Employee Hourly Cost (USD)
                       </label>
                       <input
                         type="number"
-                        id="employeeCost"
-                        name="employeeCost"
-                        value={formData.employeeCost}
+                        id="averageHourlyRate"
+                        name="averageHourlyRate"
+                        value={formData.averageHourlyRate}
                         onChange={handleInputChange}
                         placeholder="e.g., 50"
                         className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
@@ -205,14 +218,14 @@ export default function ROICalculatorPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="hoursSpentManual" className="block text-sm font-medium text-secondary-900 mb-2">
+                      <label htmlFor="manualTaskHours" className="block text-sm font-medium text-secondary-900 mb-2">
                         Hours Spent on Manual Tasks (per week)
                       </label>
                       <input
                         type="number"
-                        id="hoursSpentManual"
-                        name="hoursSpentManual"
-                        value={formData.hoursSpentManual}
+                        id="manualTaskHours"
+                        name="manualTaskHours"
+                        value={formData.manualTaskHours}
                         onChange={handleInputChange}
                         placeholder="e.g., 20"
                         className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
@@ -224,29 +237,107 @@ export default function ROICalculatorPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="primaryChallenge" className="block text-sm font-medium text-secondary-900 mb-2">
-                        Primary Challenge
+                      <label className="block text-sm font-medium text-secondary-900 mb-2">
+                        Automation Areas (select all that apply)
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { value: 'customer-service', label: 'Customer Service' },
+                          { value: 'lead-management', label: 'Lead Management' },
+                          { value: 'data-entry', label: 'Data Entry' },
+                          { value: 'reporting', label: 'Reporting' },
+                          { value: 'scheduling', label: 'Scheduling' },
+                          { value: 'billing', label: 'Billing' },
+                          { value: 'inventory', label: 'Inventory' },
+                          { value: 'hr-processes', label: 'HR Processes' },
+                          { value: 'marketing', label: 'Marketing' },
+                          { value: 'accounting', label: 'Accounting' },
+                        ].map((area) => (
+                          <label key={area.value} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={formData.automationAreas.includes(area.value)}
+                              onChange={(e) => handleCheckboxChange(area.value, e.target.checked)}
+                              className="text-primary-600 focus:ring-primary-500"
+                            />
+                            <span className="text-sm">{area.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="primaryGoal" className="block text-sm font-medium text-secondary-900 mb-2">
+                        Primary Goal
                       </label>
                       <select
-                        id="primaryChallenge"
-                        name="primaryChallenge"
-                        value={formData.primaryChallenge}
+                        id="primaryGoal"
+                        name="primaryGoal"
+                        value={formData.primaryGoal}
                         onChange={handleInputChange}
                         className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                         required
                       >
-                        <option value="">Select your main challenge</option>
-                        <option value="manual-tasks">Too many manual tasks</option>
-                        <option value="data-entry">Data entry and processing</option>
-                        <option value="customer-service">Customer service bottlenecks</option>
-                        <option value="reporting">Time-consuming reporting</option>
-                        <option value="scaling">Difficulty scaling operations</option>
-                        <option value="integration">System integration issues</option>
+                        <option value="">Select your primary goal</option>
+                        <option value="cost-reduction">Cost Reduction</option>
+                        <option value="efficiency">Efficiency Improvement</option>
+                        <option value="accuracy">Accuracy Improvement</option>
+                        <option value="scalability">Scalability</option>
+                        <option value="compliance">Compliance</option>
                       </select>
                     </div>
 
-                    <Button type="submit" size="lg" variant="cta" className="w-full">
-                      Calculate My ROI
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-secondary-900 mb-2">
+                        Your Name (optional)
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="e.g., John Smith"
+                        className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-secondary-900 mb-2">
+                        Email (optional - to receive detailed results)
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="e.g., john@company.com"
+                        className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      />
+                      <p className="text-sm text-secondary-500 mt-1">
+                        Get a detailed ROI report sent to your email
+                      </p>
+                    </div>
+
+                    {calculationError && (
+                      <div className={`p-3 rounded-lg text-sm ${
+                        calculationError.includes('✅')
+                          ? 'bg-green-50 text-green-700 border border-green-200'
+                          : 'bg-red-50 text-red-700 border border-red-200'
+                      }`}>
+                        {calculationError}
+                      </div>
+                    )}
+
+                    <Button
+                      type="submit"
+                      size="lg"
+                      variant="cta"
+                      className="w-full"
+                      disabled={isCalculating}
+                    >
+                      {isCalculating ? 'Calculating...' : 'Calculate My ROI'}
                     </Button>
                   </form>
                 </CardContent>
@@ -269,13 +360,13 @@ export default function ROICalculatorPage() {
                         <div className="grid grid-cols-2 gap-4">
                           <div className="text-center">
                             <div className="text-3xl font-bold text-accent-600">
-                              ${results.annualSavings.toLocaleString()}
+                              ${results.costSavings?.annual?.toLocaleString() || '0'}
                             </div>
                             <div className="text-sm text-secondary-600">Annual Savings</div>
                           </div>
                           <div className="text-center">
                             <div className="text-3xl font-bold text-accent-600">
-                              {results.roiPercentage}%
+                              {results.roi?.percentage || 0}%
                             </div>
                             <div className="text-sm text-secondary-600">First Year ROI</div>
                           </div>
@@ -284,13 +375,13 @@ export default function ROICalculatorPage() {
                         <div className="grid grid-cols-2 gap-4">
                           <div className="text-center">
                             <div className="text-2xl font-bold text-primary-600">
-                              {results.paybackMonths} months
+                              {results.roi?.paybackPeriod || 'N/A'}
                             </div>
                             <div className="text-sm text-secondary-600">Payback Period</div>
                           </div>
                           <div className="text-center">
                             <div className="text-2xl font-bold text-primary-600">
-                              {results.hoursReclaimed}h
+                              {results.timeSavings?.hoursPerWeek || 0}h
                             </div>
                             <div className="text-sm text-secondary-600">Hours Saved/Week</div>
                           </div>
@@ -299,9 +390,21 @@ export default function ROICalculatorPage() {
                         <div className="border-t pt-4">
                           <div className="text-sm text-secondary-600 mb-2">Estimated Implementation Cost:</div>
                           <div className="text-xl font-semibold text-secondary-900">
-                            ${results.estimatedCost.toLocaleString()}
+                            ${results.investment?.firstYearTotal?.toLocaleString() || '0'}
                           </div>
                         </div>
+
+                        {results.qualityImprovements && (
+                          <div className="border-t pt-4">
+                            <div className="text-sm text-secondary-600 mb-2">Quality Improvements:</div>
+                            <div className="text-sm">
+                              <span className="font-semibold">Error Reduction:</span> {results.qualityImprovements.errorReduction}
+                            </div>
+                            <div className="text-sm">
+                              <span className="font-semibold">Annual Error Cost Savings:</span> ${results.qualityImprovements.annualErrorCostSavings?.toLocaleString() || '0'}
+                            </div>
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
 
