@@ -204,9 +204,9 @@ export function VoiceAgentButton({
 
   return (
     <Button
-      variant={variant}
+      variant={isCallActive ? 'destructive' : variant}
       size={size}
-      className={className}
+      className={`${className} ${isCallActive ? 'bg-red-600 hover:bg-red-700 text-white border-red-600' : ''}`}
       onClick={isCallActive ? endCall : startCall}
       disabled={isLoading}
     >
