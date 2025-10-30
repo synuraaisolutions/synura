@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
 import { Analytics } from '@/lib/analytics'
 import { sendROIResults, sendLeadNotification, sendROILeadNotification } from '@/lib/email'
+import { kitIntegration } from '@/lib/kit-integration'
 
 // Validation schema for ROI calculation
 const roiSchema = z.object({
@@ -526,6 +527,31 @@ async function saveForFollowUp(data: ROIData, estimates: any, calculationId: str
     }
   }
 
-  // TODO: Save to CRM and trigger follow-up sequence
-  // TODO: Schedule follow-up reminder
+  // Add to Kit CRM with full ROI data and smart tagging
+  if (data.email) {
+    try {
+      const kitLeadData = {
+        email: data.email,
+        name: data.name,
+        companySize: data.companySize,
+        industry: data.industry,
+        calculatedROI: estimates.roi?.sixMonthROI || estimates.roi?.percentage || 0,
+        annualSavings: estimates.costSavings?.annual || 0,
+        setupInvestment: estimates.investment?.setup || 0,
+        complexityScore: estimates.internal?.complexityScore || 1,
+        leadSource: 'roi-calculator' as const,
+        calculationId
+      }
+
+      const kitResult = await kitIntegration.processROILead(kitLeadData)
+      if (kitResult) {
+        console.log('Lead successfully added to Kit CRM with tags and custom fields')
+      } else {
+        console.log('Failed to add lead to Kit CRM (not critical)')
+      }
+    } catch (error) {
+      console.error('Kit CRM integration error (not critical):', error)
+      // Don't throw - Kit failure shouldn't break the API response
+    }
+  }
 }
