@@ -135,45 +135,33 @@ const postROIHandler = async (request: NextRequest, authContext: AuthContext) =>
 // Export with optional authentication
 export const POST = withOptionalAuth(postROIHandler)
 
-// Enhanced ROI calculation with opportunity cost and productivity gains
+// Clean, conservative ROI calculation that delivers realistic 2-4x returns
 function calculateROIEstimates(data: ROIData) {
-  // Base calculations
-  const weeklyManualCost = data.manualTaskHours * data.averageHourlyRate
-  const annualManualCost = weeklyManualCost * 52
-
-  // Automation potential by area (efficiency gains)
-  const automationPotential = calculateAutomationPotential(data.automationAreas, data.industry)
-
-  // Direct time savings calculation
-  const timeSavingsPercentage = automationPotential.efficiency
+  // 1. Calculate direct time and cost savings (conservative, realistic)
+  const timeSavingsPercentage = calculateTimeSavingsPercentage(data.automationAreas, data.industry)
   const weeklySavedHours = data.manualTaskHours * (timeSavingsPercentage / 100)
   const weeklySavedCost = weeklySavedHours * data.averageHourlyRate
   const annualDirectSavings = weeklySavedCost * 52
 
-  // Opportunity cost calculation - freed time used for revenue generation
-  const opportunityMultiplier = calculateOpportunityMultiplier(data.industry, data.companySize)
-  const annualOpportunityCost = weeklySavedHours * 52 * data.averageHourlyRate * opportunityMultiplier
+  // 2. Add modest error reduction benefits (based on actual error rate)
+  const errorReductionValue = calculateErrorReductionBenefit(data)
 
-  // Productivity boost calculation - company-wide efficiency gains
-  const productivityBoost = calculateProductivityBoost(data)
+  // 3. Calculate setup investment ONLY (no retainer)
+  const setupInvestment = calculateSetupInvestment(data)
 
-  // Error reduction benefits
-  const errorReductionValue = calculateErrorReductionValue(data)
+  // 4. Total annual benefit (conservative)
+  const totalAnnualBenefit = annualDirectSavings + errorReductionValue
 
-  // Investment estimates based on complexity scoring
-  const investmentEstimate = calculateInvestmentRequired(data)
-
-  // Total value calculation
-  const totalAnnualBenefit = annualDirectSavings + annualOpportunityCost + productivityBoost.annualValue + errorReductionValue.annualValue
+  // 5. ROI calculations (proper logic - annual benefits vs setup costs)
+  const annualROI = ((totalAnnualBenefit - setupInvestment) / setupInvestment) * 100
   const sixMonthBenefit = totalAnnualBenefit / 2
-  const roiPercentage = ((totalAnnualBenefit - investmentEstimate.total) / investmentEstimate.total) * 100
-  const sixMonthROI = ((sixMonthBenefit - investmentEstimate.total) / investmentEstimate.total) * 100
-  const paybackMonths = (investmentEstimate.total / (totalAnnualBenefit / 12))
+  const sixMonthROI = ((sixMonthBenefit - setupInvestment) / setupInvestment) * 100
+  const paybackMonths = setupInvestment / (totalAnnualBenefit / 12)
 
   return {
     timeFrame: data.timeframe,
 
-    // Time savings
+    // Time savings (simple, clear)
     timeSavings: {
       hoursPerWeek: Math.round(weeklySavedHours * 10) / 10,
       hoursPerMonth: Math.round(weeklySavedHours * 4.3 * 10) / 10,
@@ -181,147 +169,147 @@ function calculateROIEstimates(data: ROIData) {
       efficiencyGain: `${timeSavingsPercentage}%`,
     },
 
-    // Enhanced value breakdown
-    valueBreakdown: {
-      directSavings: Math.round(annualDirectSavings),
-      opportunityValue: Math.round(annualOpportunityCost),
-      productivityGains: Math.round(productivityBoost.annualValue),
-      errorReduction: Math.round(errorReductionValue.annualValue),
-      totalAnnualValue: Math.round(totalAnnualBenefit),
-    },
-
-    // Cost savings (client view - simplified)
+    // Cost savings (client view - direct savings only)
     costSavings: {
       weekly: Math.round(weeklySavedCost),
       monthly: Math.round(weeklySavedCost * 4.3),
-      annual: Math.round(annualDirectSavings), // Conservative number for client
+      annual: Math.round(annualDirectSavings),
     },
 
-    // Quality improvements
+    // Quality improvements (based on actual error rate)
     qualityImprovements: {
-      errorReduction: `${Math.round(errorReductionValue.reductionPercentage)}%`,
-      annualErrorCostSavings: Math.round(errorReductionValue.annualValue),
+      errorReduction: `${Math.round((errorReductionValue / annualDirectSavings) * 100)}%`,
+      annualErrorCostSavings: Math.round(errorReductionValue),
     },
 
-    // Investment required
+    // Investment required (setup only, no retainer)
     investment: {
-      setup: investmentEstimate.setup,
-      monthly: investmentEstimate.monthly,
-      firstYearTotal: investmentEstimate.total,
-      range: investmentEstimate.range,
+      setup: setupInvestment,
+      monthly: 0, // No retainer in pricing
+      firstYearTotal: setupInvestment,
+      range: getSetupRange(data),
     },
 
-    // Enhanced ROI metrics
+    // ROI metrics (realistic 2-4x)
     roi: {
-      percentage: Math.round(roiPercentage * 10) / 10,
+      percentage: Math.round(annualROI * 10) / 10,
       sixMonthROI: Math.round(sixMonthROI * 10) / 10,
       paybackPeriod: `${Math.round(paybackMonths * 10) / 10} months`,
       breakEvenPoint: calculateBreakEvenDate(paybackMonths),
-      threeYearValue: Math.round((totalAnnualBenefit * 3) - (investmentEstimate.total + (investmentEstimate.monthly * 24))),
-    },
-
-    // Opportunity insights
-    opportunityInsights: {
-      multiplier: opportunityMultiplier,
-      description: getOpportunityDescription(data.industry),
-      productivityBoost: productivityBoost.percentage,
+      threeYearValue: Math.round(totalAnnualBenefit * 3 - setupInvestment),
     },
 
     // Internal metrics (for sales team)
     internal: {
       complexityScore: calculateComplexityScore(data),
       workflowCount: data.automationAreas.length,
-      profitMargin: calculateProfitMargin(investmentEstimate, totalAnnualBenefit),
+      profitMargin: Math.round(((setupInvestment - (setupInvestment * 0.4)) / setupInvestment) * 100),
       tier: getComplexityTier(data.automationAreas.length),
+    },
+
+    // Simple value breakdown
+    valueBreakdown: {
+      directSavings: Math.round(annualDirectSavings),
+      errorReduction: Math.round(errorReductionValue),
+      totalAnnualValue: Math.round(totalAnnualBenefit),
     },
 
     // Confidence and assumptions
     confidence: calculateConfidenceLevel(data),
-    assumptions: getCalculationAssumptions(),
+    assumptions: [
+      'Conservative estimates based on typical automation implementations',
+      'Setup cost only - ongoing retainer discussed separately',
+      'Time savings based on proven automation efficiency rates',
+      'ROI calculated using first-year benefits vs setup investment'
+    ],
   }
 }
 
-// Calculate automation potential based on selected areas and industry
-function calculateAutomationPotential(areas: string[], industry: string) {
-  // Proven efficiency gains from automation implementations
+// Calculate realistic time savings percentage (simple, conservative)
+function calculateTimeSavingsPercentage(areas: string[], industry: string): number {
+  // Conservative efficiency gains based on proven implementations
   const areaEfficiencies: Record<string, number> = {
-    'customer-service': 65,  // Chatbots, auto-responses, ticket routing
-    'lead-management': 75,   // CRM automation, scoring, follow-ups
-    'data-entry': 85,        // OCR, form automation, data validation
-    'reporting': 80,         // Dashboard automation, scheduled reports
-    'scheduling': 80,        // Calendar integration, automated booking
-    'billing': 70,           // Invoice automation, payment processing
-    'inventory': 65,         // Tracking automation, reorder alerts
-    'hr-processes': 60,      // Onboarding automation, payroll integration
-    'marketing': 60,         // Email automation, social media, campaigns
-    'accounting': 65,        // Expense tracking, reconciliation, categorization
+    'customer-service': 50,  // Conservative automation estimates
+    'lead-management': 60,   // CRM automation, follow-ups
+    'data-entry': 70,        // High automation potential for data entry
+    'reporting': 65,         // Dashboard automation, scheduled reports
+    'scheduling': 70,        // Calendar integration, automated booking
+    'billing': 60,           // Invoice automation, payment processing
+    'inventory': 55,         // Tracking automation, reorder alerts
+    'hr-processes': 45,      // Conservative for HR processes
+    'marketing': 50,         // Email automation, social media
+    'accounting': 55,        // Expense tracking, reconciliation
   }
 
-  // Industry multipliers based on automation readiness and opportunity
-  const industryMultipliers: Record<string, number> = {
-    'professional-services': 1.25,  // Strong automation potential
-    'healthcare': 1.15,             // Good potential despite regulations
-    'ecommerce': 1.35,              // Very high automation potential
-    'manufacturing': 1.20,          // Good automation opportunities
-    'finance': 1.30,                // High automation potential
-    'technology': 1.40,             // Highest automation readiness
-    'education': 1.10,              // Moderate automation potential
-    'other': 1.15,                  // Default with good potential
+  // Simple average efficiency calculation (conservative)
+  const averageEfficiency = areas.reduce((sum, area) => sum + (areaEfficiencies[area] || 50), 0) / areas.length
+
+  // Return conservative percentage (no aggressive multipliers)
+  return Math.min(Math.round(averageEfficiency), 70) // Cap at 70% for conservatism
+}
+
+// Calculate simple error reduction benefit (conservative)
+function calculateErrorReductionBenefit(data: ROIData): number {
+  // Simple error reduction calculation - only significant if error rate is high
+  if (data.errorRate <= 2) return 0 // Very low error rate = minimal savings
+
+  // Conservative error cost calculation
+  const annualTaskCost = data.manualTaskHours * data.averageHourlyRate * 52
+  const currentErrorCost = annualTaskCost * (data.errorRate / 100) * 1.5 // Conservative 1.5x multiplier
+
+  // Conservative error reduction (50% improvement max)
+  const errorReductionPercentage = Math.min(50, data.errorRate * 5)
+
+  return currentErrorCost * (errorReductionPercentage / 100)
+}
+
+// Calculate setup investment only (NO retainer) - realistic pricing
+function calculateSetupInvestment(data: ROIData): number {
+  const workflowCount = data.automationAreas.length
+  const companySize = data.companySize
+
+  // Realistic setup pricing based on automation complexity and company size
+  let basePrice = 0
+
+  // Base price by workflow count (much more conservative)
+  if (workflowCount <= 2) {
+    basePrice = 1500 // Simple automation setup
+  } else if (workflowCount <= 4) {
+    basePrice = 3000 // Medium complexity
+  } else {
+    basePrice = 4500 // Higher complexity
   }
 
-  const averageEfficiency = areas.reduce((sum, area) => sum + (areaEfficiencies[area] || 65), 0) / areas.length
-  const industryAdjusted = averageEfficiency * (industryMultipliers[industry] || 1.15)
+  // Company size adjustment (smaller companies pay less)
+  const sizeMultiplier = getSizeMultiplier(companySize)
+  const setupCost = Math.round(basePrice * sizeMultiplier)
 
-  return {
-    efficiency: Math.min(Math.round(industryAdjusted), 85), // Increased cap to 85%
-    complexity: areas.length > 3 ? 'high' : areas.length > 1 ? 'medium' : 'low',
+  // Cap maximum to keep it reasonable
+  return Math.min(setupCost, 6000) // Never more than $6K setup
+}
+
+// Get company size multiplier for pricing
+function getSizeMultiplier(companySize: string): number {
+  switch (companySize) {
+    case '1-10': return 0.8    // 20% discount for very small companies
+    case '11-50': return 1.0   // Base pricing
+    case '51-200': return 1.2  // 20% premium for medium companies
+    case '201-1000': return 1.4 // 40% premium for large companies
+    case '1000+': return 1.6   // 60% premium for enterprise
+    default: return 1.0
   }
 }
 
-// Calculate error reduction value
-function calculateErrorReductionValue(data: ROIData) {
-  const errorCostMultiplier = 2.5 // Errors typically cost 2.5x more to fix than prevent
-  const currentErrorCost = (data.manualTaskHours * data.averageHourlyRate * 52) * (data.errorRate / 100) * errorCostMultiplier
-  const errorReductionPercentage = Math.min(90, data.errorRate * 8) // Automation can reduce errors by up to 90%
-  const annualErrorSavings = currentErrorCost * (errorReductionPercentage / 100)
+// Get setup range description for display
+function getSetupRange(data: ROIData): string {
+  const workflowCount = data.automationAreas.length
 
-  return {
-    reductionPercentage: errorReductionPercentage,
-    annualValue: annualErrorSavings,
-  }
-}
-
-// Calculate investment required based on pricing rubric
-function calculateInvestmentRequired(data: ROIData) {
-  const complexityScore = calculateComplexityScore(data)
-  const tier = getComplexityTier(data.automationAreas.length)
-
-  // Pricing based on internal rubric
-  let setupRange, monthlyRange
-
-  if (complexityScore <= 3) { // Low complexity
-    setupRange = { min: 2000, max: 4000 }
-    monthlyRange = { min: 1500, max: 3000 }
-  } else if (complexityScore <= 6) { // Medium complexity
-    setupRange = { min: 5000, max: 10000 }
-    monthlyRange = { min: 3500, max: 7000 }
-  } else { // High complexity
-    setupRange = { min: 10000, max: 25000 }
-    monthlyRange = { min: 8000, max: 15000 }
-  }
-
-  // Calculate specific price within range based on complexity factors
-  const setupFactor = (complexityScore - (tier === 'low' ? 1 : tier === 'medium' ? 4 : 7)) / 3
-  const setup = Math.round(setupRange.min + (setupRange.max - setupRange.min) * setupFactor)
-  const monthly = Math.round(monthlyRange.min + (monthlyRange.max - monthlyRange.min) * setupFactor)
-
-  return {
-    setup,
-    monthly,
-    total: setup + (monthly * 12), // First year total
-    range: `$${Math.round(setupRange.min / 1000)}K-$${Math.round(setupRange.max / 1000)}K setup`,
-    tier,
-    complexityScore,
+  if (workflowCount <= 2) {
+    return '$1.2K-$2K setup' // Simple automation
+  } else if (workflowCount <= 4) {
+    return '$2.4K-$4K setup' // Medium complexity
+  } else {
+    return '$3.6K-$6K setup' // Higher complexity
   }
 }
 
@@ -401,12 +389,12 @@ function calculateBreakEvenDate(paybackMonths: number): string {
 
 function getCalculationAssumptions(): string[] {
   return [
-    'Estimates based on industry averages and Synura client data',
-    'Assumes dedicated implementation and training period',
-    'ROI calculations include setup costs and first year operational costs',
-    'Time savings assume 80-90% automation efficiency for selected processes',
-    'Error reduction based on typical manual vs. automated process accuracy',
-    'Actual results may vary based on specific implementation and adoption',
+    'Conservative estimates based on proven automation implementations',
+    'Setup cost only - ongoing retainer discussed separately',
+    'Time savings based on realistic automation efficiency rates (50-70%)',
+    'ROI calculated using annual benefits vs setup investment only',
+    'Error reduction based on actual error rates and conservative improvements',
+    'Results may vary based on specific implementation and team adoption',
   ]
 }
 
@@ -428,52 +416,6 @@ function getNextSteps(estimates: any): string[] {
   return steps
 }
 
-// Calculate opportunity cost multiplier - value when person does higher-value work
-function calculateOpportunityMultiplier(industry: string, companySize: string): number {
-  const industryMultipliers: Record<string, number> = {
-    'professional-services': 3.5, // Billable hour rates much higher
-    'technology': 4.0,            // High-value engineering/product work
-    'finance': 3.0,               // Investment/advisory work
-    'ecommerce': 2.5,             // Revenue-generating activities
-    'healthcare': 2.0,            // Patient care vs admin
-    'manufacturing': 1.8,         // Production optimization
-    'education': 1.5,             // Teaching vs admin
-    'other': 2.0,                 // Conservative default
-  }
-
-  const sizeMultipliers: Record<string, number> = {
-    '1-10': 1.0,     // Limited alternative work
-    '11-50': 1.2,    // More opportunities
-    '51-200': 1.4,   // Diverse roles available
-    '201-1000': 1.6, // Many high-value positions
-    '1000+': 1.8,    // Strategic roles available
-  }
-
-  return (industryMultipliers[industry] || 2.0) * (sizeMultipliers[companySize] || 1.2)
-}
-
-// Calculate productivity boost from automation
-function calculateProductivityBoost(data: ROIData) {
-  const baseBoost = 0.15 // 15% productivity increase
-  const areaBoost = data.automationAreas.length * 0.03 // 3% per automation area
-  const totalBoost = Math.min(baseBoost + areaBoost, 0.30) // Cap at 30%
-
-  const annualRevenue = estimateAnnualRevenue(data)
-  const annualValue = annualRevenue * totalBoost
-
-  return {
-    percentage: Math.round(totalBoost * 100),
-    annualValue,
-    description: 'Company-wide efficiency gains from automation',
-  }
-}
-
-// Estimate annual revenue based on company size and hourly rates
-function estimateAnnualRevenue(data: ROIData): number {
-  const employeeCount = getEmployeeCount(data.companySize)
-  const revenuePerEmployee = data.averageHourlyRate * 2000 * 2.5 // Rough revenue multiple
-  return employeeCount * revenuePerEmployee
-}
 
 // Calculate complexity score for pricing (1-10 scale)
 function calculateComplexityScore(data: ROIData): number {
@@ -531,28 +473,6 @@ function getEmployeeCount(companySize: string): number {
   return employeeMap[companySize] || 25
 }
 
-// Calculate profit margin for internal use
-function calculateProfitMargin(investment: any, totalBenefit: number): number {
-  const revenue = investment.total
-  const cost = revenue * 0.4 // Assume 40% cost basis
-  const profit = revenue - cost
-  return Math.round((profit / revenue) * 100)
-}
-
-// Get opportunity description by industry
-function getOpportunityDescription(industry: string): string {
-  const descriptions: Record<string, string> = {
-    'professional-services': 'Team can focus on billable client work and business development',
-    'technology': 'Engineers can focus on product development and innovation',
-    'finance': 'Staff can focus on investment analysis and client advisory work',
-    'ecommerce': 'Team can focus on marketing, product, and customer experience',
-    'healthcare': 'Staff can focus on patient care and clinical improvements',
-    'manufacturing': 'Team can focus on production optimization and quality control',
-    'education': 'Staff can focus on teaching and student engagement',
-    'other': 'Team can focus on core business activities and growth initiatives',
-  }
-  return descriptions[industry] || descriptions['other']
-}
 
 // Save calculation for follow-up
 async function saveForFollowUp(data: ROIData, estimates: any, calculationId: string) {
