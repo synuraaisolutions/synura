@@ -107,6 +107,12 @@ export function VoiceAgentButton({
         callRef.current = call
         setIsCallActive(true)
 
+        // Clear loading state after 3 seconds regardless of events
+        // This ensures users can see the "End Call" button even if call_started event doesn't fire
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 3000)
+
         // Handle call events
         call.on('disconnect', () => {
           setIsCallActive(false)
