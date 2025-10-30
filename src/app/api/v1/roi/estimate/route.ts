@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withOptionalAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
 import { Analytics } from '@/lib/analytics'
-import { sendROIResults, sendLeadNotification } from '@/lib/email'
+import { sendROIResults, sendLeadNotification, sendROILeadNotification } from '@/lib/email'
 
 // Validation schema for ROI calculation
 const roiSchema = z.object({
@@ -135,7 +135,7 @@ const postROIHandler = async (request: NextRequest, authContext: AuthContext) =>
 // Export with optional authentication
 export const POST = withOptionalAuth(postROIHandler)
 
-// Main ROI calculation function
+// Enhanced ROI calculation with opportunity cost and productivity gains
 function calculateROIEstimates(data: ROIData) {
   // Base calculations
   const weeklyManualCost = data.manualTaskHours * data.averageHourlyRate
@@ -144,21 +144,30 @@ function calculateROIEstimates(data: ROIData) {
   // Automation potential by area (efficiency gains)
   const automationPotential = calculateAutomationPotential(data.automationAreas, data.industry)
 
-  // Time savings calculation
+  // Direct time savings calculation
   const timeSavingsPercentage = automationPotential.efficiency
   const weeklySavedHours = data.manualTaskHours * (timeSavingsPercentage / 100)
   const weeklySavedCost = weeklySavedHours * data.averageHourlyRate
-  const annualSavedCost = weeklySavedCost * 52
+  const annualDirectSavings = weeklySavedCost * 52
+
+  // Opportunity cost calculation - freed time used for revenue generation
+  const opportunityMultiplier = calculateOpportunityMultiplier(data.industry, data.companySize)
+  const annualOpportunityCost = weeklySavedHours * 52 * data.averageHourlyRate * opportunityMultiplier
+
+  // Productivity boost calculation - company-wide efficiency gains
+  const productivityBoost = calculateProductivityBoost(data)
 
   // Error reduction benefits
   const errorReductionValue = calculateErrorReductionValue(data)
 
-  // Investment estimates based on scope
+  // Investment estimates based on complexity scoring
   const investmentEstimate = calculateInvestmentRequired(data)
 
-  // ROI calculation
-  const totalAnnualBenefit = annualSavedCost + errorReductionValue.annualValue
+  // Total value calculation
+  const totalAnnualBenefit = annualDirectSavings + annualOpportunityCost + productivityBoost.annualValue + errorReductionValue.annualValue
+  const sixMonthBenefit = totalAnnualBenefit / 2
   const roiPercentage = ((totalAnnualBenefit - investmentEstimate.total) / investmentEstimate.total) * 100
+  const sixMonthROI = ((sixMonthBenefit - investmentEstimate.total) / investmentEstimate.total) * 100
   const paybackMonths = (investmentEstimate.total / (totalAnnualBenefit / 12))
 
   return {
@@ -172,11 +181,20 @@ function calculateROIEstimates(data: ROIData) {
       efficiencyGain: `${timeSavingsPercentage}%`,
     },
 
-    // Cost savings
+    // Enhanced value breakdown
+    valueBreakdown: {
+      directSavings: Math.round(annualDirectSavings),
+      opportunityValue: Math.round(annualOpportunityCost),
+      productivityGains: Math.round(productivityBoost.annualValue),
+      errorReduction: Math.round(errorReductionValue.annualValue),
+      totalAnnualValue: Math.round(totalAnnualBenefit),
+    },
+
+    // Cost savings (client view - simplified)
     costSavings: {
       weekly: Math.round(weeklySavedCost),
       monthly: Math.round(weeklySavedCost * 4.3),
-      annual: Math.round(annualSavedCost),
+      annual: Math.round(annualDirectSavings), // Conservative number for client
     },
 
     // Quality improvements
@@ -190,14 +208,31 @@ function calculateROIEstimates(data: ROIData) {
       setup: investmentEstimate.setup,
       monthly: investmentEstimate.monthly,
       firstYearTotal: investmentEstimate.total,
+      range: investmentEstimate.range,
     },
 
-    // ROI metrics
+    // Enhanced ROI metrics
     roi: {
       percentage: Math.round(roiPercentage * 10) / 10,
+      sixMonthROI: Math.round(sixMonthROI * 10) / 10,
       paybackPeriod: `${Math.round(paybackMonths * 10) / 10} months`,
       breakEvenPoint: calculateBreakEvenDate(paybackMonths),
       threeYearValue: Math.round((totalAnnualBenefit * 3) - (investmentEstimate.total + (investmentEstimate.monthly * 24))),
+    },
+
+    // Opportunity insights
+    opportunityInsights: {
+      multiplier: opportunityMultiplier,
+      description: getOpportunityDescription(data.industry),
+      productivityBoost: productivityBoost.percentage,
+    },
+
+    // Internal metrics (for sales team)
+    internal: {
+      complexityScore: calculateComplexityScore(data),
+      workflowCount: data.automationAreas.length,
+      profitMargin: calculateProfitMargin(investmentEstimate, totalAnnualBenefit),
+      tier: getComplexityTier(data.automationAreas.length),
     },
 
     // Confidence and assumptions
@@ -256,29 +291,37 @@ function calculateErrorReductionValue(data: ROIData) {
   }
 }
 
-// Calculate investment required - realistic pricing based on market rates
+// Calculate investment required based on pricing rubric
 function calculateInvestmentRequired(data: ROIData) {
-  const complexityMultipliers = {
-    '1-10': 0.5,    // Significant discount for small companies
-    '11-50': 0.7,   // Good discount for medium companies
-    '51-200': 0.9,  // Slight discount
-    '201-1000': 1.0, // Standard rates
-    '1000+': 1.2,   // Moderate enterprise premium
+  const complexityScore = calculateComplexityScore(data)
+  const tier = getComplexityTier(data.automationAreas.length)
+
+  // Pricing based on internal rubric
+  let setupRange, monthlyRange
+
+  if (complexityScore <= 3) { // Low complexity
+    setupRange = { min: 2000, max: 4000 }
+    monthlyRange = { min: 1500, max: 3000 }
+  } else if (complexityScore <= 6) { // Medium complexity
+    setupRange = { min: 5000, max: 10000 }
+    monthlyRange = { min: 3500, max: 7000 }
+  } else { // High complexity
+    setupRange = { min: 10000, max: 25000 }
+    monthlyRange = { min: 8000, max: 15000 }
   }
 
-  const areaComplexity = data.automationAreas.length
-  // Competitive setup costs that ensure positive ROI
-  const baseSetup = 1500 + (areaComplexity * 500) // Reduced base costs significantly
-  const setupCost = baseSetup * (complexityMultipliers[data.companySize] || 1.0)
-
-  // Competitive monthly costs for positive ROI
-  const baseMonthlyCost = Math.max(250, areaComplexity * 125) // Reduced ongoing costs
-  const monthlyCost = baseMonthlyCost * (complexityMultipliers[data.companySize] || 1.0)
+  // Calculate specific price within range based on complexity factors
+  const setupFactor = (complexityScore - (tier === 'low' ? 1 : tier === 'medium' ? 4 : 7)) / 3
+  const setup = Math.round(setupRange.min + (setupRange.max - setupRange.min) * setupFactor)
+  const monthly = Math.round(monthlyRange.min + (monthlyRange.max - monthlyRange.min) * setupFactor)
 
   return {
-    setup: Math.round(setupCost),
-    monthly: Math.round(monthlyCost),
-    total: Math.round(setupCost + (monthlyCost * 12)), // First year total
+    setup,
+    monthly,
+    total: setup + (monthly * 12), // First year total
+    range: `$${Math.round(setupRange.min / 1000)}K-$${Math.round(setupRange.max / 1000)}K setup`,
+    tier,
+    complexityScore,
   }
 }
 
@@ -385,6 +428,132 @@ function getNextSteps(estimates: any): string[] {
   return steps
 }
 
+// Calculate opportunity cost multiplier - value when person does higher-value work
+function calculateOpportunityMultiplier(industry: string, companySize: string): number {
+  const industryMultipliers: Record<string, number> = {
+    'professional-services': 3.5, // Billable hour rates much higher
+    'technology': 4.0,            // High-value engineering/product work
+    'finance': 3.0,               // Investment/advisory work
+    'ecommerce': 2.5,             // Revenue-generating activities
+    'healthcare': 2.0,            // Patient care vs admin
+    'manufacturing': 1.8,         // Production optimization
+    'education': 1.5,             // Teaching vs admin
+    'other': 2.0,                 // Conservative default
+  }
+
+  const sizeMultipliers: Record<string, number> = {
+    '1-10': 1.0,     // Limited alternative work
+    '11-50': 1.2,    // More opportunities
+    '51-200': 1.4,   // Diverse roles available
+    '201-1000': 1.6, // Many high-value positions
+    '1000+': 1.8,    // Strategic roles available
+  }
+
+  return (industryMultipliers[industry] || 2.0) * (sizeMultipliers[companySize] || 1.2)
+}
+
+// Calculate productivity boost from automation
+function calculateProductivityBoost(data: ROIData) {
+  const baseBoost = 0.15 // 15% productivity increase
+  const areaBoost = data.automationAreas.length * 0.03 // 3% per automation area
+  const totalBoost = Math.min(baseBoost + areaBoost, 0.30) // Cap at 30%
+
+  const annualRevenue = estimateAnnualRevenue(data)
+  const annualValue = annualRevenue * totalBoost
+
+  return {
+    percentage: Math.round(totalBoost * 100),
+    annualValue,
+    description: 'Company-wide efficiency gains from automation',
+  }
+}
+
+// Estimate annual revenue based on company size and hourly rates
+function estimateAnnualRevenue(data: ROIData): number {
+  const employeeCount = getEmployeeCount(data.companySize)
+  const revenuePerEmployee = data.averageHourlyRate * 2000 * 2.5 // Rough revenue multiple
+  return employeeCount * revenuePerEmployee
+}
+
+// Calculate complexity score for pricing (1-10 scale)
+function calculateComplexityScore(data: ROIData): number {
+  let score = 1
+
+  // Automation areas count (1-4 points)
+  const areaCount = data.automationAreas.length
+  if (areaCount <= 2) score += 1
+  else if (areaCount <= 4) score += 2
+  else if (areaCount <= 6) score += 3
+  else score += 4
+
+  // Industry complexity (0-2 points)
+  const industryComplexity: Record<string, number> = {
+    'technology': 2,
+    'finance': 2,
+    'healthcare': 2,
+    'professional-services': 1,
+    'ecommerce': 1,
+    'manufacturing': 1,
+    'education': 0,
+    'other': 1,
+  }
+  score += industryComplexity[data.industry] || 1
+
+  // Company size complexity (0-3 points)
+  const sizeComplexity: Record<string, number> = {
+    '1-10': 0,
+    '11-50': 1,
+    '51-200': 2,
+    '201-1000': 2,
+    '1000+': 3,
+  }
+  score += sizeComplexity[data.companySize] || 1
+
+  return Math.min(score, 10)
+}
+
+// Get complexity tier
+function getComplexityTier(areaCount: number): 'low' | 'medium' | 'high' {
+  if (areaCount <= 3) return 'low'
+  if (areaCount <= 6) return 'medium'
+  return 'high'
+}
+
+// Get employee count from company size
+function getEmployeeCount(companySize: string): number {
+  const employeeMap: Record<string, number> = {
+    '1-10': 5,
+    '11-50': 25,
+    '51-200': 100,
+    '201-1000': 500,
+    '1000+': 2000,
+  }
+  return employeeMap[companySize] || 25
+}
+
+// Calculate profit margin for internal use
+function calculateProfitMargin(investment: any, totalBenefit: number): number {
+  const revenue = investment.total
+  const cost = revenue * 0.4 // Assume 40% cost basis
+  const profit = revenue - cost
+  return Math.round((profit / revenue) * 100)
+}
+
+// Get opportunity description by industry
+function getOpportunityDescription(industry: string): string {
+  const descriptions: Record<string, string> = {
+    'professional-services': 'Team can focus on billable client work and business development',
+    'technology': 'Engineers can focus on product development and innovation',
+    'finance': 'Staff can focus on investment analysis and client advisory work',
+    'ecommerce': 'Team can focus on marketing, product, and customer experience',
+    'healthcare': 'Staff can focus on patient care and clinical improvements',
+    'manufacturing': 'Team can focus on production optimization and quality control',
+    'education': 'Staff can focus on teaching and student engagement',
+    'other': 'Team can focus on core business activities and growth initiatives',
+  }
+  return descriptions[industry] || descriptions['other']
+}
+
 // Save calculation for follow-up
 async function saveForFollowUp(data: ROIData, estimates: any, calculationId: string) {
   const followUpData = {
@@ -433,30 +602,9 @@ async function saveForFollowUp(data: ROIData, estimates: any, calculationId: str
       await sendROIResults(roiEmailData, estimates)
       console.log('ROI results email sent successfully')
 
-      // Send notification to team about ROI calculation lead
-      const leadData = {
-        leadId: calculationId,
-        name: data.name || 'ROI Calculator User',
-        email: data.email,
-        company: `${data.companySize} company in ${data.industry}`,
-        phone: undefined,
-        intent: 'consultation' as const,
-        message: `Completed ROI calculation showing $${estimates.costSavings?.annual || 0} annual savings potential`,
-        source: 'website' as const,
-        utmSource: undefined,
-        utmCampaign: 'roi-calculator',
-        utmMedium: 'website',
-        utmContent: undefined,
-        utmTerm: undefined,
-        ipAddress: 'roi-calculator',
-        userAgent: 'roi-calculator',
-        referer: undefined,
-        apiKeyId: undefined,
-        status: 'new'
-      }
-
-      await sendLeadNotification(leadData, 'roi_calculator')
-      console.log('Team notification sent successfully')
+      // Send enhanced notification to sales team with detailed ROI analysis
+      await sendROILeadNotification(roiEmailData, estimates)
+      console.log('Enhanced sales team notification sent successfully')
 
     } catch (error) {
       console.error('Failed to send ROI follow-up emails:', error)
