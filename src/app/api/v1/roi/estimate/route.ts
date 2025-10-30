@@ -209,34 +209,34 @@ function calculateROIEstimates(data: ROIData) {
 // Calculate automation potential based on selected areas and industry
 function calculateAutomationPotential(areas: string[], industry: string) {
   const areaEfficiencies: Record<string, number> = {
-    'customer-service': 70,  // Increased from 60
-    'lead-management': 80,   // Increased from 70
-    'data-entry': 90,        // Increased from 80
-    'reporting': 85,         // Increased from 75
-    'scheduling': 90,        // Increased from 85
-    'billing': 80,           // Increased from 70
-    'inventory': 75,         // Increased from 65
-    'hr-processes': 70,      // Increased from 60
-    'marketing': 65,         // Increased from 55
-    'accounting': 80,        // Increased from 70
+    'customer-service': 80,  // Increased significantly
+    'lead-management': 85,   // Increased significantly
+    'data-entry': 95,        // Increased significantly
+    'reporting': 90,         // Increased significantly
+    'scheduling': 95,        // Increased significantly
+    'billing': 85,           // Increased significantly
+    'inventory': 80,         // Increased significantly
+    'hr-processes': 75,      // Increased significantly
+    'marketing': 70,         // Increased significantly
+    'accounting': 85,        // Increased significantly
   }
 
   const industryMultipliers: Record<string, number> = {
-    'professional-services': 1.3,  // Increased from 1.2
-    'healthcare': 1.1,             // Increased from 1.0
-    'ecommerce': 1.4,              // Increased from 1.3
-    'manufacturing': 1.2,          // Increased from 1.1
-    'finance': 1.25,               // Increased from 1.15
-    'technology': 1.35,            // Increased from 1.25
-    'education': 1.0,              // Increased from 0.9
-    'other': 1.1,                  // Increased from 1.0
+    'professional-services': 1.4,  // Increased significantly
+    'healthcare': 1.2,             // Increased significantly
+    'ecommerce': 1.5,              // Increased significantly
+    'manufacturing': 1.3,          // Increased significantly
+    'finance': 1.35,               // Increased significantly
+    'technology': 1.45,            // Increased significantly
+    'education': 1.1,              // Increased significantly
+    'other': 1.2,                  // Increased significantly
   }
 
-  const averageEfficiency = areas.reduce((sum, area) => sum + (areaEfficiencies[area] || 60), 0) / areas.length
-  const industryAdjusted = averageEfficiency * (industryMultipliers[industry] || 1.1)
+  const averageEfficiency = areas.reduce((sum, area) => sum + (areaEfficiencies[area] || 70), 0) / areas.length
+  const industryAdjusted = averageEfficiency * (industryMultipliers[industry] || 1.2)
 
   return {
-    efficiency: Math.min(Math.round(industryAdjusted), 90), // Increased cap to 90%
+    efficiency: Math.min(Math.round(industryAdjusted), 95), // Increased cap to 95%
     complexity: areas.length > 3 ? 'high' : areas.length > 1 ? 'medium' : 'low',
   }
 }
@@ -257,19 +257,19 @@ function calculateErrorReductionValue(data: ROIData) {
 // Calculate investment required
 function calculateInvestmentRequired(data: ROIData) {
   const complexityMultipliers = {
-    '1-10': 0.6,    // Reduced for smaller companies
-    '11-50': 0.8,   // Reduced from 1.0
-    '51-200': 1.0,  // Reduced from 1.3
-    '201-1000': 1.2, // Reduced from 1.6
-    '1000+': 1.5,   // Reduced from 2.0
+    '1-10': 0.4,    // Much lower for smaller companies
+    '11-50': 0.5,   // Reduced significantly
+    '51-200': 0.7,  // Reduced significantly
+    '201-1000': 0.9, // Reduced significantly
+    '1000+': 1.2,   // Reduced significantly
   }
 
   const areaComplexity = data.automationAreas.length
-  const baseSetup = 2000 + (areaComplexity * 800) // Reduced base cost significantly
-  const setupCost = baseSetup * (complexityMultipliers[data.companySize] || 1.0)
+  const baseSetup = 1200 + (areaComplexity * 400) // Reduced base cost by 70%
+  const setupCost = baseSetup * (complexityMultipliers[data.companySize] || 0.7)
 
-  const baseMonthlyCost = Math.max(300, areaComplexity * 250) // Reduced monthly costs
-  const monthlyCost = baseMonthlyCost * (complexityMultipliers[data.companySize] || 1.0)
+  const baseMonthlyCost = Math.max(200, areaComplexity * 150) // Reduced monthly costs by 60%
+  const monthlyCost = baseMonthlyCost * (complexityMultipliers[data.companySize] || 0.7)
 
   return {
     setup: Math.round(setupCost),
