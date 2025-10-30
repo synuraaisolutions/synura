@@ -103,15 +103,22 @@ export function VoiceAgentButton({
         sampleRate: 24000,
       })
 
+      console.log('Voice Agent Button: startCall returned:', call, 'Type:', typeof call)
+
+      // Set call as active and clear loading state after timeout regardless of return value
+      // The call connects even if startCall returns undefined
+      setIsCallActive(true)
+      console.log('Voice Agent Button: Call initiated, setting timeout...')
+
+      // Clear loading state after 3 seconds regardless of events
+      // This ensures users can see the "End Call" button even if call_started event doesn't fire
+      setTimeout(() => {
+        console.log('Voice Agent Button: 3-second timeout clearing loading state')
+        setIsLoading(false)
+      }, 3000)
+
       if (call) {
         callRef.current = call
-        setIsCallActive(true)
-
-        // Clear loading state after 3 seconds regardless of events
-        // This ensures users can see the "End Call" button even if call_started event doesn't fire
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 3000)
 
         // Handle call events
         call.on('disconnect', () => {
@@ -152,12 +159,29 @@ export function VoiceAgentButton({
   }
 
   const endCall = () => {
+    console.log('Voice Agent Button: Attempting to end call...')
+
+    // Try to disconnect using the call object if available
     if (callRef.current) {
       callRef.current.disconnect()
       callRef.current = null
-      setIsCallActive(false)
-      setIsLoading(false)
+      console.log('Voice Agent Button: Disconnected via call object')
+    } else {
+      // Try to disconnect using the client directly if no call object
+      try {
+        if (retellClientRef.current && typeof retellClientRef.current.disconnect === 'function') {
+          retellClientRef.current.disconnect()
+          console.log('Voice Agent Button: Disconnected via client')
+        }
+      } catch (error) {
+        console.log('Voice Agent Button: Could not disconnect via client:', error)
+      }
     }
+
+    // Always reset UI state regardless of disconnect success
+    setIsCallActive(false)
+    setIsLoading(false)
+    console.log('Voice Agent Button: UI state reset to inactive')
   }
 
   // Show fallback button if SDK isn't ready after 5 seconds
