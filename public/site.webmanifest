@@ -1,0 +1,22 @@
+{
+  "name": "Synura AI Solutions",
+  "short_name": "Synura",
+  "description": "AI automation agency for smarter systems and stronger businesses",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A2342",
+  "theme_color": "#0A2342",
+  "icons": [
+    {
+      "src": "/images/synura-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

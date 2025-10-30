@@ -28,10 +28,10 @@ export const metadata: Metadata = {
     siteName: 'Synura AI Solutions',
     images: [
       {
-        url: '/images/professional/hero-person-laptop-synura.jpg',
+        url: '/images/professional/Synura_AI_Default.jpg',
         width: 1200,
         height: 630,
-        alt: 'Synura AI Solutions - Professional viewing Synura website showing AI automation services',
+        alt: 'Synura AI Solutions - AI automation agency for smarter systems and stronger businesses',
       },
     ],
   },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: 'Synura AI Solutions - Smarter systems. Stronger businesses.',
     description: 'AI automation agency that helps businesses save time, reduce costs, and eliminate inefficiency through intelligent systems and custom-built AI agents.',
     creator: '@synuraai',
-    images: ['/images/professional/hero-person-laptop-synura.jpg'],
+    images: ['/images/professional/Synura_AI_Default.jpg'],
   },
   robots: {
     index: true,
@@ -62,6 +62,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        {/* Favicon and App Icons */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/images/synura-logo.svg" />
+        <link rel="apple-touch-icon" href="/images/synura-logo.svg" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#0A2342" />
+      </head>
       <body className={inter.className}>
         {children}
 

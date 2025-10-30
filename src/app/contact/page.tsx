@@ -10,13 +10,18 @@ export default function ContactPage() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
+      <section
+        className="relative py-20 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "linear-gradient(rgba(10, 35, 66, 0.8), rgba(10, 35, 66, 0.6)), url('/images/professional/Synura_AI_Default.jpg')"
+        }}
+      >
         <div className="synura-container">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Let's Transform Your Business
             </h1>
-            <p className="text-xl text-secondary-600 mb-8">
+            <p className="text-xl text-primary-100 mb-8">
               Ready to discover how much time and money automation can save your business?
               Start with a free consultation.
             </p>

@@ -113,17 +113,22 @@ export default function ROICalculatorPage() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
+      <section
+        className="relative py-20 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "linear-gradient(rgba(10, 35, 66, 0.8), rgba(10, 35, 66, 0.6)), url('/images/professional/Synura_AI_Default.jpg')"
+        }}
+      >
         <div className="synura-container">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               AI Automation ROI Calculator
             </h1>
-            <p className="text-xl text-secondary-600 mb-8">
+            <p className="text-xl text-primary-100 mb-8">
               Discover how much time and money AI automation could save your business.
               Get instant estimates based on your specific situation.
             </p>
-            <p className="text-lg text-secondary-700">
+            <p className="text-lg text-accent-200">
               <strong>Average client ROI: 2-3x within the first 6 months</strong>
             </p>
           </div>
