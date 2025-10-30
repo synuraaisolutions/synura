@@ -158,6 +158,9 @@ function calculateROIEstimates(data: ROIData) {
   const sixMonthROI = ((sixMonthBenefit - setupInvestment) / setupInvestment) * 100
   const paybackMonths = setupInvestment / (totalAnnualBenefit / 12)
 
+  // Calculate possible additional value (distinct from core savings)
+  const possibleOpportunityValue = Math.round(annualDirectSavings * 0.20) // 20% of direct savings
+
   return {
     timeFrame: data.timeframe,
 
@@ -199,6 +202,14 @@ function calculateROIEstimates(data: ROIData) {
       threeYearValue: Math.round(totalAnnualBenefit * 3 - setupInvestment),
     },
 
+    // Possible additional value (distinct from core savings)
+    possibleAdditionalValue: {
+      opportunityValue: possibleOpportunityValue,
+      description: "Potential additional value when team uses freed time for higher-value work",
+      caveat: "Depends on how efficiently freed time is utilized - not guaranteed",
+      percentageOfSavings: "20%",
+    },
+
     // Internal metrics (for sales team)
     internal: {
       complexityScore: calculateComplexityScore(data),
@@ -220,7 +231,8 @@ function calculateROIEstimates(data: ROIData) {
       'Conservative estimates based on typical automation implementations',
       'Setup cost only - ongoing retainer discussed separately',
       'Time savings based on proven automation efficiency rates',
-      'ROI calculated using first-year benefits vs setup investment'
+      'ROI calculated using first-year benefits vs setup investment',
+      'Additional opportunity value requires effective use of freed time'
     ],
   }
 }

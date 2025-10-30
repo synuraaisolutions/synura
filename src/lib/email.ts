@@ -233,7 +233,7 @@ function generateClientROITemplate(
     <body>
         <div class="container">
             <div class="header">
-                <img src="https://synura.ai/images/synura-logo-white.svg" alt="Synura AI Solutions" class="logo">
+                <img src="https://synura.ai/images/synura-logo.svg" alt="Synura AI Solutions" class="logo">
                 <h1 style="margin: 0; font-size: 28px;">Your Custom ROI Analysis</h1>
                 <p style="margin: 10px 0 0 0; opacity: 0.9;">Smarter systems. Stronger businesses.</p>
             </div>
@@ -265,8 +265,13 @@ function generateClientROITemplate(
 
                 <div class="opportunity">
                     <h3 style="color: #18A4E0; margin-bottom: 10px;">💡 Beyond Direct Savings</h3>
-                    <p>${estimates.opportunityInsights?.description || 'Your team can focus on core business activities and growth initiatives'}</p>
+                    <p>${estimates.possibleAdditionalValue?.description || 'Your team can focus on core business activities and growth initiatives'}</p>
+                    ${estimates.possibleAdditionalValue?.opportunityValue ? `
+                    <p style="margin-top: 10px;"><strong>Possible Additional Value:</strong> $${estimates.possibleAdditionalValue.opportunityValue.toLocaleString()}/year (${estimates.possibleAdditionalValue.percentageOfSavings} of direct savings)</p>
+                    <p style="font-size: 14px; color: #6b7280; font-style: italic;">${estimates.possibleAdditionalValue.caveat}</p>
+                    ` : `
                     <p style="margin-top: 10px;"><strong>Additional Value:</strong> Productivity gains, reduced errors, and scalability for future growth.</p>
+                    `}
                 </div>
 
                 <div class="benefits">
@@ -327,7 +332,7 @@ Payback: ${payback}
 
 Investment Range: ${costRange}
 
-Beyond direct savings, your team can focus on strategic work while automation handles routine tasks.
+Beyond direct savings${estimates.possibleAdditionalValue?.opportunityValue ? `, there's possible additional value of $${estimates.possibleAdditionalValue.opportunityValue.toLocaleString()}/year (${estimates.possibleAdditionalValue.percentageOfSavings} of direct savings) when your team uses freed time for higher-value work` : ', your team can focus on strategic work while automation handles routine tasks'}.
 
 Schedule your free strategy session: https://calendly.com/synuraaisolutions/30min
 
@@ -416,9 +421,12 @@ function generateSalesTeamTemplate(
             <div class="value-breakdown">
                 <h3>💰 Value Breakdown</h3>
                 <p><strong>Direct Savings:</strong> $${estimates.valueBreakdown?.directSavings?.toLocaleString() || 0}/year</p>
-                <p><strong>Opportunity Value:</strong> $${estimates.valueBreakdown?.opportunityValue?.toLocaleString() || 0}/year</p>
-                <p><strong>Productivity Gains:</strong> $${estimates.valueBreakdown?.productivityGains?.toLocaleString() || 0}/year</p>
                 <p><strong>Error Reduction:</strong> $${estimates.valueBreakdown?.errorReduction?.toLocaleString() || 0}/year</p>
+                ${estimates.possibleAdditionalValue?.opportunityValue ? `
+                <p><strong>Possible Additional Value:</strong> $${estimates.possibleAdditionalValue.opportunityValue.toLocaleString()}/year (${estimates.possibleAdditionalValue.percentageOfSavings} of direct savings)</p>
+                <p style="font-size: 12px; color: #6b7280; font-style: italic;">Note: ${estimates.possibleAdditionalValue.caveat}</p>
+                ` : ''}
+                <p><strong>Total Annual Value:</strong> $${estimates.valueBreakdown?.totalAnnualValue?.toLocaleString() || 0}/year</p>
             </div>
 
             <div class="internal">
@@ -465,8 +473,9 @@ Key Metrics:
 
 Value Breakdown:
 - Direct Savings: $${estimates.valueBreakdown?.directSavings?.toLocaleString() || 0}
-- Opportunity Value: $${estimates.valueBreakdown?.opportunityValue?.toLocaleString() || 0}
-- Productivity Gains: $${estimates.valueBreakdown?.productivityGains?.toLocaleString() || 0}
+- Error Reduction: $${estimates.valueBreakdown?.errorReduction?.toLocaleString() || 0}
+${estimates.possibleAdditionalValue?.opportunityValue ? `- Possible Additional Value: $${estimates.possibleAdditionalValue.opportunityValue.toLocaleString()} (${estimates.possibleAdditionalValue.percentageOfSavings} of direct savings)` : ''}
+- Total Annual Value: $${estimates.valueBreakdown?.totalAnnualValue?.toLocaleString() || 0}
 
 Next Steps:
 - Contact within 2 hours
