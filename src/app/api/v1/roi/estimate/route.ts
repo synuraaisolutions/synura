@@ -33,7 +33,7 @@ const roiSchema = z.object({
   ])).min(1),
 
   // Business goals
-  primaryGoal: z.enum(['cost-reduction', 'efficiency', 'accuracy', 'scalability', 'compliance']),
+  primaryGoal: z.enum(['cost-reduction', 'efficiency', 'accuracy', 'scalability', 'compliance', 'other']),
   timeframe: z.enum(['immediate', '3-months', '6-months', '12-months']).default('6-months'),
 
   // Optional contact info for follow-up
@@ -208,35 +208,37 @@ function calculateROIEstimates(data: ROIData) {
 
 // Calculate automation potential based on selected areas and industry
 function calculateAutomationPotential(areas: string[], industry: string) {
+  // Conservative, realistic efficiency gains based on actual client results
   const areaEfficiencies: Record<string, number> = {
-    'customer-service': 80,  // Increased significantly
-    'lead-management': 85,   // Increased significantly
-    'data-entry': 95,        // Increased significantly
-    'reporting': 90,         // Increased significantly
-    'scheduling': 95,        // Increased significantly
-    'billing': 85,           // Increased significantly
-    'inventory': 80,         // Increased significantly
-    'hr-processes': 75,      // Increased significantly
-    'marketing': 70,         // Increased significantly
-    'accounting': 85,        // Increased significantly
+    'customer-service': 50,  // Realistic: chatbots, auto-responses
+    'lead-management': 60,   // Realistic: CRM automation, scoring
+    'data-entry': 75,        // Realistic: OCR, form automation
+    'reporting': 65,         // Realistic: dashboard automation
+    'scheduling': 70,        // Realistic: calendar integration
+    'billing': 60,           // Realistic: invoice automation
+    'inventory': 55,         // Realistic: tracking automation
+    'hr-processes': 50,      // Realistic: onboarding, payroll
+    'marketing': 45,         // Realistic: email automation, social media
+    'accounting': 55,        // Realistic: expense tracking, reconciliation
   }
 
+  // Conservative industry multipliers based on automation readiness
   const industryMultipliers: Record<string, number> = {
-    'professional-services': 1.4,  // Increased significantly
-    'healthcare': 1.2,             // Increased significantly
-    'ecommerce': 1.5,              // Increased significantly
-    'manufacturing': 1.3,          // Increased significantly
-    'finance': 1.35,               // Increased significantly
-    'technology': 1.45,            // Increased significantly
-    'education': 1.1,              // Increased significantly
-    'other': 1.2,                  // Increased significantly
+    'professional-services': 1.15,  // Good automation potential
+    'healthcare': 1.05,             // Regulatory constraints
+    'ecommerce': 1.25,              // High automation potential
+    'manufacturing': 1.10,          // Some automation opportunities
+    'finance': 1.20,                // Good automation potential
+    'technology': 1.30,             // Highest automation readiness
+    'education': 1.00,              // Limited automation
+    'other': 1.05,                  // Conservative default
   }
 
-  const averageEfficiency = areas.reduce((sum, area) => sum + (areaEfficiencies[area] || 70), 0) / areas.length
-  const industryAdjusted = averageEfficiency * (industryMultipliers[industry] || 1.2)
+  const averageEfficiency = areas.reduce((sum, area) => sum + (areaEfficiencies[area] || 50), 0) / areas.length
+  const industryAdjusted = averageEfficiency * (industryMultipliers[industry] || 1.05)
 
   return {
-    efficiency: Math.min(Math.round(industryAdjusted), 95), // Increased cap to 95%
+    efficiency: Math.min(Math.round(industryAdjusted), 75), // Realistic cap at 75%
     complexity: areas.length > 3 ? 'high' : areas.length > 1 ? 'medium' : 'low',
   }
 }
@@ -254,22 +256,24 @@ function calculateErrorReductionValue(data: ROIData) {
   }
 }
 
-// Calculate investment required
+// Calculate investment required - realistic pricing based on market rates
 function calculateInvestmentRequired(data: ROIData) {
   const complexityMultipliers = {
-    '1-10': 0.4,    // Much lower for smaller companies
-    '11-50': 0.5,   // Reduced significantly
-    '51-200': 0.7,  // Reduced significantly
-    '201-1000': 0.9, // Reduced significantly
-    '1000+': 1.2,   // Reduced significantly
+    '1-10': 0.6,    // Smaller companies get better rates
+    '11-50': 0.8,   // Medium discount
+    '51-200': 1.0,  // Standard rates
+    '201-1000': 1.1, // Slight premium for complexity
+    '1000+': 1.3,   // Enterprise complexity premium
   }
 
   const areaComplexity = data.automationAreas.length
-  const baseSetup = 1200 + (areaComplexity * 400) // Reduced base cost by 70%
-  const setupCost = baseSetup * (complexityMultipliers[data.companySize] || 0.7)
+  // Realistic setup costs: consulting + implementation + training
+  const baseSetup = 2500 + (areaComplexity * 1000) // More realistic base costs
+  const setupCost = baseSetup * (complexityMultipliers[data.companySize] || 1.0)
 
-  const baseMonthlyCost = Math.max(200, areaComplexity * 150) // Reduced monthly costs by 60%
-  const monthlyCost = baseMonthlyCost * (complexityMultipliers[data.companySize] || 0.7)
+  // Realistic monthly costs: maintenance + licenses + support
+  const baseMonthlyCost = Math.max(350, areaComplexity * 200) // Realistic ongoing costs
+  const monthlyCost = baseMonthlyCost * (complexityMultipliers[data.companySize] || 1.0)
 
   return {
     setup: Math.round(setupCost),

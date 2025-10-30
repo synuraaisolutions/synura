@@ -277,6 +277,7 @@ export default function ROICalculatorPage() {
                         <option value="accuracy">Accuracy Improvement</option>
                         <option value="scalability">Scalability</option>
                         <option value="compliance">Compliance</option>
+                        <option value="other">Other</option>
                       </select>
                     </div>
 
