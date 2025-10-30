@@ -5,6 +5,7 @@ import { Button } from '@/components/common/button'
 import { ConsultationButton } from '@/components/common/consultation-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
+import { ContactForm } from '@/components/forms/contact-form'
 
 export default function ContactPage() {
   return (
@@ -79,59 +80,8 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            {/* Direct Contact */}
-            <Card className="border-secondary-200 hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <div className="flex items-center space-x-3 mb-4">
-                  <span className="text-4xl">📞</span>
-                  <div>
-                    <CardTitle className="text-2xl">Direct Contact</CardTitle>
-                    <CardDescription className="text-lg">
-                      Prefer to reach out directly? We're here to help.
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  {/* Email */}
-                  <div>
-                    <h3 className="font-semibold text-secondary-900 mb-2">Email</h3>
-                    <a
-                      href="mailto:sales@synura.ai"
-                      className="text-primary-600 hover:text-primary-800 transition-colors"
-                    >
-                      sales@synura.ai
-                    </a>
-                    <p className="text-sm text-secondary-600 mt-1">
-                      We typically respond within 2 hours during business hours
-                    </p>
-                  </div>
-
-                  {/* Voice Agent */}
-                  <div>
-                    <h3 className="font-semibold text-secondary-900 mb-2">AI Assistant</h3>
-                    <p className="text-secondary-600 mb-3">
-                      Chat with our AI assistant, using the voice widget on this page.
-                      Available 24/7 to answer questions and help schedule consultations.
-                    </p>
-                    <Button variant="outline" size="sm">
-                      Activate Voice Assistant
-                    </Button>
-                  </div>
-
-                  {/* Business Hours */}
-                  <div>
-                    <h3 className="font-semibold text-secondary-900 mb-2">Business Hours</h3>
-                    <div className="text-sm text-secondary-600 space-y-1">
-                      <div>Monday - Friday: 9:00 AM - 6:00 PM EST</div>
-                      <div>Saturday: 10:00 AM - 2:00 PM EST</div>
-                      <div>Sunday: Closed</div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Contact Form */}
+            <ContactForm />
           </div>
         </div>
       </section>

@@ -41,6 +41,14 @@ interface ROILeadData {
   calculationId: string
 }
 
+interface ContactLeadData {
+  email: string
+  name?: string
+  companySize?: string
+  message?: string
+  leadSource: 'contact-form' | 'roi-calculator' | 'voice-agent'
+}
+
 class KitIntegration {
   private config: KitConfig
 
@@ -299,23 +307,15 @@ class KitIntegration {
   }
 
   /**
-   * Initialize custom fields for marketing intelligence
+   * Initialize essential custom fields for automation triggers only
    */
   async initializeCustomFields(): Promise<void> {
     const customFields = [
-      { name: 'calculated_roi', label: 'Calculated ROI (%)' },
-      { name: 'annual_savings', label: 'Annual Savings ($)' },
-      { name: 'setup_investment', label: 'Setup Investment ($)' },
-      { name: 'complexity_score', label: 'Complexity Score (1-10)' },
       { name: 'company_size', label: 'Company Size' },
-      { name: 'industry_type', label: 'Industry' },
-      { name: 'lead_source', label: 'Lead Source' },
-      { name: 'calculation_id', label: 'Calculation ID' },
-      { name: 'manual_hours_week', label: 'Manual Hours/Week' },
-      { name: 'automation_areas', label: 'Automation Areas' }
+      { name: 'lead_source', label: 'Lead Source' }
     ]
 
-    console.log('Initializing custom fields...')
+    console.log('Initializing essential custom fields...')
 
     for (const field of customFields) {
       await this.createCustomField(field.name, field.label)
@@ -323,7 +323,7 @@ class KitIntegration {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
 
-    console.log('Custom fields initialization complete')
+    console.log('Essential custom fields initialization complete')
   }
 
   /**
@@ -356,6 +356,40 @@ class KitIntegration {
       }
     } catch (error) {
       console.error('Error processing ROI lead:', error)
+      return false
+    }
+  }
+
+  /**
+   * Process contact form lead and add to Kit (simplified)
+   */
+  async processContactLead(leadData: ContactLeadData): Promise<boolean> {
+    try {
+      // Generate simple tags based on lead data
+      const tags = this.generateContactTags(leadData)
+
+      // Generate minimal custom fields
+      const customFields = this.generateContactCustomFields(leadData)
+
+      // Create subscriber
+      const subscriberData: KitSubscriber = {
+        email: leadData.email,
+        first_name: leadData.name,
+        tags,
+        custom_fields: customFields
+      }
+
+      const result = await this.createSubscriber(subscriberData)
+
+      if (result) {
+        console.log(`Contact lead processed successfully: ${leadData.email}`)
+        return true
+      } else {
+        console.error(`Failed to process contact lead: ${leadData.email}`)
+        return false
+      }
+    } catch (error) {
+      console.error('Error processing contact lead:', error)
       return false
     }
   }
@@ -397,18 +431,42 @@ class KitIntegration {
   }
 
   /**
-   * Generate custom fields data for lead
+   * Generate essential custom fields data for lead (automation triggers only)
    */
   private generateCustomFieldsData(leadData: ROILeadData): Record<string, any> {
     return {
-      calculated_roi: leadData.calculatedROI,
-      annual_savings: leadData.annualSavings,
-      setup_investment: leadData.setupInvestment,
-      complexity_score: leadData.complexityScore,
       company_size: leadData.companySize,
-      industry_type: leadData.industry,
-      lead_source: leadData.leadSource,
-      calculation_id: leadData.calculationId
+      lead_source: leadData.leadSource
+    }
+  }
+
+  /**
+   * Generate simple tags for contact form leads
+   */
+  private generateContactTags(leadData: ContactLeadData): string[] {
+    const tags: string[] = []
+
+    // Lead source tag
+    tags.push(leadData.leadSource)
+
+    // Company size tag (if provided)
+    if (leadData.companySize) {
+      tags.push(`company-${leadData.companySize}`.replace(/\+/, '-plus'))
+    }
+
+    // Standard lead priority (contact forms are typically standard priority)
+    tags.push('standard-lead')
+
+    return tags
+  }
+
+  /**
+   * Generate minimal custom fields for contact form leads
+   */
+  private generateContactCustomFields(leadData: ContactLeadData): Record<string, any> {
+    return {
+      company_size: leadData.companySize || 'not-provided',
+      lead_source: leadData.leadSource
     }
   }
 
@@ -441,4 +499,4 @@ class KitIntegration {
 // Export singleton instance
 export const kitIntegration = new KitIntegration(process.env.KIT_API_KEY || 'kit_ab2d14214a3e0b027a62b0ea74468578')
 
-export type { ROILeadData, KitSubscriber, KitTag, KitCustomField }
+export type { ROILeadData, ContactLeadData, KitSubscriber, KitTag, KitCustomField }
