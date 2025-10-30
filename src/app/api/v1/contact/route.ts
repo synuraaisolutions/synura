@@ -119,6 +119,8 @@ async function sendContactNotification(data: ContactData, contactId: string): Pr
       message: data.message,
       intent: 'consultation' as const,
       utmSource: 'contact-form',
+      source: 'contact-form',
+      status: 'new' as const,
       timestamp: new Date().toISOString()
     }
 
