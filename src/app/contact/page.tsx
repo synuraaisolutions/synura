@@ -98,10 +98,10 @@ export default function ContactPage() {
               could save your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/roi-calculator">Calculate ROI</Link>
+              <Button size="lg" variant="cta" asChild>
+                <Link href="/roi-calculator">🧮 Calculate Your ROI Now</Link>
               </Button>
-              <Button size="lg" variant="ghost" asChild>
+              <Button size="lg" variant="outline" asChild>
                 <Link href="/case-studies">View Case Studies</Link>
               </Button>
             </div>

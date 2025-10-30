@@ -298,6 +298,46 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* ROI Calculator CTA */}
+      <section className="py-20 bg-white">
+        <div className="synura-container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-4">
+              Calculate Your Specific ROI
+            </h2>
+            <p className="text-xl text-secondary-600 mb-8">
+              See how much time and money automation could save your business.
+              Get personalized ROI estimates based on your company size and needs.
+            </p>
+
+            <div className="bg-primary-50 rounded-lg p-8 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">2-3x</div>
+                  <p className="text-secondary-700">Average ROI within first year</p>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">40-60%</div>
+                  <p className="text-secondary-700">Time savings on routine tasks</p>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">$25k+</div>
+                  <p className="text-secondary-700">Average annual cost savings</p>
+                </div>
+              </div>
+            </div>
+
+            <Button size="lg" variant="cta" asChild className="mr-4">
+              <Link href="/roi-calculator">🧮 Calculate Your ROI Now</Link>
+            </Button>
+
+            <p className="text-sm text-secondary-500 mt-4">
+              Takes 2 minutes • No email required • Instant results
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 synura-gradient">
         <div className="synura-container text-center">
