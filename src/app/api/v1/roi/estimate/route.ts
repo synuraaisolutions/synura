@@ -280,31 +280,52 @@ function calculateErrorReductionBenefit(data: ROIData): number {
 function calculateSetupInvestment(data: ROIData): number {
   const workflowCount = data.automationAreas.length
 
-  // Setup pricing based purely on work complexity (no automatic discounts)
-  let setupPrice = 0
-
   // Base price by workflow count
+  let basePrice = 0
   if (workflowCount <= 2) {
-    setupPrice = 1500 // Simple automation setup
+    basePrice = 1500 // Simple automation setup
   } else if (workflowCount <= 4) {
-    setupPrice = 3000 // Medium complexity
+    basePrice = 3000 // Medium complexity
   } else {
-    setupPrice = 4500 // Higher complexity
+    basePrice = 4500 // Higher complexity
   }
 
-  return setupPrice // Pure work-based pricing
+  // Company size multipliers based on integration complexity
+  let sizeMultiplier = 1.0
+  switch (data.companySize) {
+    case '1-10':
+      sizeMultiplier = 1.0 // Baseline - simple integration
+      break
+    case '11-50':
+      sizeMultiplier = 1.4 // Moderate complexity
+      break
+    case '51-200':
+      sizeMultiplier = 2.0 // Established systems, more integration
+      break
+    case '201-1000':
+      sizeMultiplier = 3.0 // Complex systems, extensive training
+      break
+    case '1000+':
+      sizeMultiplier = 4.0 // Enterprise complexity, multiple departments
+      break
+    default:
+      sizeMultiplier = 1.0 // Default to smallest size
+  }
+
+  return Math.round(basePrice * sizeMultiplier)
 }
 
 // Get setup range description for display
 function getSetupRange(data: ROIData): string {
-  const workflowCount = data.automationAreas.length
+  const actualSetupCost = calculateSetupInvestment(data)
 
-  if (workflowCount <= 2) {
-    return '$1.5K setup' // Simple automation
-  } else if (workflowCount <= 4) {
-    return '$3K setup' // Medium complexity
+  // Format the actual calculated price
+  if (actualSetupCost < 1000) {
+    return `$${actualSetupCost} setup`
+  } else if (actualSetupCost < 10000) {
+    return `$${(actualSetupCost / 1000).toFixed(1)}K setup`
   } else {
-    return '$4.5K setup' // Higher complexity
+    return `$${Math.round(actualSetupCost / 1000)}K setup`
   }
 }
 
