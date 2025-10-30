@@ -11,7 +11,6 @@ export default function ROICalculatorPage() {
   const [formData, setFormData] = useState({
     companySize: '',
     industry: '',
-    employeeCount: '',
     averageHourlyRate: '',
     manualTaskHours: '',
     automationAreas: [] as string[],
@@ -50,11 +49,20 @@ export default function ROICalculatorPage() {
     setCalculationError(null)
 
     try {
+      // Derive employee count from company size
+      const employeeCountMap: Record<string, number> = {
+        '1-10': 5,
+        '11-50': 25,
+        '51-200': 100,
+        '201-1000': 500,
+        '1000+': 2000
+      }
+
       // Prepare API payload
       const payload = {
         companySize: formData.companySize,
         industry: formData.industry,
-        employeeCount: parseInt(formData.employeeCount) || 1,
+        employeeCount: employeeCountMap[formData.companySize] || 25,
         averageHourlyRate: parseFloat(formData.averageHourlyRate) || 50,
         manualTaskHours: parseFloat(formData.manualTaskHours) || 1,
         automationAreas: formData.automationAreas.length > 0 ? formData.automationAreas : ['data-entry'],
@@ -182,21 +190,6 @@ export default function ROICalculatorPage() {
                       </select>
                     </div>
 
-                    <div>
-                      <label htmlFor="employeeCount" className="block text-sm font-medium text-secondary-900 mb-2">
-                        Number of Employees
-                      </label>
-                      <input
-                        type="number"
-                        id="employeeCount"
-                        name="employeeCount"
-                        value={formData.employeeCount}
-                        onChange={handleInputChange}
-                        placeholder="e.g., 25"
-                        className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
-                        required
-                      />
-                    </div>
 
                     <div>
                       <label htmlFor="averageHourlyRate" className="block text-sm font-medium text-secondary-900 mb-2">
@@ -287,6 +280,25 @@ export default function ROICalculatorPage() {
                       </select>
                     </div>
 
+                    {/* Email field moved up and made more prominent */}
+                    <div className="bg-primary-50 p-4 rounded-lg border border-primary-200">
+                      <label htmlFor="email" className="block text-sm font-medium text-secondary-900 mb-2">
+                        📧 Email Address (Get Your Results Emailed!)
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="e.g., john@company.com"
+                        className="w-full p-3 border border-primary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                      />
+                      <p className="text-sm text-primary-600 mt-1 font-medium">
+                        ✨ Get a detailed ROI report with your specific savings calculations sent directly to your inbox!
+                      </p>
+                    </div>
+
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-secondary-900 mb-2">
                         Your Name (optional)
@@ -300,24 +312,6 @@ export default function ROICalculatorPage() {
                         placeholder="e.g., John Smith"
                         className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                       />
-                    </div>
-
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-secondary-900 mb-2">
-                        Email (optional - to receive detailed results)
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="e.g., john@company.com"
-                        className="w-full p-3 border border-secondary-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
-                      />
-                      <p className="text-sm text-secondary-500 mt-1">
-                        Get a detailed ROI report sent to your email
-                      </p>
                     </div>
 
                     {calculationError && (
