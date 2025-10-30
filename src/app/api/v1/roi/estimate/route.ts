@@ -266,38 +266,20 @@ function calculateErrorReductionBenefit(data: ROIData): number {
 // Calculate setup investment only (NO retainer) - realistic pricing
 function calculateSetupInvestment(data: ROIData): number {
   const workflowCount = data.automationAreas.length
-  const companySize = data.companySize
 
-  // Realistic setup pricing based on automation complexity and company size
-  let basePrice = 0
+  // Setup pricing based purely on work complexity (no automatic discounts)
+  let setupPrice = 0
 
-  // Base price by workflow count (much more conservative)
+  // Base price by workflow count
   if (workflowCount <= 2) {
-    basePrice = 1500 // Simple automation setup
+    setupPrice = 1500 // Simple automation setup
   } else if (workflowCount <= 4) {
-    basePrice = 3000 // Medium complexity
+    setupPrice = 3000 // Medium complexity
   } else {
-    basePrice = 4500 // Higher complexity
+    setupPrice = 4500 // Higher complexity
   }
 
-  // Company size adjustment (smaller companies pay less)
-  const sizeMultiplier = getSizeMultiplier(companySize)
-  const setupCost = Math.round(basePrice * sizeMultiplier)
-
-  // Cap maximum to keep it reasonable
-  return Math.min(setupCost, 6000) // Never more than $6K setup
-}
-
-// Get company size multiplier for pricing
-function getSizeMultiplier(companySize: string): number {
-  switch (companySize) {
-    case '1-10': return 0.8    // 20% discount for very small companies
-    case '11-50': return 1.0   // Base pricing
-    case '51-200': return 1.2  // 20% premium for medium companies
-    case '201-1000': return 1.4 // 40% premium for large companies
-    case '1000+': return 1.6   // 60% premium for enterprise
-    default: return 1.0
-  }
+  return setupPrice // Pure work-based pricing
 }
 
 // Get setup range description for display
@@ -305,11 +287,11 @@ function getSetupRange(data: ROIData): string {
   const workflowCount = data.automationAreas.length
 
   if (workflowCount <= 2) {
-    return '$1.2K-$2K setup' // Simple automation
+    return '$1.5K setup' // Simple automation
   } else if (workflowCount <= 4) {
-    return '$2.4K-$4K setup' // Medium complexity
+    return '$3K setup' // Medium complexity
   } else {
-    return '$3.6K-$6K setup' // Higher complexity
+    return '$4.5K setup' // Higher complexity
   }
 }
 
