@@ -1,7 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { withAdminAuth, AuthContext, addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
+import { addCORSHeaders, handleCORS } from '@/lib/middleware/auth-middleware'
 import { Analytics, AnalyticsDashboard } from '@/lib/analytics'
 import { getAPIKeyStats } from '@/lib/auth'
+
+// Validate admin session from cookie or authorization header
+function validateAdminSession(request: NextRequest): boolean {
+  const validAdminKey = process.env.NEXT_PUBLIC_ADMIN_ACCESS_KEY || 'synura-admin-2024'
+
+  // Check Authorization header
+  const authHeader = request.headers.get('authorization')
+  if (authHeader?.startsWith('Bearer ')) {
+    const token = authHeader.substring(7)
+    if (token === validAdminKey) return true
+  }
+
+  // Check admin-session cookie
+  const cookies = request.headers.get('cookie')
+  if (cookies) {
+    const adminSession = cookies
+      .split('; ')
+      .find(row => row.startsWith('admin-session='))
+      ?.split('=')[1]
+
+    if (adminSession === validAdminKey) return true
+  }
+
+  return false
+}
 
 // Handle CORS preflight requests
 export async function OPTIONS(request: NextRequest) {
@@ -9,8 +34,17 @@ export async function OPTIONS(request: NextRequest) {
 }
 
 // GET handler - Dashboard summary data
-const getDashboardHandler = async (request: NextRequest, authContext: AuthContext) => {
+const getDashboardHandler = async (request: NextRequest) => {
   const startTime = Date.now()
+
+  // Validate admin authentication
+  if (!validateAdminSession(request)) {
+    return addCORSHeaders(NextResponse.json({
+      success: false,
+      error: 'Unauthorized',
+      message: 'Admin authentication required'
+    }, { status: 401 }))
+  }
 
   try {
     // Get last 7 days for recent activity, last 30 days for summaries
@@ -136,7 +170,7 @@ const getDashboardHandler = async (request: NextRequest, authContext: AuthContex
       }
 
       const response = NextResponse.json(responseData)
-      await Analytics.logAPI(request, response, startTime, authContext)
+      await Analytics.logAPI(request, response, startTime, { isAuthenticated: true, apiKeyId: 'admin-session' })
       return addCORSHeaders(response)
 
     } catch (analyticsError) {
@@ -177,7 +211,7 @@ const getDashboardHandler = async (request: NextRequest, authContext: AuthContex
       }
 
       const response = NextResponse.json(fallbackData)
-      await Analytics.logAPI(request, response, startTime, authContext)
+      await Analytics.logAPI(request, response, startTime, { isAuthenticated: true, apiKeyId: 'admin-session' })
       return addCORSHeaders(response)
     }
 
@@ -195,4 +229,4 @@ const getDashboardHandler = async (request: NextRequest, authContext: AuthContex
 }
 
 // Export handler with admin authentication
-export const GET = withAdminAuth(getDashboardHandler)
+export const GET = getDashboardHandler

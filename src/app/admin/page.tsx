@@ -86,13 +86,18 @@ export default function AdminDashboard() {
       setLoading(true)
       setError(null)
 
-      // Note: In a real application, you would need to authenticate first
-      // This is a demo implementation
+      // Get admin session from cookie for authentication
+      const adminSession = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('admin-session='))
+        ?.split('=')[1]
+
       const response = await fetch('/api/v1/admin/dashboard', {
         headers: {
-          'Authorization': 'Bearer YOUR_ADMIN_API_KEY', // Would come from auth context
+          'Authorization': `Bearer ${adminSession}`,
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
       })
 
       if (!response.ok) {
