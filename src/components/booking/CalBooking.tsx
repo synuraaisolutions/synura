@@ -5,7 +5,7 @@ import { BookerEmbed } from "@calcom/atoms"
 interface CalBookingProps {
   username?: string
   eventSlug?: string
-  view?: "month_view" | "week_view" | "column_view"
+  view?: "MONTH_VIEW" | "WEEK_VIEW" | "COLUMN_VIEW"
   className?: string
   onBookingSuccess?: () => void
 }
@@ -13,7 +13,7 @@ interface CalBookingProps {
 export default function CalBooking({
   username = "synuraaisolutions", // Default username - update with your actual Cal.com username
   eventSlug = "30min", // Default event slug - update with your actual event slug
-  view = "month_view",
+  view = "MONTH_VIEW",
   className = "",
   onBookingSuccess
 }: CalBookingProps) {
@@ -39,14 +39,7 @@ export default function CalBooking({
         eventSlug={eventSlug}
         view={view}
         customClassNames={{
-          bookerContainer: "border-gray-200 border rounded-lg shadow-sm bg-white",
-          // Add Synura brand styling
-          eventMeta: "text-secondary-600",
-          datePickerContainer: "border-gray-100",
-          timeSlot: "hover:bg-primary-50 border-primary-200",
-          selectedTimeSlot: "bg-primary-600 text-white",
-          bookingForm: "space-y-4",
-          submitButton: "bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+          bookerContainer: "border-gray-200 border rounded-lg shadow-sm bg-white"
         }}
         onCreateBookingSuccess={handleBookingSuccess}
       />

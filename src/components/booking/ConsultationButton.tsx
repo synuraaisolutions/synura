@@ -6,14 +6,14 @@ import CalBooking from './CalBooking'
 import { X } from 'lucide-react'
 
 interface ConsultationButtonProps {
-  size?: 'sm' | 'md' | 'lg'
-  variant?: 'primary' | 'secondary' | 'outline'
+  size?: 'default' | 'sm' | 'lg' | 'xl' | 'icon'
+  variant?: 'default' | 'secondary' | 'outline' | 'cta' | 'destructive' | 'ghost' | 'link'
   children?: React.ReactNode
   className?: string
   // Cal.com specific props
   username?: string
   eventSlug?: string
-  view?: "month_view" | "week_view" | "column_view"
+  view?: "MONTH_VIEW" | "WEEK_VIEW" | "COLUMN_VIEW"
 }
 
 export default function ConsultationButton({
@@ -23,7 +23,7 @@ export default function ConsultationButton({
   className = '',
   username,
   eventSlug,
-  view = 'month_view'
+  view = 'MONTH_VIEW'
 }: ConsultationButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
