@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 interface ContactFormData {
   name: string
   email: string
+  phone: string
   companySize: string
   message: string
 }
@@ -19,6 +20,7 @@ export function ContactForm({ className = '' }: ContactFormProps) {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
+    phone: '',
     companySize: '',
     message: ''
   })
@@ -50,7 +52,7 @@ export function ContactForm({ className = '' }: ContactFormProps) {
 
       if (response.ok) {
         setIsSubmitted(true)
-        setFormData({ name: '', email: '', companySize: '', message: '' })
+        setFormData({ name: '', email: '', phone: '', companySize: '', message: '' })
       } else {
         const errorData = await response.json()
         setError(errorData.message || 'Failed to send message. Please try again.')
@@ -136,6 +138,22 @@ export function ContactForm({ className = '' }: ContactFormProps) {
             />
           </div>
 
+          {/* Phone */}
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-2">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-secondary-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              placeholder="e.g., (555) 123-4567"
+            />
+          </div>
+
           {/* Company Size */}
           <div>
             <label htmlFor="companySize" className="block text-sm font-medium text-secondary-700 mb-2">
@@ -195,9 +213,9 @@ export function ContactForm({ className = '' }: ContactFormProps) {
 
         <div className="mt-4 text-center">
           <p className="text-sm text-secondary-600">
-            Need immediate help? Call us at{' '}
-            <a href="tel:+17787235969" className="text-primary-600 hover:text-primary-800">
-              (778) 723-5969
+            Need immediate help? Email us at{' '}
+            <a href="mailto:sales@synura.ai" className="text-primary-600 hover:text-primary-800">
+              sales@synura.ai
             </a>
           </p>
         </div>

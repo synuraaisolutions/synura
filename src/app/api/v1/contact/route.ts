@@ -8,6 +8,7 @@ import { sendLeadNotification } from '@/lib/email'
 const contactSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
   email: z.string().email('Invalid email address'),
+  phone: z.string().max(20, 'Phone number too long').optional(),
   companySize: z.enum(['1-10', '11-50', '51-200', '201-1000', '1000+', '']).optional(),
   message: z.string().min(1, 'Message is required').max(1000, 'Message too long'),
 })
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
       contactId,
       email: validatedData.email,
       name: validatedData.name,
+      phone: validatedData.phone,
       companySize: validatedData.companySize
     })
 
@@ -115,7 +117,7 @@ async function sendContactNotification(data: ContactData, contactId: string): Pr
       name: data.name,
       email: data.email,
       company: data.companySize ? `${data.companySize} employees` : undefined,
-      phone: undefined,
+      phone: data.phone || undefined,
       message: data.message,
       intent: 'consultation' as const,
       utmSource: 'contact-form',
