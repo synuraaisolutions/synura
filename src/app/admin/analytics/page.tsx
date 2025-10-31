@@ -110,7 +110,7 @@ export default function AnalyticsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [selectedType, dateRange, setLoading, setError, setData])
 
   const getDemoData = (type: string) => {
     switch (type) {
@@ -215,7 +215,7 @@ export default function AnalyticsPage() {
       default:
         return {}
     }
-  }, [selectedType, dateRange, setLoading, setError, setData])
+  }
 
   useEffect(() => {
     fetchAnalytics()
