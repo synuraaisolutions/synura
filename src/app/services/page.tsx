@@ -63,9 +63,11 @@ export default function ServicesPage() {
       <section className="py-20 bg-white relative">
         {/* AI Workflow Background */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
-          <img
+          <Image
             src="/images/professional/ai-automation-workflow.png"
             alt="AI Automation Network"
+            width={768}
+            height={400}
             className="max-w-2xl w-full h-auto"
           />
         </div>
@@ -140,9 +142,11 @@ export default function ServicesPage() {
           {/* Process Visualization */}
           <div className="max-w-5xl mx-auto mb-16">
             <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8 shadow-lg">
-              <img
+              <Image
                 src="/images/professional/Untitled-1.png"
                 alt="Synura Implementation Process: Discovery, Strategy, Implementation, Optimization"
+                width={1000}
+                height={300}
                 className="w-full h-auto mx-auto"
               />
             </div>

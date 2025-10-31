@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 // Pricing content is loaded directly from MDX
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
@@ -56,9 +57,11 @@ export default function PricingPage() {
               <Card className="relative overflow-hidden">
                 {/* Clean Image Section */}
                 <div className="h-30 w-full">
-                  <img
+                  <Image
                     src="/images/professional/Starter-Card-Header.png"
                     alt="Starter package header"
+                    width={400}
+                    height={120}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -98,9 +101,11 @@ export default function PricingPage() {
                 </div>
                 {/* Clean Image Section */}
                 <div className="h-30 w-full">
-                  <img
+                  <Image
                     src="/images/professional/Business-Card-Header.png"
                     alt="Business package header"
+                    width={400}
+                    height={120}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -138,9 +143,11 @@ export default function PricingPage() {
               <Card className="relative">
                 {/* Clean Image Section */}
                 <div className="h-30 w-full">
-                  <img
+                  <Image
                     src="/images/professional/Enterprise-Card-Header.png"
                     alt="Enterprise package header"
+                    width={400}
+                    height={120}
                     className="w-full h-full object-cover"
                   />
                 </div>
