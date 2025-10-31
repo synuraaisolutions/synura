@@ -23,8 +23,8 @@ export function useAdminAuth(): AdminAuthState {
         .find(row => row.startsWith('admin-session='))
         ?.split('=')[1]
 
-      // Check for admin access key header (for API calls)
-      const validAdminKey = 'synura-admin-2024' // This should match your middleware
+      // Check for admin access key (use environment variable or fallback)
+      const validAdminKey = process.env.NEXT_PUBLIC_ADMIN_ACCESS_KEY || 'synura-admin-2024'
 
       const isAuthenticated = adminSession === validAdminKey
 
