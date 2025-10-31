@@ -31,6 +31,12 @@ interface CalculationInputs {
   timelinePreference: string
   complexityFactors: string[]
   customRequirements: string
+  // New realistic inputs
+  weeklyHoursOnProcesses: string
+  peopleInvolvedInProcesses: string
+  averageHourlyRate: string
+  currentSoftwareCosts: string
+  automationEfficiency: string
 }
 
 interface CalculationResult {
@@ -71,6 +77,21 @@ const COMPLEXITY_FACTORS = [
   'Multi-location Implementation'
 ]
 
+// Industry default hourly rates (loaded cost including benefits)
+const getIndustryDefaultRate = (industry: string): number => {
+  const rates: Record<string, number> = {
+    'technology': 75,
+    'healthcare': 65,
+    'finance': 85,
+    'manufacturing': 55,
+    'retail': 35,
+    'professional-services': 95,
+    'real-estate': 45,
+    'other': 50
+  }
+  return rates[industry] || 50
+}
+
 export default function SalesCalculatorPage() {
   const { isAuthenticated, isLoading: authLoading } = useAdminAuth()
 
@@ -83,54 +104,72 @@ export default function SalesCalculatorPage() {
     monthlyRevenue: '',
     timelinePreference: '',
     complexityFactors: [],
-    customRequirements: ''
+    customRequirements: '',
+    // New realistic inputs
+    weeklyHoursOnProcesses: '',
+    peopleInvolvedInProcesses: '',
+    averageHourlyRate: '',
+    currentSoftwareCosts: '',
+    automationEfficiency: '70' // Default to 70%
   })
 
   const [showResults, setShowResults] = useState(false)
 
-  // Complex pricing logic based on multiple factors
+  // Realistic pricing logic based on actual hours and industry rates
   const calculation = useMemo((): CalculationResult => {
     const employees = parseInt(inputs.employeeCount) || 0
     const revenue = parseInt(inputs.monthlyRevenue) || 0
     const processCount = inputs.targetProcesses.length
     const complexityScore = inputs.complexityFactors.length
 
-    // Base package determination
+    // NEW: Realistic hour-based calculations
+    const weeklyHours = parseFloat(inputs.weeklyHoursOnProcesses) || 0
+    const peopleInvolved = parseInt(inputs.peopleInvolvedInProcesses) || 1
+    const hourlyRate = parseFloat(inputs.averageHourlyRate) || getIndustryDefaultRate(inputs.industry)
+    const currentSoftwareCosts = parseFloat(inputs.currentSoftwareCosts) || 0
+    const automationEfficiency = parseFloat(inputs.automationEfficiency) || 70
+
+    // Base package determination (more realistic thresholds)
     let packageType = 'Starter'
-    let basePrice = 5000
-    let monthlyFee = 1200
+    let basePrice = 3000 // Reduced base prices
+    let monthlyFee = 800
 
-    if (employees > 100 || revenue > 500000 || processCount > 3) {
+    // Base on project complexity rather than company size
+    const totalWeeklyHoursToAutomate = weeklyHours
+    const totalMonthlyCostToAutomate = totalWeeklyHoursToAutomate * 4.33 * hourlyRate
+
+    if (totalMonthlyCostToAutomate > 8000 || processCount > 2 || complexityScore > 1) {
       packageType = 'Business'
-      basePrice = 15000
-      monthlyFee = 2500
+      basePrice = 8000
+      monthlyFee = 1500
     }
 
-    if (employees > 500 || revenue > 2000000 || processCount > 6 || complexityScore > 3) {
+    if (totalMonthlyCostToAutomate > 20000 || processCount > 4 || complexityScore > 3) {
       packageType = 'Enterprise'
-      basePrice = 35000
-      monthlyFee = 5000
+      basePrice = 18000
+      monthlyFee = 3000
     }
 
-    // Complexity adjustments
-    const complexityMultiplier = 1 + (complexityScore * 0.15)
-    const processMultiplier = 1 + (Math.max(0, processCount - 2) * 0.1)
+    // Complexity adjustments (reduced impact)
+    const complexityMultiplier = 1 + (complexityScore * 0.1)
+    const processMultiplier = 1 + (Math.max(0, processCount - 1) * 0.05)
 
     const adjustedBasePrice = Math.round(basePrice * complexityMultiplier * processMultiplier)
     const adjustedMonthlyFee = Math.round(monthlyFee * complexityMultiplier)
 
-    // Setup fee calculation
-    const setupFee = Math.round(adjustedBasePrice * 0.3)
+    // Reduced setup fee (15% instead of 30%)
+    const setupFee = Math.round(adjustedBasePrice * 0.15)
 
-    // ROI calculations
-    const hoursSavedPerMonth = processCount * 40 * employees * 0.1 // Conservative estimate
-    const hourlyCost = 35 // Average loaded hourly cost
-    const monthlySavings = hoursSavedPerMonth * hourlyCost
+    // REALISTIC ROI calculations based on actual hours
+    const currentWeeklyHours = weeklyHours
+    const automationEfficiencyDecimal = automationEfficiency / 100
+    const hoursSavedPerWeek = currentWeeklyHours * automationEfficiencyDecimal
+    const monthlySavings = (hoursSavedPerWeek * 4.33 * hourlyRate) + (currentSoftwareCosts / 12)
     const annualSavings = monthlySavings * 12
     const netAnnualSavings = annualSavings - (adjustedMonthlyFee * 12)
 
-    const paybackMonths = Math.ceil(adjustedBasePrice / monthlySavings)
-    const expectedROI = Math.round(((netAnnualSavings / adjustedBasePrice) * 100))
+    const paybackMonths = monthlySavings > 0 ? Math.ceil(adjustedBasePrice / monthlySavings) : 999
+    const expectedROI = adjustedBasePrice > 0 ? Math.round(((netAnnualSavings / adjustedBasePrice) * 100)) : 0
 
     // Implementation timeline
     let implementationTime = '6-8 weeks'
@@ -141,21 +180,24 @@ export default function SalesCalculatorPage() {
       implementationTime = `${min + 2}-${max + 4} weeks`
     }
 
-    // Generate insights
+    // Generate insights based on actual hours
     const insights = [
-      `Current automation level suggests ${100 - parseInt(inputs.currentAutomationLevel || '20')}% efficiency opportunity`,
-      `Target processes could save approximately ${Math.round(hoursSavedPerMonth)} hours monthly`,
-      `Industry benchmarks show ${packageType} package fits ${inputs.industry || 'your industry'} requirements`,
+      `Current ${Math.round(weeklyHours)} weekly hours spent on processes can be reduced by ${automationEfficiency}%`,
+      `Target processes could save approximately ${Math.round(hoursSavedPerWeek * 4.33)} hours monthly`,
+      `At $${hourlyRate}/hour, you're spending $${Math.round(totalMonthlyCostToAutomate).toLocaleString()}/month on these processes`,
+      `${inputs.industry} industry average rates justify ${packageType} package selection`,
+      `${currentSoftwareCosts > 0 ? `Eliminating $${Math.round(currentSoftwareCosts)} in current software costs` : 'No current software costs to eliminate'}`,
       `${inputs.timelinePreference === 'urgent' ? 'Expedited implementation available with dedicated resources' : 'Standard timeline allows for thorough testing and training'}`
     ]
 
-    // Generate talking points
+    // Generate realistic talking points
     const talkingPoints = [
-      `"Based on your ${employees} employees, you're looking at ${Math.round(hoursSavedPerMonth)} hours saved monthly"`,
-      `"The ${packageType} package typically delivers ${expectedROI}% ROI within the first year"`,
-      `"Implementation includes dedicated project management and ${implementationTime} timeline"`,
-      `"Monthly savings of $${Math.round(monthlySavings).toLocaleString()} justify the investment quickly"`,
-      `"Your industry peers typically see ${paybackMonths < 12 ? 'immediate' : '12-month'} payback periods"`
+      `"Your team spends ${Math.round(weeklyHours)} hours weekly on these processes - we can automate ${automationEfficiency}% of that"`,
+      `"At $${hourlyRate}/hour, that's $${Math.round(monthlySavings).toLocaleString()} in monthly savings"`,
+      `"The ${packageType} package delivers ${expectedROI}% ROI ${paybackMonths < 12 ? 'in under a year' : `with ${paybackMonths}-month payback`}"`,
+      `"Implementation takes ${implementationTime} with dedicated project management"`,
+      `"Total investment of $${(adjustedBasePrice + setupFee).toLocaleString()} pays for itself through time savings"`,
+      `"Your ${inputs.industry} industry peers typically see similar efficiency gains"`
     ]
 
     // Risk factors
@@ -251,7 +293,13 @@ ${calculation.riskFactors.map(risk => `• ${risk}`).join('\n')}
       monthlyRevenue: '',
       timelinePreference: '',
       complexityFactors: [],
-      customRequirements: ''
+      customRequirements: '',
+      // Reset new realistic inputs
+      weeklyHoursOnProcesses: '',
+      peopleInvolvedInProcesses: '',
+      averageHourlyRate: '',
+      currentSoftwareCosts: '',
+      automationEfficiency: '70' // Default to 70%
     })
     setShowResults(false)
   }, [])
@@ -399,6 +447,82 @@ ${calculation.riskFactors.map(risk => `• ${risk}`).join('\n')}
                       <span>{process}</span>
                     </label>
                   ))}
+                </div>
+              </div>
+
+              {/* REALISTIC HOUR-BASED INPUTS */}
+              <div className="border-t pt-6 mt-6">
+                <h3 className="text-lg font-semibold mb-4 text-blue-600">⏱️ Time & Cost Analysis</h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="weeklyHoursOnProcesses">Hours per week spent on target processes</Label>
+                    <Input
+                      id="weeklyHoursOnProcesses"
+                      type="number"
+                      step="0.5"
+                      value={inputs.weeklyHoursOnProcesses}
+                      onChange={(e) => handleInputChange('weeklyHoursOnProcesses', e.target.value)}
+                      placeholder="40"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">Total across all people involved</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="peopleInvolvedInProcesses">Number of people involved</Label>
+                    <Input
+                      id="peopleInvolvedInProcesses"
+                      type="number"
+                      value={inputs.peopleInvolvedInProcesses}
+                      onChange={(e) => handleInputChange('peopleInvolvedInProcesses', e.target.value)}
+                      placeholder="3"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">Who work on these specific processes</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="averageHourlyRate">Average hourly rate ($ including benefits)</Label>
+                    <Input
+                      id="averageHourlyRate"
+                      type="number"
+                      value={inputs.averageHourlyRate}
+                      onChange={(e) => handleInputChange('averageHourlyRate', e.target.value)}
+                      placeholder={getIndustryDefaultRate(inputs.industry).toString()}
+                    />
+                    <p className="text-xs text-gray-600 mt-1">Industry default: ${getIndustryDefaultRate(inputs.industry)}/hour</p>
+                  </div>
+                  <div>
+                    <Label htmlFor="currentSoftwareCosts">Current software costs ($ annual)</Label>
+                    <Input
+                      id="currentSoftwareCosts"
+                      type="number"
+                      value={inputs.currentSoftwareCosts}
+                      onChange={(e) => handleInputChange('currentSoftwareCosts', e.target.value)}
+                      placeholder="2400"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">Software you'd eliminate (optional)</p>
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="automationEfficiency">Expected automation efficiency (%)</Label>
+                  <div className="flex items-center space-x-4 mt-2">
+                    <input
+                      type="range"
+                      id="automationEfficiency"
+                      min="40"
+                      max="90"
+                      step="5"
+                      value={inputs.automationEfficiency}
+                      onChange={(e) => handleInputChange('automationEfficiency', e.target.value)}
+                      className="flex-1"
+                    />
+                    <span className="text-lg font-semibold text-blue-600 min-w-[60px]">
+                      {inputs.automationEfficiency}%
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">40% = Some manual oversight needed, 90% = Fully automated</p>
                 </div>
               </div>
 
