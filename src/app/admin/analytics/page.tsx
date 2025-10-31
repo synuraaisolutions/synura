@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAdminAuth } from '@/hooks/useAdminAuth'
 import { Button } from '@/components/ui/button'
@@ -46,26 +46,7 @@ export default function AnalyticsPage() {
   const [selectedType, setSelectedType] = useState('summary')
   const [dateRange, setDateRange] = useState('30d')
 
-  // Show loading screen while authentication is being checked
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center h-64">
-            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
-            <span className="ml-2 text-lg">Checking authentication...</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // If not authenticated, useAdminAuth will handle the redirect
-  if (!isAuthenticated) {
-    return null
-  }
-
-  const fetchAnalytics = async (type: string = selectedType) => {
+  const fetchAnalytics = useCallback(async (type: string = selectedType) => {
     try {
       setLoading(true)
       setError(null)
@@ -234,11 +215,30 @@ export default function AnalyticsPage() {
       default:
         return {}
     }
-  }
+  }, [selectedType, dateRange, setLoading, setError, setData])
 
   useEffect(() => {
     fetchAnalytics()
-  }, [selectedType, dateRange])
+  }, [fetchAnalytics])
+
+  // Show loading screen while authentication is being checked
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center h-64">
+            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
+            <span className="ml-2 text-lg">Checking authentication...</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // If not authenticated, useAdminAuth will handle the redirect
+  if (!isAuthenticated) {
+    return null
+  }
 
   const handleExport = async () => {
     try {

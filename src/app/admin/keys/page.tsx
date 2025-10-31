@@ -72,25 +72,6 @@ export default function APIKeysManagement() {
   const [newlyCreatedKey, setNewlyCreatedKey] = useState<NewAPIKey | null>(null)
   const [showNewKeyDialog, setShowNewKeyDialog] = useState(false)
 
-  // Show loading screen while authentication is being checked
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center h-64">
-            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
-            <span className="ml-2 text-lg">Checking authentication...</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // If not authenticated, useAdminAuth will handle the redirect
-  if (!isAuthenticated) {
-    return null
-  }
-
   // Form state
   const [formData, setFormData] = useState({
     name: '',
@@ -169,6 +150,25 @@ export default function APIKeysManagement() {
   useEffect(() => {
     fetchAPIKeys()
   }, [])
+
+  // Show loading screen while authentication is being checked
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center h-64">
+            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
+            <span className="ml-2 text-lg">Checking authentication...</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // If not authenticated, useAdminAuth will handle the redirect
+  if (!isAuthenticated) {
+    return null
+  }
 
   const handleCreateKey = async (e: React.FormEvent) => {
     e.preventDefault()
