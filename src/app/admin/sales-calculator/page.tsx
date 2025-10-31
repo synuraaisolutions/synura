@@ -129,46 +129,59 @@ export default function SalesCalculatorPage() {
     const currentSoftwareCosts = parseFloat(inputs.currentSoftwareCosts) || 0
     const automationEfficiency = parseFloat(inputs.automationEfficiency) || 70
 
-    // Base package determination (more realistic thresholds)
-    let packageType = 'Starter'
-    let basePrice = 3000 // Reduced base prices
-    let monthlyFee = 800
-
-    // Base on project complexity rather than company size
-    const totalWeeklyHoursToAutomate = weeklyHours
-    const totalMonthlyCostToAutomate = totalWeeklyHoursToAutomate * 4.33 * hourlyRate
-
-    if (totalMonthlyCostToAutomate > 8000 || processCount > 2 || complexityScore > 1) {
-      packageType = 'Business'
-      basePrice = 8000
-      monthlyFee = 1500
-    }
-
-    if (totalMonthlyCostToAutomate > 20000 || processCount > 4 || complexityScore > 3) {
-      packageType = 'Enterprise'
-      basePrice = 18000
-      monthlyFee = 3000
-    }
-
-    // Complexity adjustments (reduced impact)
-    const complexityMultiplier = 1 + (complexityScore * 0.1)
-    const processMultiplier = 1 + (Math.max(0, processCount - 1) * 0.05)
-
-    const adjustedBasePrice = Math.round(basePrice * complexityMultiplier * processMultiplier)
-    const adjustedMonthlyFee = Math.round(monthlyFee * complexityMultiplier)
-
-    // Reduced setup fee (15% instead of 30%)
-    const setupFee = Math.round(adjustedBasePrice * 0.15)
-
-    // REALISTIC ROI calculations based on actual hours
+    // REALISTIC ROI calculations based on actual hours (calculate savings FIRST)
     const currentWeeklyHours = weeklyHours
     const automationEfficiencyDecimal = automationEfficiency / 100
     const hoursSavedPerWeek = currentWeeklyHours * automationEfficiencyDecimal
     const monthlySavings = (hoursSavedPerWeek * 4.33 * hourlyRate) + (currentSoftwareCosts / 12)
     const annualSavings = monthlySavings * 12
+
+    // Package determination based on SAVINGS POTENTIAL (not current costs)
+    // Monthly fee should not exceed 25% of monthly savings per user feedback
+    let packageType = 'Starter'
+    let basePrice = 3000
+    let monthlyFeePercentage = 0.20 // 20% of monthly savings
+
+    // Determine package based on monthly savings and complexity
+    if (monthlySavings > 4000 || processCount > 2 || complexityScore > 1) {
+      packageType = 'Business'
+      basePrice = 6000
+      monthlyFeePercentage = 0.22 // 22% of monthly savings for more complex projects
+    }
+
+    if (monthlySavings > 10000 || processCount > 4 || complexityScore > 3) {
+      packageType = 'Enterprise'
+      basePrice = 12000
+      monthlyFeePercentage = 0.25 // 25% of monthly savings for enterprise complexity (max cap)
+    }
+
+    // Complexity adjustments (reduced impact)
+    const complexityMultiplier = 1 + (complexityScore * 0.15)
+    const processMultiplier = 1 + (Math.max(0, processCount - 1) * 0.10)
+
+    const adjustedBasePrice = Math.round(basePrice * complexityMultiplier * processMultiplier)
+
+    // CRITICAL FIX: Monthly fee based on savings, not fixed amounts
+    const calculatedMonthlyFee = Math.round(monthlySavings * monthlyFeePercentage)
+
+    // Set minimum monthly fees to ensure business viability, but never exceed 60% of savings
+    let adjustedMonthlyFee = Math.max(calculatedMonthlyFee,
+      packageType === 'Starter' ? 500 :
+      packageType === 'Business' ? 800 : 1200)
+
+    // SAFETY CHECK: Never let monthly fee exceed 25% of monthly savings per user feedback
+    const maxAllowedFee = Math.floor(monthlySavings * 0.25)
+    adjustedMonthlyFee = Math.min(adjustedMonthlyFee, maxAllowedFee)
+
+    // Setup fee (reduced to 15% of base price)
+    const setupFee = Math.round(adjustedBasePrice * 0.15)
+
+    // Net savings calculation
     const netAnnualSavings = annualSavings - (adjustedMonthlyFee * 12)
 
-    const paybackMonths = monthlySavings > 0 ? Math.ceil(adjustedBasePrice / monthlySavings) : 999
+    // Calculate payback period and ROI
+    const netMonthlySavings = monthlySavings - adjustedMonthlyFee
+    const paybackMonths = netMonthlySavings > 0 ? Math.ceil(adjustedBasePrice / netMonthlySavings) : 999
     const expectedROI = adjustedBasePrice > 0 ? Math.round(((netAnnualSavings / adjustedBasePrice) * 100)) : 0
 
     // Implementation timeline
@@ -226,9 +239,47 @@ export default function SalesCalculatorPage() {
     setInputs(prev => ({ ...prev, [field]: value }))
   }, [])
 
+  // Validation function
+  const validateInputs = useCallback((): { isValid: boolean; errors: string[] } => {
+    const errors: string[] = []
+
+    // Required fields validation
+    if (!inputs.companyName.trim()) errors.push('Company name is required')
+    if (!inputs.industry) errors.push('Industry selection is required')
+    if (!inputs.employeeCount || parseInt(inputs.employeeCount) < 1) errors.push('Valid employee count is required')
+    if (!inputs.weeklyHoursOnProcesses || parseFloat(inputs.weeklyHoursOnProcesses) < 1) errors.push('Weekly hours on processes is required (minimum 1 hour)')
+    if (inputs.targetProcesses.length === 0) errors.push('At least one target process must be selected')
+
+    // Economic viability validation
+    const weeklyHours = parseFloat(inputs.weeklyHoursOnProcesses) || 0
+    const hourlyRate = parseFloat(inputs.averageHourlyRate) || getIndustryDefaultRate(inputs.industry)
+    const automationEfficiency = parseFloat(inputs.automationEfficiency) || 70
+    const currentSoftwareCosts = parseFloat(inputs.currentSoftwareCosts) || 0
+
+    const hoursSavedPerWeek = weeklyHours * (automationEfficiency / 100)
+    const monthlySavings = (hoursSavedPerWeek * 4.33 * hourlyRate) + (currentSoftwareCosts / 12)
+
+    if (monthlySavings < 600) {
+      errors.push('Insufficient savings potential. Minimum $600/month in savings required for automation to be cost-effective.')
+    }
+
+    return { isValid: errors.length === 0, errors }
+  }, [inputs])
+
+  const [validationErrors, setValidationErrors] = useState<string[]>([])
+
   const handleCalculate = useCallback(() => {
+    const validation = validateInputs()
+
+    if (!validation.isValid) {
+      setValidationErrors(validation.errors)
+      setShowResults(false)
+      return
+    }
+
+    setValidationErrors([])
     setShowResults(true)
-  }, [])
+  }, [validateInputs])
 
   const handleExportPDF = useCallback(async () => {
     // Generate PDF export logic
@@ -576,6 +627,21 @@ ${calculation.riskFactors.map(risk => `• ${risk}`).join('\n')}
                 />
               </div>
 
+              {/* Validation Errors */}
+              {validationErrors.length > 0 && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <h4 className="text-red-800 font-semibold mb-2">Please fix the following issues:</h4>
+                  <ul className="space-y-1">
+                    {validationErrors.map((error, index) => (
+                      <li key={index} className="text-red-700 text-sm flex items-start">
+                        <span className="text-red-500 mr-2">•</span>
+                        {error}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <Button onClick={handleCalculate} className="w-full bg-blue-600 hover:bg-blue-700">
                 <Calculator className="w-4 h-4 mr-2" />
                 Calculate Pricing & Generate Insights
@@ -634,6 +700,18 @@ ${calculation.riskFactors.map(risk => `• ${risk}`).join('\n')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
+                  {/* Positive ROI Guarantee */}
+                  <div className="bg-green-100 border border-green-300 rounded-lg p-4 mb-4">
+                    <div className="flex items-center mb-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                      <span className="font-semibold text-green-800">Guaranteed Positive ROI</span>
+                    </div>
+                    <p className="text-green-700 text-sm">
+                      Monthly fees are capped at 25% of your savings, ensuring you keep at least 75% of the value we create.
+                      Net monthly savings: <strong>${Math.round((calculation.annualSavings/12) - calculation.monthlyFee).toLocaleString()}</strong>
+                    </p>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-green-50 p-4 rounded-lg text-center">
                       <div className="text-2xl font-bold text-green-600">{calculation.expectedROI}%</div>
