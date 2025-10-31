@@ -6,6 +6,7 @@ import { allServices } from '@/data/services'
 import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
+import ConsultationButton from '@/components/booking/ConsultationButton'
 
 export default function ServicesPage() {
   const featuredServices = allServices.filter(service => service.featured)
@@ -42,19 +43,12 @@ export default function ServicesPage() {
               From AI employees that work 24/7 to seamless system integrations,
               we provide complete solutions that eliminate manual work and drive measurable business growth.
             </p>
-            <Button
+            <ConsultationButton
               size="lg"
               variant="secondary"
-              onClick={() => {
-                if (typeof window !== 'undefined' && (window as any).Calendly) {
-                  (window as any).Calendly.initPopupWidget({
-                    url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                  });
-                }
-              }}
             >
               Schedule Free Consultation
-            </Button>
+            </ConsultationButton>
           </div>
         </div>
       </section>
@@ -203,19 +197,12 @@ export default function ServicesPage() {
             Start with a free consultation to discover which services would benefit your business most.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
+            <ConsultationButton
               size="lg"
               variant="secondary"
-              onClick={() => {
-                if (typeof window !== 'undefined' && (window as any).Calendly) {
-                  (window as any).Calendly.initPopupWidget({
-                    url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                  });
-                }
-              }}
             >
               Book Free Consultation
-            </Button>
+            </ConsultationButton>
             <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>

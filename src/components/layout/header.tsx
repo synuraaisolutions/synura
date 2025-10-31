@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/common/button'
 import { cn } from '@/lib/utils'
+import ConsultationButton from '@/components/booking/ConsultationButton'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -61,18 +62,11 @@ export function Header() {
           <Button variant="ghost" asChild>
             <Link href="/contact">Contact</Link>
           </Button>
-          <Button
+          <ConsultationButton
             variant="cta"
-            onClick={() => {
-              if (typeof window !== 'undefined' && (window as any).Calendly) {
-                (window as any).Calendly.initPopupWidget({
-                  url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                });
-              }
-            }}
           >
             Free Consultation
-          </Button>
+          </ConsultationButton>
         </div>
 
         {/* Mobile menu button */}
@@ -124,19 +118,11 @@ export function Header() {
                   Contact
                 </Link>
               </Button>
-              <Button
+              <ConsultationButton
                 variant="cta"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (typeof window !== 'undefined' && (window as any).Calendly) {
-                    (window as any).Calendly.initPopupWidget({
-                      url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                    });
-                  }
-                }}
               >
                 Free Consultation
-              </Button>
+              </ConsultationButton>
             </div>
           </div>
         </div>

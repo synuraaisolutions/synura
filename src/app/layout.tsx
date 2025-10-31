@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import { RetellWidget } from '@/components/retell-widget'
 import { ContactPopup } from '@/components/common/contact-popup'
-import { CalendlyIntegration } from '@/components/calendly-integration'
 import { GoogleAnalytics } from '@/components/analytics/google-analytics'
 import '@/styles/globals.css'
 
@@ -78,9 +77,6 @@ export default function RootLayout({
 
         {/* Contact Popup */}
         <ContactPopup />
-
-        {/* Calendly Integration */}
-        <CalendlyIntegration />
 
         {/* Analytics and Monitoring Scripts */}
         {process.env.NODE_ENV === 'production' && (

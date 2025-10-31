@@ -7,6 +7,7 @@ import { Button } from '@/components/common/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/common/card'
 import { PageLayout } from '@/components/layout/page-layout'
 import { VoiceAgentButton } from '@/components/common/voice-agent-button'
+import ConsultationButton from '@/components/booking/ConsultationButton'
 // Static pricing page without MDX dependency
 
 export default function PricingPage() {
@@ -79,18 +80,11 @@ export default function PricingPage() {
                     <li className="flex items-center">✓ Basic integration setup</li>
                     <li className="flex items-center">✓ 30-day support included</li>
                   </ul>
-                  <Button
+                  <ConsultationButton
                     className="w-full mt-6"
-                    onClick={() => {
-                      if (typeof window !== 'undefined' && (window as any).Calendly) {
-                        (window as any).Calendly.initPopupWidget({
-                          url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                        });
-                      }
-                    }}
                   >
                     Get Started
-                  </Button>
+                  </ConsultationButton>
                 </CardContent>
               </Card>
 
@@ -124,18 +118,11 @@ export default function PricingPage() {
                     <li className="flex items-center">✓ Custom workflows</li>
                     <li className="flex items-center">✓ 90-day support</li>
                   </ul>
-                  <Button
+                  <ConsultationButton
                     className="w-full mt-6"
-                    onClick={() => {
-                      if (typeof window !== 'undefined' && (window as any).Calendly) {
-                        (window as any).Calendly.initPopupWidget({
-                          url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                        });
-                      }
-                    }}
                   >
                     Get Started
-                  </Button>
+                  </ConsultationButton>
                 </CardContent>
               </Card>
 
@@ -166,18 +153,11 @@ export default function PricingPage() {
                     <li className="flex items-center">✓ Dedicated support</li>
                     <li className="flex items-center">✓ SLA guarantees</li>
                   </ul>
-                  <Button
+                  <ConsultationButton
                     className="w-full mt-6"
-                    onClick={() => {
-                      if (typeof window !== 'undefined' && (window as any).Calendly) {
-                        (window as any).Calendly.initPopupWidget({
-                          url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                        });
-                      }
-                    }}
                   >
                     Contact Sales
-                  </Button>
+                  </ConsultationButton>
                 </CardContent>
               </Card>
             </div>
@@ -355,19 +335,12 @@ export default function PricingPage() {
             Let's find out how much time and money your business could save with intelligent automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
+            <ConsultationButton
               size="lg"
               variant="secondary"
-              onClick={() => {
-                if (typeof window !== 'undefined' && (window as any).Calendly) {
-                  (window as any).Calendly.initPopupWidget({
-                    url: 'https://calendly.com/synuraaisolutions/30min?hide_event_type_details=1&hide_gdpr_banner=1'
-                  });
-                }
-              }}
             >
               Book Free Consultation
-            </Button>
+            </ConsultationButton>
             <VoiceAgentButton size="lg" variant="outline" className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               Speak to an agent
             </VoiceAgentButton>
