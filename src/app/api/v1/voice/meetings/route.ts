@@ -49,7 +49,7 @@ const postMeetingsHandler = async (request: NextRequest, authContext: AuthContex
       apiKeyId: authContext.apiKeyId,
     }
 
-    // Integrate with calendar system (Calendly, Acuity, etc.)
+    // Integrate with calendar system (Cal.com, Acuity, etc.)
     const calendarResult = await scheduleCalendarMeeting(validatedData, meetingId)
 
     // Log meeting booking (could be expanded to dedicated meetings table in future)
@@ -123,7 +123,7 @@ export const POST = withOptionalAuth(postMeetingsHandler)
 // Simulate calendar integration
 async function scheduleCalendarMeeting(meetingData: MeetingData, meetingId: string) {
   // In production, this would integrate with:
-  // - Calendly API
+  // - Cal.com API
   // - Acuity Scheduling API
   // - Google Calendar API
   // - Microsoft Graph API (Outlook)
@@ -153,7 +153,7 @@ async function scheduleCalendarMeeting(meetingData: MeetingData, meetingId: stri
 
   return {
     status: 'scheduled',
-    calendarUrl: `https://calendly.com/synura/consultation?meeting_id=${meetingId}`,
+    calendarUrl: `https://cal.com/synuraaisolutions/30min?meeting_id=${meetingId}`,
     eventId: `cal_${meetingId}`,
   }
 }

@@ -13,7 +13,6 @@ interface ConsultationButtonProps {
   // Cal.com specific props
   username?: string
   eventSlug?: string
-  view?: "MONTH_VIEW" | "WEEK_VIEW" | "COLUMN_VIEW"
 }
 
 export default function ConsultationButton({
@@ -22,8 +21,7 @@ export default function ConsultationButton({
   children = 'Schedule Free Consultation',
   className = '',
   username,
-  eventSlug,
-  view = 'MONTH_VIEW'
+  eventSlug
 }: ConsultationButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -86,7 +84,6 @@ export default function ConsultationButton({
               <CalBooking
                 username={username}
                 eventSlug={eventSlug}
-                view={view}
                 onBookingSuccess={handleBookingSuccess}
                 className="w-full"
               />

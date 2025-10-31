@@ -1,47 +1,59 @@
 'use client'
 
-import { BookerEmbed } from "@calcom/atoms"
+import Cal, { getCalApi } from "@calcom/embed-react"
+import { useEffect } from 'react'
 
 interface CalBookingProps {
   username?: string
   eventSlug?: string
-  view?: "MONTH_VIEW" | "WEEK_VIEW" | "COLUMN_VIEW"
   className?: string
   onBookingSuccess?: () => void
 }
 
 export default function CalBooking({
-  username = "synuraaisolutions", // Default username - update with your actual Cal.com username
-  eventSlug = "30min", // Default event slug - update with your actual event slug
-  view = "MONTH_VIEW",
+  username = "synuraaisolutions", // Update with your actual Cal.com username
+  eventSlug = "30min", // Update with your actual Cal.com event slug
   className = "",
   onBookingSuccess
 }: CalBookingProps) {
-  const handleBookingSuccess = () => {
-    console.log("Synura consultation booking created successfully")
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi()
 
-    // Optional: Track booking in analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'booking_completed', {
-        event_category: 'consultation',
-        event_label: 'cal_com_booking'
+      // Set up event listeners
+      cal("on", {
+        action: "bookingSuccessful",
+        callback: () => {
+          console.log("Synura consultation booking created successfully")
+
+          // Track booking in analytics
+          if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'booking_completed', {
+              event_category: 'consultation',
+              event_label: 'cal_com_booking'
+            })
+          }
+
+          // Call custom success handler if provided
+          onBookingSuccess?.()
+        }
       })
-    }
-
-    // Call custom success handler if provided
-    onBookingSuccess?.()
-  }
+    })()
+  }, [onBookingSuccess])
 
   return (
-    <div className={`cal-booking-container ${className}`}>
-      <BookerEmbed
-        username={username}
-        eventSlug={eventSlug}
-        view={view}
-        customClassNames={{
-          bookerContainer: "border-gray-200 border rounded-lg shadow-sm bg-white"
+    <div className={`cal-booking-container ${className}`} style={{ minHeight: '600px' }}>
+      <Cal
+        calLink={`${username}/${eventSlug}`}
+        config={{
+          layout: 'month_view',
+          theme: 'light'
         }}
-        onCreateBookingSuccess={handleBookingSuccess}
+        style={{
+          width: "100%",
+          height: "100%",
+          overflow: "scroll"
+        }}
       />
     </div>
   )

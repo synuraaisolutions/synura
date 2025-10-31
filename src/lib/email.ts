@@ -288,7 +288,7 @@ function generateClientROITemplate(
                 <p style="margin-top: 15px;">These are conservative estimates based on industry data and our client results. Many companies see returns of 2-4× within 6 months.</p>
 
                 <div style="text-align: center; margin: 35px 0;">
-                    <a href="https://calendly.com/synuraaisolutions/30min" class="cta">🗓️ Schedule Free Strategy Session</a>
+                    <a href="https://cal.com/synuraaisolutions/30min" class="cta">🗓️ Schedule Free Strategy Session</a>
                 </div>
 
                 <p><strong>In your free 30-minute session, we'll:</strong></p>
@@ -334,7 +334,7 @@ Investment Range: ${costRange}
 
 Beyond direct savings${estimates.possibleAdditionalValue?.opportunityValue ? `, there's possible additional value of $${estimates.possibleAdditionalValue.opportunityValue.toLocaleString()}/year (${estimates.possibleAdditionalValue.percentageOfSavings} of direct savings) when your team uses freed time for higher-value work` : ', your team can focus on strategic work while automation handles routine tasks'}.
 
-Schedule your free strategy session: https://calendly.com/synuraaisolutions/30min
+Schedule your free strategy session: https://cal.com/synuraaisolutions/30min
 
 Best regards,
 The Synura AI Team
@@ -661,7 +661,7 @@ function generateContactConfirmationEmail(leadData: LeadCaptureLog): EmailTempla
                 </ul>
 
                 <p style="text-align: center;">
-                    <a href="https://calendly.com/synuraaisolutions/30min" class="cta">Schedule Immediate Consultation</a>
+                    <a href="https://cal.com/synuraaisolutions/30min" class="cta">Schedule Immediate Consultation</a>
                 </p>
 
                 <p>Questions? Reply to this email or call us at (778) 723-5969.</p>
@@ -693,7 +693,7 @@ What happens next:
 - We'll respond with relevant information and next steps
 - If you requested a consultation, we'll send you a calendar link
 
-Schedule immediate consultation: https://calendly.com/synuraaisolutions/30min
+Schedule immediate consultation: https://cal.com/synuraaisolutions/30min
 
 Questions? Reply to this email or call us at (778) 723-5969.
 
