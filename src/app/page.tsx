@@ -8,6 +8,8 @@ import { PageLayout } from '@/components/layout/page-layout'
 import { VoiceAgentButton } from '@/components/common/voice-agent-button'
 import { AutomationExplainer } from '@/components/common/automation-explainer'
 import ConsultationButton from '@/components/booking/ConsultationButton'
+import { ParticleNetwork } from '@/components/animations/ParticleNetwork'
+import { CountUpNumber } from '@/components/animations/CountUpNumber'
 
 const services = [
   {
@@ -72,6 +74,13 @@ export default function HomePage() {
           </video>
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary-600/90 to-secondary-900/90"></div>
+          {/* Particle Network Overlay */}
+          <ParticleNetwork
+            className="z-10"
+            particleCount={40}
+            maxDistance={100}
+            particleSpeed={0.2}
+          />
         </div>
 
         <div className="synura-container relative z-10">
@@ -146,14 +155,21 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold text-secondary-900 mb-4">
               For every dollar you invest, our clients typically see
             </h2>
-            <p className="text-6xl font-bold synura-text-gradient">2-3x ROI</p>
+            <div className="text-6xl font-bold synura-text-gradient">
+              <CountUpNumber target="2-3x" duration={2500} /> ROI
+            </div>
             <p className="text-secondary-600 mt-2">within the first months of implementation</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm">
-                <div className="text-3xl font-bold text-primary-600 mb-2">{stat.value}</div>
+                <div className="text-3xl font-bold text-primary-600 mb-2">
+                  <CountUpNumber
+                    target={stat.value}
+                    duration={2000 + index * 200}
+                  />
+                </div>
                 <div className="text-sm font-semibold text-secondary-900 mb-1">{stat.label}</div>
                 <div className="text-xs text-secondary-600">{stat.description}</div>
               </div>
