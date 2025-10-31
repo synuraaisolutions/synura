@@ -184,7 +184,7 @@ export default function FAQsPage() {
             Ready to Get Started?
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Join hundreds of businesses that have transformed their operations with intelligent automation.
+            Join thousands of businesses that have transformed their operations with intelligent automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
