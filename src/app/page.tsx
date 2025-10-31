@@ -12,11 +12,11 @@ import ConsultationButton from '@/components/booking/ConsultationButton'
 const services = [
   {
     title: 'AI Workforce Solutions',
-    description: 'Digital team members that work 24/7 handling customer support, scheduling, lead follow-up, and reporting.',
+    description: 'Complete AI teams with up to 10 digital employees, managers, and supervisors that work 24/7 handling customer support, scheduling, lead follow-up, and reporting.',
     icon: '🤖',
     image: '/images/professional/industrial-robotics-automation.jpg',
     href: '/services/ai-workforce',
-    benefits: ['40-60% time savings', '24/7 availability', 'Consistent quality'],
+    benefits: ['40-60% time savings', '24/7 availability', 'Scale to full departments'],
   },
   {
     title: 'Automation & Integration',

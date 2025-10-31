@@ -32,7 +32,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
               <Image
-                src="/images/synura-logo-white.svg"
+                src="/images/synura_logo_white.svg"
                 alt="Synura AI Solutions"
                 width={32}
                 height={32}

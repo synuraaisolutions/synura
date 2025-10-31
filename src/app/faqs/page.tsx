@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/common/button'
 import { ConsultationButton } from '@/components/common/consultation-button'
 import { PageLayout } from '@/components/layout/page-layout'
@@ -9,12 +10,24 @@ export default function FAQsPage() {
   // FAQ data organized by category for better UX
   const generalFAQs = [
     {
+      question: "What is AI automation?",
+      answer: "AI automation combines artificial intelligence with workflow automation to create intelligent systems that can learn, adapt, and make decisions. Unlike traditional automation that follows fixed rules, AI automation can handle complex tasks, understand context, and improve over time—like having digital employees that think and learn."
+    },
+    {
       question: "What does Synura AI Solutions do?",
       answer: "We specialize in intelligent business automation that delivers measurable results. We help companies eliminate repetitive tasks, connect disconnected systems, and deploy AI employees that work 24/7 to handle customer service, scheduling, lead follow-up, and reporting."
     },
     {
+      question: "Will AI automation replace my employees?",
+      answer: "No, AI automation enhances your team rather than replacing them. We focus on automating repetitive, time-consuming tasks so your employees can focus on strategic, creative, and high-value work that requires human expertise and judgment."
+    },
+    {
       question: "How do you ensure automation solutions fit our business?",
       answer: "We start with a free consultation to analyze your specific processes and identify automation opportunities with clear ROI projections. Every solution is custom-designed for your business needs, integrating with your existing systems and workflows."
+    },
+    {
+      question: "What size business do you work with?",
+      answer: "We work with businesses of all sizes, from small startups to large enterprises. Our solutions scale to your needs—whether you're a 5-person team looking to automate basic tasks or a 500+ employee company needing comprehensive digital transformation."
     },
     {
       question: "What industries do you work with?",
@@ -25,8 +38,8 @@ export default function FAQsPage() {
       answer: "Implementation timelines vary by project scope. Simple automations can be deployed in 1-2 weeks, while comprehensive AI workforce solutions typically take 4-8 weeks. We provide detailed timelines during your consultation."
     },
     {
-      question: "Do you provide training for our team?",
-      answer: "Yes! We include comprehensive team training, documentation, and initial support with every implementation. We ensure your team is confident using and managing the new automation systems."
+      question: "Do I need technical expertise to use AI automation?",
+      answer: "Not at all! We design user-friendly solutions that your team can operate without technical expertise. We provide comprehensive training and ongoing support to ensure everyone feels confident using the new systems."
     }
   ]
 
@@ -34,6 +47,10 @@ export default function FAQsPage() {
     {
       question: "How much does automation implementation cost?",
       answer: "Investment varies by project scope, but our clients typically see 2-3x ROI within the first months. We provide detailed cost projections and ROI analysis during your free consultation."
+    },
+    {
+      question: "How do you measure ROI from automation?",
+      answer: "We measure ROI through time savings, cost reduction, error prevention, and efficiency gains. Our clients typically see measurable benefits within 30 days and full ROI within 3-6 months through reduced labor costs and increased productivity."
     },
     {
       question: "What are your payment terms?",
@@ -69,14 +86,27 @@ export default function FAQsPage() {
     {
       question: "Can automations be modified after implementation?",
       answer: "Absolutely! We design flexible systems that can be updated and expanded. Changes can be made to accommodate new processes, integrations, or business requirements."
+    },
+    {
+      question: "How do I get started with AI automation?",
+      answer: "Getting started is simple: 1) Schedule a free consultation to discuss your challenges, 2) We analyze your processes and identify opportunities, 3) Receive a custom automation roadmap with ROI projections, 4) Begin implementation with our expert team."
     }
   ]
 
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
-        <div className="synura-container">
+      <section className="relative bg-gradient-to-br from-primary-50 to-primary-100 py-20 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/hero/faqs_page.png"
+            alt="Frequently Asked Questions"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+        </div>
+        <div className="relative z-10 synura-container">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
               Frequently Asked Questions

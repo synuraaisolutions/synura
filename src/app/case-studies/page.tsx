@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { allCaseStudies } from '@/data/case-studies'
 import { Button } from '@/components/common/button'
 import { ConsultationButton } from '@/components/common/consultation-button'
@@ -81,8 +82,17 @@ export default function CaseStudiesPage() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-primary-100 py-20">
-        <div className="synura-container">
+      <section className="relative bg-gradient-to-br from-primary-50 to-primary-100 py-20 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/hero/case_study_page.png"
+            alt="Success Stories"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+        </div>
+        <div className="relative z-10 synura-container">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
               Success Stories

@@ -4,35 +4,37 @@ export const allServices: Service[] = [
   {
     title: "AI Workforce Solutions",
     slug: "ai-workforce",
-    description: "Deploy AI employees that work 24/7 to handle customer service, lead qualification, data processing, and administrative tasks with human-level accuracy.",
+    description: "Deploy complete AI teams with up to 10 AI employees, managers, and supervisors that work 24/7 to handle customer service, lead qualification, data processing, and administrative tasks with human-level accuracy.",
     category: "ai-workforce",
     featured: true,
     icon: "robot",
     image: "/images/services/AI-Workforce-Solutions.png",
     benefits: [
       "24/7 availability with no breaks or downtime",
+      "Deploy complete AI teams with managers and supervisors",
       "Process unlimited conversations simultaneously",
-      "Consistent quality and brand voice",
+      "Consistent quality and brand voice across entire teams",
       "Integrate with existing tools and workflows",
       "Reduce operational costs by up to 70 percent",
-      "Scale instantly during peak demand"
+      "Scale from single agents to full departments instantly"
     ],
     outcomes: [
+      "Deploy entire AI departments with proper hierarchy",
       "Eliminate wait times for customer inquiries",
-      "Qualify leads while you sleep",
-      "Process data entry tasks in seconds",
+      "Qualify leads while you sleep with dedicated teams",
+      "Process data entry tasks in seconds across multiple agents",
       "Free up human staff for strategic work",
-      "Improve customer satisfaction scores"
+      "Improve customer satisfaction scores with coordinated teams"
     ],
     url: "/services/ai-workforce",
     body: {
       raw: `# AI Workforce Solutions
 
-Transform your business operations with AI employees that work around the clock, handling customer interactions, administrative tasks, and data processing with exceptional accuracy and consistency.
+Transform your business operations with complete AI teams of up to 10 AI employees, managers, and supervisors that work around the clock, handling customer interactions, administrative tasks, and data processing with exceptional accuracy and consistency.
 
 ## What We Deliver
 
-Our AI Workforce Solutions provide you with virtual employees that integrate seamlessly into your existing operations, handling tasks that typically require human intervention.
+Our AI Workforce Solutions provide you with complete virtual teams that integrate seamlessly into your existing operations, from individual specialists to full departments with proper hierarchy and management structure.
 
 ### Core Capabilities
 

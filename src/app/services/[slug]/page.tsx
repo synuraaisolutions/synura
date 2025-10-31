@@ -218,10 +218,40 @@ export default function ServicePage({ params }: ServicePageProps) {
               ))}
             </div>
 
+            {service.slug === 'ai-workforce' && (
+              <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg p-8 mt-8">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-secondary-900 mb-4">
+                    Complete AI Teams & Departments
+                  </h3>
+                  <p className="text-lg text-secondary-700 mb-6 max-w-3xl mx-auto">
+                    We don't just deploy individual AI agents - we create entire AI workforces with proper organizational structure, including managers, supervisors, and specialized team members working together seamlessly.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 className="font-semibold text-secondary-900 mb-2">Individual Agents</h4>
+                      <p className="text-sm text-secondary-600">Single AI employees for specific tasks</p>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 className="font-semibold text-secondary-900 mb-2">Team Structure</h4>
+                      <p className="text-sm text-secondary-600">Coordinated teams with managers & supervisors</p>
+                    </div>
+                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <h4 className="font-semibold text-secondary-900 mb-2">Full Departments</h4>
+                      <p className="text-sm text-secondary-600">Up to 10 AI employees in complete organizational hierarchy</p>
+                    </div>
+                  </div>
+                  <p className="text-secondary-600 mb-4">
+                    Scale from a single AI assistant to an entire virtual department that operates with the coordination and efficiency of a human team, but with 24/7 availability and unlimited capacity.
+                  </p>
+                </div>
+              </div>
+            )}
+
             <div className="text-center mt-12">
               <div className="bg-white rounded-lg p-6 border border-primary-200">
                 <p className="text-lg text-secondary-700 mb-4">
-                  {service.slug === 'ai-workforce' && 'Don\'t see your specific role listed? We can automate virtually any position that involves repetitive tasks, customer interactions, or data processing.'}
+                  {service.slug === 'ai-workforce' && 'Don\'t see your specific role listed? We can automate virtually any position that involves repetitive tasks, customer interactions, or data processing - from individual roles to complete departments.'}
                   {service.slug === 'automation-integration' && 'Have a unique process that needs automation? We specialize in creating custom solutions for any business workflow or integration requirement.'}
                   {service.slug === 'ai-consulting' && 'Need guidance in a specific area not mentioned? Our consultants have experience across all industries and automation scenarios.'}
                   {service.slug === 'managed-operations' && 'Have specific operational requirements? We customize our management services to match your exact needs and service level requirements.'}
