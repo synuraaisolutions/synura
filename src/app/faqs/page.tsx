@@ -190,9 +190,6 @@ export default function FAQsPage() {
             <Button size="lg" variant="secondary" asChild>
               <Link href="/services">Explore Services</Link>
             </Button>
-            <VoiceAgentButton size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary-600">
-              Speak to an agent
-            </VoiceAgentButton>
             <Button size="lg" variant="outline" asChild className="!text-white border-white !bg-transparent hover:!bg-white hover:!text-primary-600">
               <Link href="/pricing">View Pricing</Link>
             </Button>
