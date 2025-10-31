@@ -51,15 +51,8 @@ export default function CalBooking({
           }
         })
 
-        // Listen for errors
-        cal("on", {
-          action: "error",
-          callback: (e) => {
-            console.warn("Cal.com embed error:", e)
-            setIsLoading(false)
-            setHasError(true)
-          }
-        })
+        // Listen for embed events (removed invalid "error" event)
+        // Cal.com will handle errors internally
 
       } catch (error) {
         console.error("Failed to initialize Cal.com:", error)
