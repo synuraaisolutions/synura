@@ -198,9 +198,7 @@ export function VoiceAgentButton({
     return () => clearTimeout(fallbackTimer)
   }, [isSDKReady])
 
-  if (!isSDKReady && !showFallback) {
-    return null // Don't render initially while waiting for SDK
-  }
+  // Always render the button, but show different states based on SDK readiness
 
   return (
     <Button

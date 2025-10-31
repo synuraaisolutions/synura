@@ -88,7 +88,7 @@ export default function CaseStudiesPage() {
             src="/images/hero/case_study_page.png"
             alt="Success Stories"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-40"
             priority
           />
         </div>

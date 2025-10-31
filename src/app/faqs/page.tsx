@@ -102,7 +102,7 @@ export default function FAQsPage() {
             src="/images/hero/faqs_page.png"
             alt="Frequently Asked Questions"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-40"
             priority
           />
         </div>
@@ -166,7 +166,7 @@ export default function FAQsPage() {
               <ConsultationButton size="lg" variant="cta">
                 Schedule Free Consultation
               </ConsultationButton>
-              <VoiceAgentButton size="lg" variant="outline">
+              <VoiceAgentButton size="lg" variant="outline" className="text-secondary-900 border-secondary-900 hover:bg-secondary-900 hover:text-white">
                 Ask our agent directly
               </VoiceAgentButton>
               <Button size="lg" variant="outline" asChild>
