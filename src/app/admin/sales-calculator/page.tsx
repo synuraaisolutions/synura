@@ -194,10 +194,11 @@ export default function SalesCalculatorPage() {
     }
 
     // Generate insights based on actual hours
+    const currentMonthlyCost = weeklyHours * 4.33 * hourlyRate
     const insights = [
       `Current ${Math.round(weeklyHours)} weekly hours spent on processes can be reduced by ${automationEfficiency}%`,
       `Target processes could save approximately ${Math.round(hoursSavedPerWeek * 4.33)} hours monthly`,
-      `At $${hourlyRate}/hour, you're spending $${Math.round(totalMonthlyCostToAutomate).toLocaleString()}/month on these processes`,
+      `At $${hourlyRate}/hour, you're spending $${Math.round(currentMonthlyCost).toLocaleString()}/month on these processes`,
       `${inputs.industry} industry average rates justify ${packageType} package selection`,
       `${currentSoftwareCosts > 0 ? `Eliminating $${Math.round(currentSoftwareCosts)} in current software costs` : 'No current software costs to eliminate'}`,
       `${inputs.timelinePreference === 'urgent' ? 'Expedited implementation available with dedicated resources' : 'Standard timeline allows for thorough testing and training'}`
