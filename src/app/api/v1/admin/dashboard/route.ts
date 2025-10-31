@@ -223,7 +223,7 @@ const getDashboardHandler = async (request: NextRequest) => {
       message: 'Failed to load dashboard data',
     }, { status: 500 })
 
-    await Analytics.logAPI(request, errorResponse, startTime, authContext)
+    await Analytics.logAPI(request, errorResponse, startTime, { isAuthenticated: true, apiKeyId: 'admin-session' })
     return addCORSHeaders(errorResponse)
   }
 }
