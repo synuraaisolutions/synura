@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       emailNotification: emailResult
     })
 
-    return addCORSHeaders(response)
+    return addCORSHeaders(response, request)
 
   } catch (error) {
     console.error('Contact form submission error:', error)
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       }, { status: 500 })
     }
 
-    return addCORSHeaders(errorResponse)
+    return addCORSHeaders(errorResponse, request)
   }
 }
 

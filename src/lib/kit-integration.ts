@@ -497,6 +497,10 @@ class KitIntegration {
 }
 
 // Export singleton instance
-export const kitIntegration = new KitIntegration(process.env.KIT_API_KEY || 'kit_ab2d14214a3e0b027a62b0ea74468578')
+const apiKey = process.env.KIT_API_KEY
+if (!apiKey) {
+  throw new Error('KIT_API_KEY environment variable is required')
+}
+export const kitIntegration = new KitIntegration(apiKey)
 
 export type { ROILeadData, ContactLeadData, KitSubscriber, KitTag, KitCustomField }

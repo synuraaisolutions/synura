@@ -218,11 +218,31 @@ export function getRequestMetadata(request: NextRequest, authContext?: AuthConte
 /**
  * CORS headers for API responses
  */
-export function addCORSHeaders(response: NextResponse): NextResponse {
-  response.headers.set('Access-Control-Allow-Origin', '*')
+export function addCORSHeaders(response: NextResponse, request?: Request): NextResponse {
+  // Define allowed origins for production security
+  const allowedOrigins = [
+    'https://synura.ai',
+    'https://www.synura.ai',
+    'https://synuraaisolutions.vercel.app',
+    'https://synura.vercel.app',
+    process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  ].filter(Boolean)
+
+  // Get the origin from the request
+  const origin = request?.headers.get('origin')
+
+  // Set appropriate CORS header
+  if (origin && allowedOrigins.includes(origin)) {
+    response.headers.set('Access-Control-Allow-Origin', origin)
+  } else if (!origin) {
+    // Allow same-origin requests (no origin header)
+    response.headers.set('Access-Control-Allow-Origin', allowedOrigins[0])
+  }
+
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key')
   response.headers.set('Access-Control-Expose-Headers', 'X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset')
+  response.headers.set('Access-Control-Allow-Credentials', 'true')
   return response
 }
 
