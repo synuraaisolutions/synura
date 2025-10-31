@@ -16,7 +16,8 @@ import {
   RefreshCw,
   Calendar,
   BarChart3,
-  Database
+  Database,
+  Calculator
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -265,6 +266,12 @@ export default function AdminDashboard() {
                 View Analytics
               </Button>
             </Link>
+            <Link href="/admin/sales-calculator">
+              <Button variant="outline">
+                <Calculator className="w-4 h-4 mr-2" />
+                Sales Calculator
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -469,7 +476,7 @@ export default function AdminDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <Link href="/admin/keys">
                     <Button variant="outline" className="w-full h-20 flex flex-col">
                       <Key className="w-6 h-6 mb-2" />
@@ -480,6 +487,12 @@ export default function AdminDashboard() {
                     <Button variant="outline" className="w-full h-20 flex flex-col">
                       <BarChart3 className="w-6 h-6 mb-2" />
                       View Analytics
+                    </Button>
+                  </Link>
+                  <Link href="/admin/sales-calculator">
+                    <Button variant="outline" className="w-full h-20 flex flex-col">
+                      <Calculator className="w-6 h-6 mb-2" />
+                      Sales Calculator
                     </Button>
                   </Link>
                   <Button variant="outline" className="w-full h-20 flex flex-col" onClick={fetchDashboardData}>
