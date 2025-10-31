@@ -115,24 +115,120 @@ export default function ServicePage({ params }: ServicePageProps) {
         </div>
       </section>
 
-      {/* Service Details - TEMPORARILY DISABLED MDX TO FIX DEPLOYMENT */}
+      {/* Automation Examples */}
       <section className="py-16 bg-secondary-50">
         <div className="synura-container">
-          <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg max-w-none">
-              {/* Temporary static content while MDX issue is resolved */}
-              <div className="text-lg text-secondary-700 space-y-6">
-                <p>
-                  Our {service.title} helps businesses streamline operations and improve efficiency
-                  through intelligent automation solutions.
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-secondary-900 text-center mb-4">
+              {service.slug === 'ai-workforce' && 'Positions & Roles We Can Automate'}
+              {service.slug === 'automation-integration' && 'Business Processes We Automate'}
+              {service.slug === 'ai-consulting' && 'Strategic Areas We Optimize'}
+              {service.slug === 'managed-operations' && 'Operational Areas We Manage'}
+            </h2>
+            <p className="text-lg text-secondary-600 text-center mb-12 max-w-3xl mx-auto">
+              {service.slug === 'ai-workforce' && 'Transform these common business roles into AI-powered employees that work 24/7 with consistent quality and unlimited scalability.'}
+              {service.slug === 'automation-integration' && 'Streamline these critical business processes to eliminate manual work and ensure seamless operations across your organization.'}
+              {service.slug === 'ai-consulting' && 'Our strategic consulting covers these essential areas to maximize your automation ROI and minimize implementation risks.'}
+              {service.slug === 'managed-operations' && 'We provide comprehensive management across these operational areas to ensure your AI systems deliver consistent value.'}
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {service.slug === 'ai-workforce' && [
+                { category: 'Customer Service', items: ['Inbound call agents', 'Live chat support', 'Email support specialists', 'Help desk technicians', 'Customer success managers'] },
+                { category: 'Sales & Marketing', items: ['Outbound sales callers', 'Lead qualification agents', 'Email marketing specialists', 'Social media managers', 'Content creators'] },
+                { category: 'Administrative', items: ['Data entry clerks', 'Administrative assistants', 'Appointment schedulers', 'Document processors', 'Report generators'] },
+                { category: 'Operations', items: ['Order processing staff', 'Inventory coordinators', 'Quality assurance agents', 'Compliance monitors', 'Workflow coordinators'] },
+                { category: 'Human Resources', items: ['Recruitment coordinators', 'Employee onboarding', 'Benefits administrators', 'Performance trackers', 'Training coordinators'] },
+                { category: 'Finance & Accounting', items: ['Invoice processors', 'Expense coordinators', 'Payment collectors', 'Financial reporters', 'Budget analysts'] }
+              ].map((category, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-secondary-200">
+                  <h3 className="text-lg font-semibold text-secondary-900 mb-4">{category.category}</h3>
+                  <ul className="space-y-2">
+                    {category.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start space-x-2">
+                        <span className="text-primary-500 mt-1 text-sm">•</span>
+                        <span className="text-secondary-700 text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              {service.slug === 'automation-integration' && [
+                { category: 'Sales & CRM', items: ['Lead capture & routing', 'Contact data sync', 'Pipeline management', 'Proposal generation', 'Follow-up sequences'] },
+                { category: 'E-commerce', items: ['Order processing', 'Inventory updates', 'Customer notifications', 'Returns management', 'Shipping coordination'] },
+                { category: 'Finance & Billing', items: ['Invoice generation', 'Payment processing', 'Expense tracking', 'Financial reporting', 'Budget monitoring'] },
+                { category: 'Marketing', items: ['Email campaigns', 'Lead nurturing', 'Social media posting', 'Content distribution', 'Analytics reporting'] },
+                { category: 'Operations', items: ['Document workflows', 'Approval processes', 'Task assignments', 'Quality checks', 'Compliance tracking'] },
+                { category: 'Customer Success', items: ['Onboarding workflows', 'Support ticket routing', 'Customer health scoring', 'Renewal notifications', 'Feedback collection'] }
+              ].map((category, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-secondary-200">
+                  <h3 className="text-lg font-semibold text-secondary-900 mb-4">{category.category}</h3>
+                  <ul className="space-y-2">
+                    {category.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start space-x-2">
+                        <span className="text-primary-500 mt-1 text-sm">•</span>
+                        <span className="text-secondary-700 text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              {service.slug === 'ai-consulting' && [
+                { category: 'Strategic Planning', items: ['Automation roadmapping', 'ROI analysis & projections', 'Priority identification', 'Resource allocation', 'Timeline development'] },
+                { category: 'Technology Selection', items: ['Platform evaluation', 'Vendor comparison', 'Integration assessment', 'Scalability planning', 'Cost optimization'] },
+                { category: 'Process Design', items: ['Workflow mapping', 'Efficiency analysis', 'Bottleneck identification', 'Quality assurance', 'Performance metrics'] },
+                { category: 'Change Management', items: ['Team training programs', 'Adoption strategies', 'Communication plans', 'Resistance management', 'Success measurement'] },
+                { category: 'Risk Management', items: ['Security assessment', 'Compliance planning', 'Backup strategies', 'Failure mitigation', 'Recovery procedures'] },
+                { category: 'Performance Optimization', items: ['KPI development', 'Success tracking', 'Continuous improvement', 'Value measurement', 'ROI maximization'] }
+              ].map((category, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-secondary-200">
+                  <h3 className="text-lg font-semibold text-secondary-900 mb-4">{category.category}</h3>
+                  <ul className="space-y-2">
+                    {category.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start space-x-2">
+                        <span className="text-primary-500 mt-1 text-sm">•</span>
+                        <span className="text-secondary-700 text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              {service.slug === 'managed-operations' && [
+                { category: 'System Monitoring', items: ['Performance tracking', 'Uptime monitoring', 'Error detection', 'Capacity planning', 'Health alerts'] },
+                { category: 'Security & Compliance', items: ['Access control', 'Threat detection', 'Vulnerability scanning', 'Compliance reporting', 'Audit trails'] },
+                { category: 'Maintenance & Updates', items: ['Software updates', 'Performance tuning', 'Bug fixes', 'Feature rollouts', 'System optimization'] },
+                { category: 'Support & Training', items: ['User support', 'Technical assistance', 'Training programs', 'Documentation updates', 'Best practices'] },
+                { category: 'Backup & Recovery', items: ['Data protection', 'Disaster recovery', 'System restoration', 'Business continuity', 'Recovery testing'] },
+                { category: 'Analytics & Reporting', items: ['Performance dashboards', 'Usage analytics', 'ROI tracking', 'Trend analysis', 'Improvement recommendations'] }
+              ].map((category, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-secondary-200">
+                  <h3 className="text-lg font-semibold text-secondary-900 mb-4">{category.category}</h3>
+                  <ul className="space-y-2">
+                    {category.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start space-x-2">
+                        <span className="text-primary-500 mt-1 text-sm">•</span>
+                        <span className="text-secondary-700 text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <div className="bg-white rounded-lg p-6 border border-primary-200">
+                <p className="text-lg text-secondary-700 mb-4">
+                  {service.slug === 'ai-workforce' && 'Don\'t see your specific role listed? We can automate virtually any position that involves repetitive tasks, customer interactions, or data processing.'}
+                  {service.slug === 'automation-integration' && 'Have a unique process that needs automation? We specialize in creating custom solutions for any business workflow or integration requirement.'}
+                  {service.slug === 'ai-consulting' && 'Need guidance in a specific area not mentioned? Our consultants have experience across all industries and automation scenarios.'}
+                  {service.slug === 'managed-operations' && 'Have specific operational requirements? We customize our management services to match your exact needs and service level requirements.'}
                 </p>
-                <p>
-                  We provide comprehensive support and implementation services to ensure your
-                  automation initiatives deliver measurable results and ROI.
-                </p>
-                <p>
-                  Contact us today to learn how {service.title} can transform your business operations.
-                </p>
+                <ConsultationButton variant="cta" size="lg">
+                  Discuss Your Specific Needs
+                </ConsultationButton>
               </div>
             </div>
           </div>
