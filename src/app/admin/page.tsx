@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useAdminAuth } from '@/hooks/useAdminAuth'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -74,10 +75,30 @@ interface DashboardData {
 }
 
 export default function AdminDashboard() {
+  const { isAuthenticated, isLoading: authLoading } = useAdminAuth()
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date())
+
+  // Show loading screen while authentication is being checked
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center h-64">
+            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
+            <span className="ml-2 text-lg">Checking authentication...</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // If not authenticated, useAdminAuth will handle the redirect
+  if (!isAuthenticated) {
+    return null
+  }
 
   const fetchDashboardData = async () => {
     try {
