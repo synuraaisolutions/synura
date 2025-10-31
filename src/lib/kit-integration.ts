@@ -496,11 +496,37 @@ class KitIntegration {
   }
 }
 
-// Export singleton instance
-const apiKey = process.env.KIT_API_KEY
-if (!apiKey) {
-  throw new Error('KIT_API_KEY environment variable is required')
+// Lazy-loaded singleton instance
+let _kitIntegration: KitIntegration | null = null
+
+export const kitIntegration = {
+  get instance(): KitIntegration {
+    if (!_kitIntegration) {
+      const apiKey = process.env.KIT_API_KEY
+      if (!apiKey) {
+        throw new Error('KIT_API_KEY environment variable is required')
+      }
+      _kitIntegration = new KitIntegration(apiKey)
+    }
+    return _kitIntegration
+  },
+
+  // Proxy methods to the actual instance
+  async testConnection(): Promise<boolean> {
+    return this.instance.testConnection()
+  },
+
+  async processROILead(leadData: ROILeadData): Promise<boolean> {
+    return this.instance.processROILead(leadData)
+  },
+
+  async processContactLead(leadData: ContactLeadData): Promise<boolean> {
+    return this.instance.processContactLead(leadData)
+  },
+
+  async initializeKitSetup(): Promise<boolean> {
+    return this.instance.initializeKitSetup()
+  }
 }
-export const kitIntegration = new KitIntegration(apiKey)
 
 export type { ROILeadData, ContactLeadData, KitSubscriber, KitTag, KitCustomField }
